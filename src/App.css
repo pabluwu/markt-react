@@ -1,0 +1,271 @@
+:root {
+  --primary-color: #3C6EAF;
+  --secondary-color: #2EB67D;
+  --verde-oscuro: #156749;
+  --bg-color: #f3f6fc;
+  --placeholder: #95a0b6;
+  --celeste-1: #2e5a9b;
+  --celeste-2: #c9d8ee;
+  --border-1: #d4d4d8;
+  --white: #FFFFFF;
+  --black: #0f0f0f;
+  --font-size: 16px;
+  --gris: rgba(61, 37, 20, .08);
+  --spacing: 8px;
+}
+
+body {
+  background-color: var(--bg-color) !important;
+}
+
+.full-viewport-width {
+  width: 100vw;
+}
+
+.full-viewheight-height {
+  height: 100vh;
+}
+
+.error_input {
+  color: red;
+  margin-bottom: 8px;
+}
+
+.btn-azul {
+  background-color: var(--primary-color) !important;
+  color: var(--white) !important;
+  border: solid 1px var(--primary-color) !important;
+}
+
+.btn-azul:hover {
+  background-color: var(--white) !important;
+  color: var(--primary-color) !important;
+  border: solid 1px var(--primary-color) !important;
+}
+
+.btn-verde {
+  background-color: var(--verde-oscuro) !important;
+  color: var(--white) !important;
+  border: solid 1px var(--verde-oscuro) !important;
+}
+
+.btn-verde:hover {
+  background-color: var(--secondary-color) !important;
+  color: var(--verde-oscuro) !important;
+  border: solid 1px var(--verde-oscuro) !important;
+}
+
+.bg-navbar {
+  background-color: var(--celeste-1) !important;
+}
+
+.profile-card {
+  box-shadow: 0 0 1px rgba(0, 0, 0, .15), 0 2px 3px rgba(0, 0, 0, .2);
+  background-color: var(--white);
+
+  .sub-info-profile {
+    text-align: justify;
+    font-size: 12px;
+  }
+
+  .compartir {
+    height: 50px;
+    width: 100%;
+    background-color: var(--bg-color);
+    color: var(--placeholder);
+    display: flex;
+    align-items: center;
+    padding: 16px;
+    cursor: pointer;
+  }
+}
+
+.info-profile {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  gap: 16px;
+
+  h4 {
+    color: var(--black);
+    margin: 0;
+  }
+
+  p {
+    margin: 0;
+  }
+
+  img {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+
+/* Basic editor styles */
+.tiptap {
+
+  img {
+    max-width: 500px;
+    /* Ajusta el tamaño máximo */
+    height: auto;
+    /* Mantiene la proporción */
+    display: block;
+    margin: 10px auto;
+  }
+
+  .button-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .25rem;
+    margin-bottom: 16px;
+  }
+
+  button {
+    background: var(--gris);
+    border-radius: .5rem;
+    border: none;
+    color: var(--black);
+    font-family: inherit;
+    font-size: .875rem;
+    font-weight: 500;
+    line-height: 1.15;
+    margin: none;
+    padding: .375rem .625rem;
+  }
+
+  button.is-active {
+    background: var(--verde-oscuro);
+    color: var(--white);
+  }
+
+  div:focus-visible {
+    outline: none;
+  }
+
+  :first-child {
+    margin-top: 0;
+  }
+
+  /* List styles */
+  ul,
+  ol {
+    padding: 0 1rem;
+    margin: 1.25rem 1rem 1.25rem 0.4rem;
+
+    li p {
+      margin-top: 0.25em;
+      margin-bottom: 0.25em;
+    }
+  }
+
+  /* Heading styles */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    line-height: 1.1;
+    margin-top: 2.5rem;
+    text-wrap: pretty;
+  }
+
+  h1,
+  h2 {
+    margin-top: 3.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  h1 {
+    font-size: 1.4rem;
+  }
+
+  h2 {
+    font-size: 1.2rem;
+  }
+
+  h3 {
+    font-size: 1.1rem;
+  }
+
+  h4,
+  h5,
+  h6 {
+    font-size: 1rem;
+  }
+
+  /* Code and preformatted text styles */
+  code {
+    background-color: var(--purple-light);
+    border-radius: 0.4rem;
+    color: var(--black);
+    font-size: 0.85rem;
+    padding: 0.25em 0.3em;
+  }
+
+  pre {
+    background: var(--black);
+    border-radius: 0.5rem;
+    color: var(--white);
+    font-family: 'JetBrainsMono', monospace;
+    margin: 1.5rem 0;
+    padding: 0.75rem 1rem;
+
+    code {
+      background: none;
+      color: inherit;
+      font-size: 0.8rem;
+      padding: 0;
+    }
+  }
+
+  blockquote {
+    border-left: 3px solid var(--gray-3);
+    margin: 1.5rem 0;
+    padding-left: 1rem;
+  }
+
+  hr {
+    border: none;
+    border-top: 1px solid var(--gray-2);
+    margin: 2rem 0;
+  }
+}
+
+.tiptap .ProseMirror {
+  border-radius: 8px;
+  border: solid 0.5px var(--border-1);
+  padding: 16px;
+}
+
+.navbar-toggler:focus {
+  outline: none;
+  box-shadow: none !important;
+}
+
+.mis-empresas-card {
+  box-shadow: 0 0 1px rgba(0, 0, 0, .15), 0 2px 3px rgba(0, 0, 0, .2);
+  background-color: var(--white);
+
+  span {
+    color: var(--primary-color);
+    cursor: pointer;
+  }
+}
+
+.offcanvas-backdrop.show {
+  opacity: 0 !important;
+}
+
+
+@media (width >=992px) {
+  .container-responsive {
+    margin-left: 400px !important;
+
+  }
+}
