@@ -1,5 +1,6 @@
 // src/Tiptap.tsx
 import { EditorProvider, FloatingMenu, BubbleMenu, useCurrentEditor } from '@tiptap/react'
+import { Controller } from 'react-hook-form';
 import { Color } from '@tiptap/extension-color'
 import Image from "@tiptap/extension-image";
 import ListItem from '@tiptap/extension-list-item'
@@ -101,36 +102,6 @@ const MenuBar = () => {
                 >
                     Lista numerada
                 </button>
-                {/* <button onClick={() => editor.chain().focus().setHorizontalRule().run()}>
-                    Horizontal rule
-                </button>
-                <button onClick={() => editor.chain().focus().setHardBreak().run()}>
-                    Hard break
-                </button> */}
-                {/* <button
-                    onClick={() => editor.chain().focus().undo().run()}
-                    disabled={
-                        !editor.can()
-                            .chain()
-                            .focus()
-                            .undo()
-                            .run()
-                    }
-                >
-                    Undo
-                </button>
-                <button
-                    onClick={() => editor.chain().focus().redo().run()}
-                    disabled={
-                        !editor.can()
-                            .chain()
-                            .focus()
-                            .redo()
-                            .run()
-                    }
-                >
-                    Redo
-                </button> */}
             </div>
         </div>
     )
@@ -152,15 +123,22 @@ const extensions = [
     Image.configure({ allowBase64: true }),
 ]
 
-export default ({ onContentChange }) => {
+export default ({ name, control, errors }) => {
     return (
-        <EditorProvider
-            slotBefore={<MenuBar />}
-            extensions={extensions}
-            content={content}
-            onUpdate={({ editor }) => {
-                onContentChange(editor.getHTML()); // Pasamos el contenido al padre
-            }}
-        />
+        <>
+            <Controller
+                name={name}
+                control={control}
+                rules={{ required: "El contenido es obligatorio" }}
+                render={({ field: { onChange, value } }) => (
+                    <EditorProvider
+                        slotBefore={<MenuBar />}
+                        extensions={extensions}
+                        onUpdate={({ editor }) => onChange(editor.getHTML())}
+                    />
+                )}
+            />
+            {errors[name]?.type === 'required' && <p className="error_input">{errors[name].message}</p>}
+        </>
     )
 }

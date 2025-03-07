@@ -269,3 +269,14 @@ body {
 
   }
 }
+
+.postInfo{
+  .fecha{
+    font-size: 12px;
+  }
+}
+
+.postContent{
+  padding-top: 8px;
+  border-top: solid 2px var(--gris);
+}
