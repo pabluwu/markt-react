@@ -16,7 +16,7 @@ const Login = () => {
     }
 
     const onSubmit = async (data) => {
-        const response = await fetch(`${api}token/`, {
+        const response = await fetch(`${api}api/token/`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
