@@ -4,6 +4,7 @@ import { useAuth } from "../../services/AuthContext";
 import useStore from "../../store/userStore";
 import { useNavigate, Navigate } from "react-router-dom";
 import Input from "../../Components/Input/Input";
+import { api } from "../../assets/variables";
 const Login = () => {
     const navigate = useNavigate();
     const { register, handleSubmit, formState: { errors } } = useForm();
@@ -15,7 +16,7 @@ const Login = () => {
     }
 
     const onSubmit = async (data) => {
-        const response = await fetch('http://127.0.0.1:8000/api/token/', {
+        const response = await fetch(`${api}token/`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
