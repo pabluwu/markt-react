@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { Navigate } from "react-router-dom";
 import { useAuth } from "../../services/AuthContext";
 import useStore from "../../store/userStore";
+import { api } from "../../assets/variables";
 
 const PrivateRoute = ({ element }) => {
   const { isAuthenticated, logout } = useAuth();
@@ -12,7 +13,7 @@ const PrivateRoute = ({ element }) => {
       //Obtener datos del usuario
       const res = async () => {
         const acc = localStorage.getItem("access_token");
-        const responseUsuario = await fetch('http://127.0.0.1:8000/api/usuario/', {
+        const responseUsuario = await fetch(`${api}api/usuario/`, {
           headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${acc}`
