@@ -50,7 +50,7 @@ function Sidebar({ content }) {
                 tabIndex="-1"
                 id="sidebar"
                 aria-labelledby="sidebarLabel"
-                style={{ visibility: isOpen ? "visible" : "hidden", height: calculo, top: `${altura}px` }}
+                style={{ visibility: isOpen ? "visible" : "hidden", height: calculo, paddingTop: `${altura}px`, zIndex: 99 }}
             >
                 {content}
             </div>

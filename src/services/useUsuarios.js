@@ -26,5 +26,29 @@ export const useIdEmailUsuarios = () => {
     }
 }
 
+export const getUsuarioByUsername = (username) => {
+    const acc = localStorage.getItem("access_token");
+    const get = async () => {
+        const res = await fetch(`${api}api/usuario/by-username/${username}`, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${acc}`
+            },
+        });
+        if (!res.ok) {
+            throw new Error('Failed to fetch');
+        }
+        return res.json();
+    }
+
+    const {
+        data: usuario,
+    } = useQuery({ queryKey: ['usuarioUsername'], queryFn: get });
+
+    return {
+        usuario,
+    }
+}
+
 
 

@@ -18,6 +18,11 @@ body {
   background-color: var(--bg-color) !important;
 }
 
+a {
+  text-decoration: none !important;
+  color: #0f0f0f !important;
+}
+
 .full-viewport-width {
   width: 100vw;
 }
@@ -59,13 +64,19 @@ body {
   background-color: var(--celeste-1) !important;
 }
 
+.navbar{
+  z-index: 100;
+}
+
 .profile-card {
   box-shadow: 0 0 1px rgba(0, 0, 0, .15), 0 2px 3px rgba(0, 0, 0, .2);
   background-color: var(--white);
+  text-decoration: none !important;
 
   .sub-info-profile {
     text-align: justify;
     font-size: 12px;
+    text-decoration: none !important;
   }
 
   .compartir {
@@ -245,7 +256,7 @@ body {
 
 .navbar-toggler:focus {
   outline: none;
-  box-shadow: none !important;
+  navbardow: none !important;
 }
 
 .mis-empresas-card {
@@ -270,13 +281,13 @@ body {
   }
 }
 
-.postInfo{
-  .fecha{
+.postInfo {
+  .fecha {
     font-size: 12px;
   }
 }
 
-.postContent{
+.postContent {
   padding-top: 8px;
   border-top: solid 2px var(--gris);
 }

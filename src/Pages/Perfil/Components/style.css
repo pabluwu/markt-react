@@ -1,0 +1,59 @@
+.contenedorPerfil {
+    position: relative;
+    .imagenFondo {
+        background-color: black;
+        height: 300px;
+    }
+
+    .opciones{
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: end;
+        background-color: var(--celeste-2);
+        padding: 0 200px;
+        gap: 16px;
+
+        p{
+            margin: 0;
+            cursor: pointer;
+        }
+        p.active{
+            font-weight: bold;
+        }
+
+        .boton-seguir{
+            padding: 2px 16px;
+            border-radius: 8px;
+            cursor:pointer;
+        }
+    }
+
+    .cardUsuario {
+        width: 300px;
+        height: 400px;
+        background-color: var(--white);
+        border-radius: 8px;
+        position: absolute;
+        box-shadow: 0 0 1px rgba(0, 0, 0, .15), 0 2px 3px rgba(0, 0, 0, .2);
+        top: 40%;
+
+        img{
+            width: 150px;
+            height: auto;
+            margin-bottom: 16px;
+        }
+    }
+
+}
+
+.margin-content-usuario{
+    margin-left: 316px;
+    margin-top: 32px;
+}
+
+.box-datos{
+    aspect-ratio: 1 / 1;
+    box-shadow: 0 0 1px rgba(0, 0, 0, .15), 0 2px 3px rgba(0, 0, 0, .2);
+    background-color: var(--white);
+}

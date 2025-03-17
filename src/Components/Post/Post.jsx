@@ -1,8 +1,6 @@
 import PostItem from "./PostItem";
 import { getAllPost } from "../../services/usePost";
-const Post = () => {
-    const { posts } = getAllPost();
-    console.log(posts);
+const Post = ({posts}) => {
     return (
         <>
             {

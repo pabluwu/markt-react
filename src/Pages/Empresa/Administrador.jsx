@@ -1,10 +1,11 @@
 import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { Navigate, useParams } from "react-router-dom";
 import { getEmpresa } from "../../services/useEmpresas";
 
 import Navbar from "../../Components/Navbar/Navbar";
 import Sidebar from "../../Components/Sidebar/Sidebar";
 import ConfigurarEmpresa from "./Configurar";
+import PublicacionesEmpresa from "./Publicaciones";
 
 const AdministradorEmpresa = () => {
     const [option, setOption] = useState({ key: 'publicaciones', nombre: 'Publicaciones' });
@@ -13,6 +14,7 @@ const AdministradorEmpresa = () => {
 
     const opciones = [
         { key: 'publicaciones', nombre: 'Publicaciones' },
+        { key: 'perfil', nombre: 'Ver perfil' },
         { key: 'servicios', nombre: 'Servicios' },
         { key: 'contactos', nombre: 'Contactos' },
         { key: 'configurar', nombre: 'Configurar' },
@@ -59,8 +61,16 @@ const AdministradorEmpresa = () => {
                         <div className="container mt-4 ">
                             <h3>{option.nombre}</h3>
                             {
+                                option.key == 'publicaciones' &&
+                                <PublicacionesEmpresa empresa={empresa}/>
+                            }
+                            {
                                 option.key == 'configurar' &&
                                 <ConfigurarEmpresa empresa={empresa} />
+                            }
+                            {
+                                option.key == 'perfil' &&
+                                <Navigate to={`/c/${empresa.id}`}/>
                             }
                         </div>
                     </div>

@@ -8,7 +8,14 @@ const PostItem = ({ item }) => {
             <div className="info-profile px-3 py-2">
                 <img src={SampleAvatar} alt="" />
                 <div className='postInfo'>
-                    <p><strong>{item.author.username}</strong></p>
+                    {
+                        item.author.username &&
+                        <p><strong>{item.author.username}</strong></p>
+                    }
+                    {
+                        item.author.nombre_fantasia &&
+                        <p><strong>{item.author.nombre_fantasia}</strong></p>
+                    }
                     <span className='fecha'>{created}</span>
                 </div>
             </div>

@@ -1,12 +1,13 @@
 import useStore from '../../store/userStore';
+import { getAllPost } from '../../services/usePost';
 import Navbar from '../../Components/Navbar/Navbar';
 import ProfileCard from '../../Components/ProfileCard/ProfileCard';
 import Publicar from '../../Components/Publicar/Publicar';
 import MisEmpresas from '../../Components/MisEmpresas/MisEmpresas';
 import Post from '../../Components/Post/Post';
 const Home = () => {
-
     const { user } = useStore();
+    const { posts } = getAllPost();
     return (
         <>
             {
@@ -20,7 +21,7 @@ const Home = () => {
                             </div>
                             <div className="col-lg-6 mb-2">
                                 <Publicar author_id={user.id} type={'user'} />
-                                <Post />
+                                <Post posts={posts} />
                             </div>
                             <div className="col-lg-3 mb-2">
                                 <MisEmpresas />
