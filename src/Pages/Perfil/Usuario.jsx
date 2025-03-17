@@ -9,7 +9,7 @@ import Perfil from "./Components/Perfil";
 import Post from "../../Components/Post/Post";
 import Publicar from "../../Components/Publicar/Publicar";
 
-import './components/style.css';
+import './Components/style.css';
 const PerfilUsuario = () => {
     const opciones = [
         { key: 'publicaciones', nombre: 'Publicaciones' },
