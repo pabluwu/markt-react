@@ -1,11 +1,13 @@
 import './style.css';
 import SampleAvatar from '../../../assets/SampleAvatar.png';
+import useStore from '../../../store/userStore';
 const Perfil = ({ user, opciones, selectedOption, setSelectedOption }) => {
-    console.log(selectedOption);
+    const { user: usuarioStore } = useStore();
     return (
         <div className="contenedorPerfil">
             {
                 user &&
+                usuarioStore &&
                 <>
                     <div className="imagenFondo">
 
@@ -13,13 +15,28 @@ const Perfil = ({ user, opciones, selectedOption, setSelectedOption }) => {
                     <div className="opciones">
                         {
                             opciones &&
-                            opciones.map((item,index) => (
-                                <p
-                                    key={index}
-                                    className={selectedOption.key == item.key ? 'active' : ''}
-                                    onClick={() => setSelectedOption({key: item.key, nombre: item.nombre})}>
-                                    {item.nombre}
-                                </p>
+                            opciones.map((item, index) => (
+                                <>
+                                    {
+                                        item.key == 'configurar' &&
+                                        usuarioStore.id === user?.id &&
+                                        <p
+                                            key={index}
+                                            className={selectedOption.key == item.key ? 'active' : ''}
+                                            onClick={() => setSelectedOption({ key: item.key, nombre: item.nombre })}>
+                                            {item.nombre}
+                                        </p>
+                                    }
+                                    {
+                                        item.key != 'configurar' &&
+                                        <p
+                                            key={index}
+                                            className={selectedOption.key == item.key ? 'active' : ''}
+                                            onClick={() => setSelectedOption({ key: item.key, nombre: item.nombre })}>
+                                            {item.nombre}
+                                        </p>
+                                    }
+                                </>
                             ))
                         }
 

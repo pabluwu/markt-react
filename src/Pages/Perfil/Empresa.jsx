@@ -17,41 +17,48 @@ const PerfilEmpresa = () => {
     const [selectedOption, setSelectedOption] = useState(opciones[0]);
     const { id } = useParams();
     const { postsEmpresa } = getAllPostByEmpresa(id);
-    const { empresa, empresaIsLoading } = getEmpresa(id);
-
+    const { empresa, empresaIsLoading, error } = getEmpresa(id);
+    console.log(error);
     return (
         <>
             <Navbar />
-            <div className="container-fluid">
-                <div className="row mt-4">
-                    <div className="col-lg-3">
-                        <div className="contenedorPerfil">
-                            <div className="cardUsuario">
-                                <div className="text-center">
-                                    <img src={SampleAvatar} alt="" />
-                                    {
-                                        empresa &&
-                                        <h2>{empresa.nombre_fantasia}</h2>
-                                    }
+            {
+                !empresa ?
+                    <div className="d-flex justify-content-center mt-5">
+                        <h1>Not found empresa</h1>
+                    </div>
+                    :
+                    <div className="container-fluid">
+                        <div className="row mt-4">
+                            <div className="col-lg-3">
+                                <div className="contenedorPerfil">
+                                    <div className="cardUsuario">
+                                        <div className="text-center">
+                                            <img src={SampleAvatar} alt="" />
+                                            {
+                                                empresa &&
+                                                <h2>{empresa.nombre_fantasia}</h2>
+                                            }
+                                        </div>
+                                    </div>
                                 </div>
+                            </div>
+                            <div className="col-lg-9">
+                                <CardReputacion />
+                                <Tab
+                                    opciones={opciones}
+                                    selectedOption={selectedOption}
+                                    setSelectedOption={setSelectedOption} />
+
+                                {
+                                    selectedOption.key == 'publicaciones' &&
+                                    postsEmpresa &&
+                                    <Post posts={postsEmpresa} />
+                                }
                             </div>
                         </div>
                     </div>
-                    <div className="col-lg-9">
-                        <CardReputacion />
-                        <Tab
-                            opciones={opciones}
-                            selectedOption={selectedOption}
-                            setSelectedOption={setSelectedOption} />
-
-                        {
-                            selectedOption.key == 'publicaciones' && 
-                            postsEmpresa &&
-                            <Post posts={postsEmpresa}/>
-                        }
-                    </div>
-                </div>
-            </div>
+            }
         </>
     )
 }

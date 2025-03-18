@@ -8,6 +8,7 @@ import Navbar from "../../Components/Navbar/Navbar";
 import Perfil from "./Components/Perfil";
 import Post from "../../Components/Post/Post";
 import Publicar from "../../Components/Publicar/Publicar";
+import Configurar from "./Components/Configurar";
 
 import './Components/style.css';
 const PerfilUsuario = () => {
@@ -26,27 +27,40 @@ const PerfilUsuario = () => {
     return (
         <>
             <Navbar />
-            <Perfil
-                user={usuario}
-                opciones={opciones}
-                selectedOption={selectedOption}
-                setSelectedOption={setSelectedOption} />
-            <div className="container">
-                <div className="margin-content-usuario">
-                    {
-                        selectedOption.key == 'publicaciones' &&
-                        <>
-                            {
-                                user &&
-                                usuario &&
-                                user.id == usuario.id &&
-                                <Publicar author_id={user.id} type={'user'} />
-                            }
-                            <Post posts={postsUser} />
-                        </>
-                    }
-                </div>
-            </div>
+            {
+                !usuario ?
+                    <div className="d-flex justify-content-center mt-5">
+                        <h1>Profile not found</h1>
+                    </div>
+                    :
+                    <>
+                        <Perfil
+                            user={usuario}
+                            opciones={opciones}
+                            selectedOption={selectedOption}
+                            setSelectedOption={setSelectedOption} />
+                        <div className="container">
+                            <div className="margin-content-usuario">
+                                {
+                                    selectedOption.key == 'publicaciones' &&
+                                    <>
+                                        {
+                                            user &&
+                                            usuario &&
+                                            user.id == usuario.id &&
+                                            <Publicar author_id={user.id} type={'user'} />
+                                        }
+                                        <Post posts={postsUser} />
+                                    </>
+                                }
+                                {
+                                    selectedOption.key == 'configurar' &&
+                                    <Configurar />
+                                }
+                            </div>
+                        </div>
+                    </>
+            }
         </>
     )
 }
