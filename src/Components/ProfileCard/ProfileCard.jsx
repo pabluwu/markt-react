@@ -13,7 +13,9 @@ const ProfileCard = ({ user }) => {
                 </div>
             </Link>
             <p className="sub-info-profile px-3 pt-3">
-                Lorem ipsum odor amet, consectetuer adipiscing elit. Vehicula torquent himenaeos sodales enim dis elementum. Blandit fermentum montes lacus ornare nec feugiat nostra dis. Enim porttitor libero eu feugiat leo. Nulla auctor in habitant duis; ac neque. Hac vel dis donec vulputate taciti curabitur dapibus eleifend. Commodo pharetra lacus elementum, aenean luctus feugiat. Efficitur et enim parturient posuere lacus. Magna tincidunt laoreet consequat volutpat, sagittis ipsum ultrices. Tempor accumsan malesuada vestibulum penatibus adipiscing.
+                {
+                    user?.userprofile?.sobre_mi
+                }
             </p>
         </div>
     )

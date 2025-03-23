@@ -64,7 +64,7 @@ a {
   background-color: var(--celeste-1) !important;
 }
 
-.navbar{
+.navbar {
   z-index: 100;
 }
 
@@ -290,4 +290,28 @@ a {
 .postContent {
   padding-top: 8px;
   border-top: solid 2px var(--gris);
+}
+
+.social-buttons {
+  border-top: solid 1px rgba(0, 0, 0, .15);
+
+  .button {
+    span {
+      gap: 8px;
+      cursor: pointer;
+      align-items: center;
+
+      p {
+        margin: 0 !important;
+      }
+
+      img {
+        width: 24px !important;
+      }
+    }
+  }
+}
+
+.selector-user{
+  border-top: solid 1px rgba(0, 0, 0, .15);
 }

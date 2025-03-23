@@ -37,7 +37,7 @@ export const getAllPost = () => {
         data: posts,
     } = useQuery({ queryKey: ['posts'], queryFn: get });
 
-    console.log(posts);
+    // console.log(posts);
 
     return {
         posts,
@@ -92,4 +92,35 @@ export const getAllPostByUser = (idUser) => {
     return {
         postsUser,
     }
+}
+
+export const toggleLikePost = async (data) => {
+    const acc = localStorage.getItem("access_token");
+    const response = await fetch(`${api}api/like/toggle_like/`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${acc}`
+        },
+        body: JSON.stringify(data),
+    });
+    if (!response.ok) {
+        throw new Error('Error al crear el usuario');
+    }
+    return response.json();
+};
+
+export const getLikeByLike = async (data) => {
+    const acc = localStorage.getItem('access_token');
+
+    const response = await fetch(`${api}api/like/check_liker?post_id=1&liker_id=1&like_type=empresa`, {
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${acc}`
+        },
+    })
+    if (!response.ok) {
+        throw new Error('Error al obtener todos los posts');
+    }
+    return response.json();
 }

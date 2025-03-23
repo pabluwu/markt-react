@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 const MisEmpresas = ({ user }) => {
 
     const { misEmpresas } = useMisEmpresas();
-    console.log(misEmpresas);
+    // console.log(misEmpresas);
     return (
         <div className="rounded mis-empresas-card py-3">
             <div className=" px-3">

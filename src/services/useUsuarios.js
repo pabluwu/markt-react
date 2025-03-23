@@ -50,5 +50,24 @@ export const getUsuarioByUsername = (username) => {
     }
 }
 
+export const updateUsuario = async (data) => {
+    const acc = localStorage.getItem("access_token");
+
+    const res = await fetch(`${api}api/usuario/${data.idUser}/update-user/`, {
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${acc}`
+        },
+        method: 'PUT',
+        body: JSON.stringify(data)
+    });
+
+    if (!res.ok) {
+        throw new Error('Failed to update');
+    }
+    return res.json();
+
+}
+
 
 

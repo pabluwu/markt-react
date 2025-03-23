@@ -2,8 +2,9 @@ import { Controller, useForm } from "react-hook-form";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "./style.css";
+import { es } from 'date-fns/locale'
 
-const DatePickerCustom = ({ label, name, control, errors, required}) => {
+const DatePickerCustom = ({ label, name, control, errors, required }) => {
 
     return (
 
@@ -18,7 +19,9 @@ const DatePickerCustom = ({ label, name, control, errors, required}) => {
                         className="date-input form-control w-100"
                         selected={field.value}
                         onChange={(date) => field.onChange(date)}
-                        onClick={(e) => e.target.blur()} // Evita foco en el input
+                        onClick={(e) => e.target.blur()}
+                        locale={es}
+                        dateFormat="dd/MM/yyyy"
                     />
                 )}
             />
