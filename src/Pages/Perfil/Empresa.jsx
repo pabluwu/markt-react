@@ -9,6 +9,7 @@ import Tab from "../../Components/Tab/Tab";
 import Post from "../../Components/Post/Post";
 
 import SampleAvatar from '../../assets/SampleAvatar.png';
+import './style.css';
 const PerfilEmpresa = () => {
     const opciones = [
         { key: 'publicaciones', nombre: 'Publicaciones' },
@@ -31,8 +32,8 @@ const PerfilEmpresa = () => {
                     <div className="container-fluid">
                         <div className="row mt-4">
                             <div className="col-lg-3">
-                                <div className="contenedorPerfil">
-                                    <div className="cardUsuario">
+                                <div className="contenedorPerfilEmpresa">
+                                    <div className="cardEmpresa">
                                         <div className="text-center">
                                             <img src={SampleAvatar} alt="" />
                                             {
@@ -41,6 +42,9 @@ const PerfilEmpresa = () => {
                                             }
                                         </div>
                                     </div>
+                                    <span className="boton-seguir btn-azul text-center">
+                                        Seguir
+                                    </span>
                                 </div>
                             </div>
                             <div className="col-lg-9">

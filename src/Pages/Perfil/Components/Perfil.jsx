@@ -6,8 +6,8 @@ const Perfil = ({ user, opciones, selectedOption, setSelectedOption }) => {
     return (
         <div className="contenedorPerfil">
             {
-                user &&
                 usuarioStore &&
+                user &&
                 <>
                     <div className="imagenFondo">
 
@@ -16,7 +16,7 @@ const Perfil = ({ user, opciones, selectedOption, setSelectedOption }) => {
                         {
                             opciones &&
                             opciones.map((item, index) => (
-                                <>
+                                <div key={index}>
                                     {
                                         item.key == 'configurar' &&
                                         usuarioStore.id === user?.id &&
@@ -36,13 +36,16 @@ const Perfil = ({ user, opciones, selectedOption, setSelectedOption }) => {
                                             {item.nombre}
                                         </p>
                                     }
-                                </>
+                                </div>
                             ))
                         }
 
-                        <span className="boton-seguir btn-azul">
-                            Seguir
-                        </span>
+                        {
+                            usuarioStore.id != user?.id &&
+                            <span className="boton-seguir btn-azul">
+                                Seguir
+                            </span>
+                        }
 
                     </div>
                     <div className="container">

@@ -15,12 +15,14 @@ import Liked from "../../assets/liked.svg";
 const PostItem = ({ item }) => {
     const created = useFormattedDate(item.created_at);
     const { misEmpresas } = useMisEmpresas();
+    const [isLiked, setIsLiked] = useState(false);
     const { user } = useStore();
     const [selected, setSelected] = useState({ id: user.id, type: 'user', nombre: user.first_name });
 
     // Query para verificar el estado del like
     const getLikeByLike = async () => {
         const acc = localStorage.getItem('access_token');
+        // console.log('se revisa este post', { post_id: item.id, liker_id: selected.id, like_type: selected.type });
         const data = { post_id: item.id, liker_id: selected.id, like_type: selected.type };
         const response = await fetch(`${api}api/like/check_like/?post_id=${data.post_id}&liker_id=${data.liker_id}&like_type=${data.like_type}`, {
             headers: {
@@ -37,7 +39,7 @@ const PostItem = ({ item }) => {
     // Query para obtener el like, con 'enabled' activado solo cuando 'selected' tiene un id
     const { data: liked, refetch: likedRefetch } = useQuery(
         {
-            queryKey: ['likes', selected.id], // La clave ahora es un objeto
+            queryKey: ['likes', item.id], // La clave ahora es un objeto
             queryFn: getLikeByLike,
             enabled: !!selected.id,  // Solo se ejecuta si selected tiene un id
         }
@@ -56,19 +58,24 @@ const PostItem = ({ item }) => {
 
     const handleLike = async () => {
         const data = { post_id: item.id, liker_id: selected.id, like_type: selected.type };
-        console.log('con este usuario se da like', data);
+        // console.log('se da like a post', item.id);
         mutation.mutate(data);
     };
 
     // Condición para saber si el post está marcado como "like" o no
-    const likeStatus = liked?.liked === 1;
+    useEffect(() => {
+        // console.log('se marca como like', item.id);
+        setIsLiked(liked?.liked === 1);
+    }, [liked])
 
     // Efecto para ejecutar cuando el selected cambie y obtener el estado del like
     useEffect(() => {
-        console.log(`Liked de ${selected.nombre}: ${liked?.liked}`);
+        // console.log(`Liked de ${selected.nombre}: ${liked?.liked}`);
         likedRefetch();
     }, [selected]); // Esto asegura que se ejecute siempre que 'liked' o 'selected' cambien
 
+
+    // console.log(isLiked, item.id);
     return (
         <div className="rounded profile-card mt-3">
             <div className="info-profile px-3 py-2">
@@ -100,10 +107,12 @@ const PostItem = ({ item }) => {
             }
             <div className='social-buttons px-4 py-2'>
                 <div className="d-flex justify-content-around button">
+
                     <span className='d-flex' onClick={handleLike}>
-                        <img src={likeStatus ? Liked : Like} alt="" />
+                        <img src={isLiked ? Liked : Like} alt="" />
                         <p>Me gusta</p>
                     </span>
+
                     <span>Comentar</span>
                     <span>Compartir</span>
                 </div>

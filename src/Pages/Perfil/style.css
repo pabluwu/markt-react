@@ -1,0 +1,22 @@
+.contenedorPerfilEmpresa {
+    position: relative;
+    display: flex;
+    gap: 16px;
+    flex-direction: column;
+    .cardEmpresa {
+        /* width: 300px; */
+        height: 400px;
+        padding: 16px 32px;
+        background-color: var(--white);
+        border-radius: 8px;
+        /* position: absolute; */
+        box-shadow: 0 0 1px rgba(0, 0, 0, .15), 0 2px 3px rgba(0, 0, 0, .2);
+
+        img {
+            width: 150px;
+            height: auto;
+            margin-bottom: 16px;
+        }
+    }
+
+}
