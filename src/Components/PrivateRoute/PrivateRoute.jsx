@@ -21,8 +21,8 @@ const PrivateRoute = ({ element }) => {
         });
 
         const status = await responseUsuario.status;
-        
-        if(status == 401){
+
+        if (status == 401) {
           logout();
         }
         setUser(await responseUsuario.json());
@@ -31,7 +31,7 @@ const PrivateRoute = ({ element }) => {
       res();
     }
   }, [isAuthenticated])
-  return isAuthenticated ? element : <Navigate to="/login" />;
+  return isAuthenticated ? <div key={window.location.pathname}>{element}</div> : <Navigate to="/login" />;
 };
 
 export default PrivateRoute;

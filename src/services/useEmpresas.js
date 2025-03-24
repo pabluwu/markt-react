@@ -44,7 +44,7 @@ export const getEmpresa = (id) => {
         data: empresa,
         isLoading: empresaIsLoading,
         error,
-    } = useQuery({ queryKey: ['empresa'], queryFn: get });
+    } = useQuery({ queryKey: ['empresa', id], queryFn: get });
 
     return {
         empresa,

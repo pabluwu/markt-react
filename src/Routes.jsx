@@ -22,10 +22,10 @@ const UserRouter = () => {
                 <PrivateRoute element={<AdministradorEmpresa />}/>
             } />
             <Route path="/p/:username" element={
-                <PrivateRoute element={<PerfilUsuario />}/>
+                <PrivateRoute element={<PerfilUsuario key={Math.random()}/>}/>
             } />
             <Route path="/c/:id" element={
-                <PrivateRoute element={<PerfilEmpresa />}/>
+                <PrivateRoute element={<PerfilEmpresa key={Math.random()}/>}/>
             } />
             <Route path="/login" element={<Login />} />
         </Routes >

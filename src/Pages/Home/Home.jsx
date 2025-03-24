@@ -7,7 +7,7 @@ import MisEmpresas from '../../Components/MisEmpresas/MisEmpresas';
 import Post from '../../Components/Post/Post';
 const Home = () => {
     const { user } = useStore();
-    const { posts } = getAllPost();
+    const { posts, refetchAllPosts } = getAllPost();
     return (
         <>
             {
@@ -20,7 +20,7 @@ const Home = () => {
                                 <ProfileCard user={user} />
                             </div>
                             <div className="col-lg-6 mb-2">
-                                <Publicar author_id={user.id} type={'user'} />
+                                <Publicar author_id={user.id} type={'user'} refetchPosts={refetchAllPosts}/>
                                 <Post posts={posts} />
                             </div>
                             <div className="col-lg-3 mb-2">

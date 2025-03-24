@@ -5,7 +5,7 @@ import { createPost } from '../../services/usePost';
 import Popup from '../Popup/Popup';
 import Tiptap from '../TipTap/TipTap';
 import SampleAvatar from '../../assets/SampleAvatar.png';
-const Publicar = ({ author_id, type }) => {
+const Publicar = ({ author_id, type, refetchPosts }) => {
     const [popUpCompartir, setPopupCompartir] = useState(false);
 
     const { reset, handleSubmit, formState: { errors }, setValue, control, getValues, trigger } = useForm();
@@ -15,6 +15,7 @@ const Publicar = ({ author_id, type }) => {
         onSuccess: (data) => {
             reset();
             setPopupCompartir(false);
+            refetchPosts();
             alert('Post creado correctamente');
 
         },

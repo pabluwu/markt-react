@@ -1,6 +1,9 @@
-import './style.css';
-import SampleAvatar from '../../../assets/SampleAvatar.png';
 import useStore from '../../../store/userStore';
+
+import SeguirButton from '../../../Components/SeguirButton/SeguirButton';
+
+import SampleAvatar from '../../../assets/SampleAvatar.png';
+import './style.css';
 const Perfil = ({ user, opciones, selectedOption, setSelectedOption }) => {
     const { user: usuarioStore } = useStore();
     return (
@@ -42,9 +45,11 @@ const Perfil = ({ user, opciones, selectedOption, setSelectedOption }) => {
 
                         {
                             usuarioStore.id != user?.id &&
-                            <span className="boton-seguir btn-azul">
-                                Seguir
-                            </span>
+                            <SeguirButton
+                                id_seguido={user.id}
+                                type_seguido={'user'}
+                                id_seguidor={usuarioStore.id}
+                                type_seguidor={'user'} />
                         }
 
                     </div>

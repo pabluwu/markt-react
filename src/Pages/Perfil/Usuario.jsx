@@ -9,6 +9,7 @@ import Perfil from "./Components/Perfil";
 import Post from "../../Components/Post/Post";
 import Publicar from "../../Components/Publicar/Publicar";
 import Configurar from "./Components/Configurar";
+import Contactos from "./Components/Contactos";
 
 import './Components/style.css';
 const PerfilUsuario = () => {
@@ -22,8 +23,13 @@ const PerfilUsuario = () => {
     const { user } = useStore();
     const { usuario } = getUsuarioByUsername(username);
 
-    const { postsUser } = getAllPostByUser(usuario?.id);
-    // console.log(postsUser);
+    const { postsUser, refetchAllPostByUser } = getAllPostByUser(usuario?.id);
+    console.log('username', username);
+    console.log('setSelectedOption', selectedOption);
+
+    useEffect(() => {
+        setSelectedOption(opciones[0]);
+    }, [username])
     return (
         <>
             <Navbar />
@@ -48,7 +54,7 @@ const PerfilUsuario = () => {
                                             user &&
                                             usuario &&
                                             user.id == usuario.id &&
-                                            <Publicar author_id={user.id} type={'user'} />
+                                            <Publicar author_id={user.id} type={'user'} refetchPosts={refetchAllPostByUser} />
                                         }
                                         <Post posts={postsUser} />
                                     </>
@@ -56,6 +62,10 @@ const PerfilUsuario = () => {
                                 {
                                     selectedOption.key == 'configurar' &&
                                     <Configurar />
+                                }
+                                {
+                                    selectedOption.key == 'contactos' &&
+                                    <Contactos id_user={usuario?.id} />
                                 }
                             </div>
                         </div>

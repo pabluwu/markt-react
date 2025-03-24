@@ -4,6 +4,7 @@ import { useMisEmpresas } from '../../services/useEmpresas';
 import useStore from '../../store/userStore';
 import { api } from '../../assets/variables';
 import { toggleLikePost } from '../../services/usePost';
+import { Link } from 'react-router-dom';
 
 import SampleAvatar from '../../assets/SampleAvatar.png';
 import useFormattedDate from '../../services/useFormattedDate';
@@ -83,11 +84,15 @@ const PostItem = ({ item }) => {
                 <div className='postInfo'>
                     {
                         item.author.username &&
-                        <p><strong>{item.author.username}</strong></p>
+                        <a href={`/p/${item.author.username}`}>
+                            <p><strong>{item.author.username}</strong></p>
+                        </a>
                     }
                     {
                         item.author.nombre_fantasia &&
-                        <p><strong>{item.author.nombre_fantasia}</strong></p>
+                        <Link to={`/c/${item.author.id}`}>
+                            <p><strong>{item.author.nombre_fantasia}</strong></p>
+                        </Link>
                     }
                     <span className='fecha'>{created}</span>
                 </div>

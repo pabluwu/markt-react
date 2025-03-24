@@ -35,12 +35,14 @@ export const getAllPost = () => {
 
     const {
         data: posts,
+        refetch: refetchAllPosts
     } = useQuery({ queryKey: ['posts'], queryFn: get });
 
     // console.log(posts);
 
     return {
         posts,
+        refetchAllPosts
     }
 }
 
@@ -62,10 +64,12 @@ export const getAllPostByEmpresa = (idEmpresa) => {
 
     const {
         data: postsEmpresa,
-    } = useQuery({ queryKey: ['posts'], queryFn: get });
+        refetch: refetchPosts
+    } = useQuery({ queryKey: ['posts', idEmpresa], queryFn: get });
 
     return {
         postsEmpresa,
+        refetchPosts
     }
 }
 
@@ -87,10 +91,12 @@ export const getAllPostByUser = (idUser) => {
 
     const {
         data: postsUser,
-    } = useQuery({ queryKey: ['posts'], queryFn: get });
+        refetch: refetchAllPostByUser,
+    } = useQuery({ queryKey: ['posts', idUser], queryFn: get });
 
     return {
         postsUser,
+        refetchAllPostByUser
     }
 }
 

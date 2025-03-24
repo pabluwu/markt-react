@@ -3,10 +3,12 @@ import { useParams } from "react-router-dom";
 import { getEmpresa } from "../../services/useEmpresas";
 import { getAllPostByEmpresa } from "../../services/usePost";
 
+import SeguirButton from "../../Components/SeguirButton/SeguirButton";
 import Navbar from "../../Components/Navbar/Navbar";
 import CardReputacion from "./Components/CardReputacion";
 import Tab from "../../Components/Tab/Tab";
 import Post from "../../Components/Post/Post";
+import useStore from "../../store/userStore";
 
 import SampleAvatar from '../../assets/SampleAvatar.png';
 import './style.css';
@@ -15,6 +17,7 @@ const PerfilEmpresa = () => {
         { key: 'publicaciones', nombre: 'Publicaciones' },
         { key: 'servicios', nombre: 'Servicios' }
     ]
+    const { user } = useStore();
     const [selectedOption, setSelectedOption] = useState(opciones[0]);
     const { id } = useParams();
     const { postsEmpresa } = getAllPostByEmpresa(id);
@@ -42,9 +45,15 @@ const PerfilEmpresa = () => {
                                             }
                                         </div>
                                     </div>
-                                    <span className="boton-seguir btn-azul text-center">
-                                        Seguir
-                                    </span>
+                                    {
+                                        user &&
+                                        id &&
+                                        <SeguirButton
+                                            id_seguido={id}
+                                            type_seguido={'empresa'}
+                                            id_seguidor={user.id}
+                                            type_seguidor={'user'} />
+                                    }
                                 </div>
                             </div>
                             <div className="col-lg-9">
