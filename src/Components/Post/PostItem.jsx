@@ -9,6 +9,7 @@ import { Link } from 'react-router-dom';
 import SampleAvatar from '../../assets/SampleAvatar.png';
 import useFormattedDate from '../../services/useFormattedDate';
 import SelectorPerfil from '../SelectorPerfil/SelectorPerfil';
+import Comentario from '../Comentario/Comentario';
 
 import Like from "../../assets/like.svg";
 import Liked from "../../assets/liked.svg";
@@ -17,6 +18,7 @@ const PostItem = ({ item }) => {
     const created = useFormattedDate(item.created_at);
     const { misEmpresas } = useMisEmpresas();
     const [isLiked, setIsLiked] = useState(false);
+    const [comentar, setComentar] = useState(false);
     const { user } = useStore();
     const [selected, setSelected] = useState({ id: user.id, type: 'user', nombre: user.first_name });
 
@@ -80,7 +82,15 @@ const PostItem = ({ item }) => {
     return (
         <div className="rounded profile-card mt-3">
             <div className="info-profile px-3 py-2">
-                <img src={SampleAvatar} alt="" />
+                <img
+                    className='rounded'
+                    src={
+                        item.author?.userprofile?.imagen_perfil ?
+                            `${'http://localhost:8000'}/${user.userprofile.imagen_perfil}`
+                            :
+                            SampleAvatar
+                    }
+                    alt="" />
                 <div className='postInfo'>
                     {
                         item.author.username &&
@@ -118,10 +128,14 @@ const PostItem = ({ item }) => {
                         <p>Me gusta</p>
                     </span>
 
-                    <span>Comentar</span>
+                    <span onClick={() => setComentar(!comentar)}>Comentar</span>
                     <span>Compartir</span>
                 </div>
             </div>
+            {
+                comentar &&
+                <Comentario post_id={item.id} commenter_id={selected.id} commenter_type={selected.type} />
+            }
         </div>
     );
 };

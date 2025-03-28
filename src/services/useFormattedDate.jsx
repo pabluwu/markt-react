@@ -16,3 +16,8 @@ const useFormattedDate = (dateString) => {
 };
 
 export default useFormattedDate;
+
+export const renderFormattedDate = (dateString) => {
+    const date = new Date(dateString);
+    return format(date, 'dd/MM/yyyy HH:mm'); // Formato DD/MM/YYYY HH:mm
+}

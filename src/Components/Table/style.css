@@ -1,0 +1,39 @@
+.StyledThead{
+    height: 50px;
+    th {
+        text-align: start;
+        border-bottom: solid 1px #CCC;
+    }
+    input{
+        width: 24px;
+        height: 24px;
+    }
+}
+
+.StyledTbody{
+    tr{
+        height: 50px;
+
+        td{
+            border-bottom: solid 1px #CCC;
+        }
+    }
+
+    input{
+        width: 24px;
+        height: 24px;
+    }
+}
+
+.ContainerPaginator{
+    display: flex;
+    justify-content: space-between;
+    padding: 18px 0;
+
+    span{
+        border: solid 1px #F2F2F2;
+        padding: 10px 11px;
+        color: var(--primary-color);
+        cursor: pointer;
+    }
+}

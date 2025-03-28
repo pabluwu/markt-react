@@ -3,10 +3,12 @@ import { useForm } from "react-hook-form";
 import { useEffect } from "react";
 import useStore from "../../../store/userStore";
 import { updateUsuario } from "../../../services/useUsuarios";
+import { convertToFormData } from "../../../services/convertFormData";
 
 import Input from "../../../Components/Input/Input";
 import DatePickerCustom from "../../../Components/DatePicker/DatePicker";
 import Textarea from "../../../Components/Textarea/Textarea";
+import File from "../../../Components/File/File";
 
 
 const Configurar = () => {
@@ -41,6 +43,7 @@ const Configurar = () => {
     });
 
     const onSubmit = (data) => {
+        console.log(data);
         mutation.mutate(data);
     }
     return (
@@ -58,6 +61,16 @@ const Configurar = () => {
                             name={'rut'}
                             errors={errors}
                             type={'text'}
+                        />
+                    </div>
+                    <div className="col-md-6">
+                        <File
+                            text={'Foto de perfil'}
+                            register={register}
+                            required={{ required: 'Campo requerido' }}
+                            name={'imagen_perfil'}
+                            errors={errors}
+                            accept={"image/png, image/jpeg"}
                         />
                     </div>
                     <div className="col-md-6">
@@ -119,12 +132,12 @@ const Configurar = () => {
                             required={{ required: true }} />
                     </div>
                     <div className="col-md-12">
-                        <Textarea 
+                        <Textarea
                             label={'Sobre mí'}
                             register={register}
                             required={{ required: 'Campo requerido' }}
                             name={'sobre_mi'}
-                            errors={errors}/>
+                            errors={errors} />
                     </div>
                     <div className="col-12 text-end">
                         <button type="submit" className="btn btn-azul mt-3">Guardar datos</button>

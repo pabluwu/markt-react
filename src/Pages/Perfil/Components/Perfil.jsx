@@ -1,11 +1,13 @@
 import useStore from '../../../store/userStore';
 
 import SeguirButton from '../../../Components/SeguirButton/SeguirButton';
+import { api } from '../../../assets/variables';
 
 import SampleAvatar from '../../../assets/SampleAvatar.png';
 import './style.css';
 const Perfil = ({ user, opciones, selectedOption, setSelectedOption }) => {
     const { user: usuarioStore } = useStore();
+    console.log(usuarioStore);
     return (
         <div className="contenedorPerfil">
             {
@@ -54,10 +56,18 @@ const Perfil = ({ user, opciones, selectedOption, setSelectedOption }) => {
 
                     </div>
                     <div className="container">
-                        <div className="cardUsuario">
+                        <div className="cardUsuario pt-3">
                             <div className="text-center">
-                                <img src={SampleAvatar} alt="" />
+                                <img className='rounded'
+                                    src={
+                                        user.userprofile.imagen_perfil ? 
+                                        `${'http://localhost:8000'}/${user.userprofile.imagen_perfil}`
+                                        :
+                                        SampleAvatar
+                                    }
+                                    alt="" />
                                 <h2>{user.first_name} {user.last_name}</h2>
+                                <p>{user?.userprofile?.sobre_mi}</p>
                             </div>
                         </div>
                     </div>

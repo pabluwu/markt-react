@@ -1,4 +1,5 @@
 const Input = ({ label, register, required, name, errors, disabled, type }) => {
+    // console.log(errors)
     return (
         <div className="text-start mt-4">
             <label>

@@ -5,7 +5,13 @@ const ProfileCard = ({ user }) => {
         <div className="rounded profile-card py-3">
             <Link to={`/p/${user.username}`}>
                 <div className="info-profile px-3">
-                    <img src={SampleAvatar} alt="" />
+                    <img className='rounded'
+                        src={
+                            user.userprofile.imagen_perfil ?
+                                `${'http://localhost:8000'}/${user.userprofile.imagen_perfil}`
+                                :
+                                SampleAvatar
+                        } alt="" />
                     <div>
                         <h4>{`${user?.first_name} ${user?.last_name}`}</h4>
                         <p>Descripcion</p>

@@ -1,13 +1,16 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
 import { getEmpresa } from "../../services/useEmpresas";
 import { getAllPostByEmpresa } from "../../services/usePost";
+import { api } from "../../assets/variables";
 
 import SeguirButton from "../../Components/SeguirButton/SeguirButton";
 import Navbar from "../../Components/Navbar/Navbar";
 import CardReputacion from "./Components/CardReputacion";
 import Tab from "../../Components/Tab/Tab";
 import Post from "../../Components/Post/Post";
+import Table from "../../Components/Table/Table";
 import useStore from "../../store/userStore";
 
 import SampleAvatar from '../../assets/SampleAvatar.png';
@@ -22,7 +25,46 @@ const PerfilEmpresa = () => {
     const { id } = useParams();
     const { postsEmpresa } = getAllPostByEmpresa(id);
     const { empresa, empresaIsLoading, error } = getEmpresa(id);
-    console.log(error);
+
+    const obtenerServicios = async () => {
+        const acc = localStorage.getItem('access_token');
+        const response = await fetch(`${api}api/servicios/?empresa_id=${id}`, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${acc}`
+            },
+        })
+        if (!response.ok) {
+            throw new Error('Error al obtener información del like');
+        }
+        return response.json();
+    };
+
+    const { data: servicios, refetch: refetchServicios } = useQuery(
+        {
+            queryKey: ['comentarios', id], // La clave ahora es un objeto
+            queryFn: obtenerServicios,
+            enabled: !!id,  // Solo se ejecuta si selected tiene un id
+        }
+    );
+
+    const columns = useMemo(
+        () => [
+            {
+                accessorKey: 'descripcion',
+                header: 'Descripción',
+            },
+            {
+                accessorKey: 'tiempo_entrega',
+                header: 'Tiempo de entrega',
+            },
+            {
+                accessorKey: '',
+                header: 'Acciones',
+            }
+        ],
+        []
+    );
     return (
         <>
             <Navbar />
@@ -67,6 +109,15 @@ const PerfilEmpresa = () => {
                                     selectedOption.key == 'publicaciones' &&
                                     postsEmpresa &&
                                     <Post posts={postsEmpresa} />
+                                }
+                                {
+                                    selectedOption.key == 'servicios' &&
+                                    servicios &&
+                                    <div className="mis-empresas-card px-4 mt-3">
+                                        <Table
+                                            data={servicios}
+                                            columns={columns} />
+                                    </div>
                                 }
                             </div>
                         </div>

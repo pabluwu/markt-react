@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { api } from "../assets/variables";
-
+import { convertToFormData } from "./convertFormData";
 
 export const useIdEmailUsuarios = () => {
     const acc = localStorage.getItem("access_token");
@@ -53,14 +53,14 @@ export const getUsuarioByUsername = (username) => {
 
 export const updateUsuario = async (data) => {
     const acc = localStorage.getItem("access_token");
-
+    const formData = convertToFormData(data)
     const res = await fetch(`${api}api/usuario/${data.idUser}/update-user/`, {
         headers: {
-            'Content-Type': 'application/json',
+            // 'Content-Type': 'application/json',
             'Authorization': `Bearer ${acc}`
         },
         method: 'PUT',
-        body: JSON.stringify(data)
+        body: formData
     });
 
     if (!res.ok) {

@@ -4,7 +4,7 @@ import makeAnimated from 'react-select/animated';
 
 const MultiSelect = ({ control, name, options, rules, label, errors }) => {
     const animatedComponents = makeAnimated();
-    console.log(options, 'opciones para el componente');
+    // console.log(options, 'opciones para el componente');
     return (
         <div className='mt-4'>
             <label htmlFor="">{label}</label>

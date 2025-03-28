@@ -6,6 +6,7 @@ import Navbar from "../../Components/Navbar/Navbar";
 import Sidebar from "../../Components/Sidebar/Sidebar";
 import ConfigurarEmpresa from "./Configurar";
 import PublicacionesEmpresa from "./Publicaciones";
+import Servicios from "./Servicios";
 
 const AdministradorEmpresa = () => {
     const [option, setOption] = useState({ key: 'publicaciones', nombre: 'Publicaciones' });
@@ -71,6 +72,10 @@ const AdministradorEmpresa = () => {
                             {
                                 option.key == 'perfil' &&
                                 <Navigate to={`/c/${empresa.id}`}/>
+                            }
+                            {
+                                option.key == 'servicios' &&
+                                <Servicios empresa={empresa}/>
                             }
                         </div>
                     </div>
