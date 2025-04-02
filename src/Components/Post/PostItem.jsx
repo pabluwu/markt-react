@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { useMisEmpresas } from '../../services/useEmpresas';
 import useStore from '../../store/userStore';
-import { api } from '../../assets/variables';
+import { api, media_url } from '../../assets/variables';
 import { toggleLikePost } from '../../services/usePost';
 import { Link } from 'react-router-dom';
 
@@ -78,7 +78,7 @@ const PostItem = ({ item }) => {
     }, [selected]); // Esto asegura que se ejecute siempre que 'liked' o 'selected' cambien
 
 
-    // console.log(isLiked, item.id);
+    console.log(item);
     return (
         <div className="rounded profile-card mt-3">
             <div className="info-profile px-3 py-2">
@@ -86,9 +86,12 @@ const PostItem = ({ item }) => {
                     className='rounded'
                     src={
                         item.author?.userprofile?.imagen_perfil ?
-                            `${'http://localhost:8000'}/${user.userprofile.imagen_perfil}`
+                            `${media_url}/${user.userprofile.imagen_perfil}`
                             :
-                            SampleAvatar
+                            item.author?.imagen_perfil ?
+                                `${media_url}/${item.author?.imagen_perfil}`
+                                :
+                                SampleAvatar
                     }
                     alt="" />
                 <div className='postInfo'>

@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import { getEmpresa } from "../../services/useEmpresas";
 import { getAllPostByEmpresa } from "../../services/usePost";
 import { api } from "../../assets/variables";
+import { media_url } from "../../assets/variables";
 
 import SeguirButton from "../../Components/SeguirButton/SeguirButton";
 import Navbar from "../../Components/Navbar/Navbar";
@@ -80,7 +81,12 @@ const PerfilEmpresa = () => {
                                 <div className="contenedorPerfilEmpresa">
                                     <div className="cardEmpresa">
                                         <div className="text-center">
-                                            <img src={SampleAvatar} alt="" />
+                                            <img className="rounded" src={
+                                                empresa.imagen_perfil ?
+                                                    `${media_url}/${empresa.imagen_perfil}`
+                                                    :
+                                                    SampleAvatar
+                                            } alt="" />
                                             {
                                                 empresa &&
                                                 <h2>{empresa.nombre_fantasia}</h2>

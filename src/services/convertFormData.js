@@ -1,18 +1,23 @@
 export const convertToFormData = (data) => {
     const formData = new FormData();
 
-    // Función recursiva para agregar campos al FormData
-    const appendFormData = (data, parentKey) => {
-        if (data && typeof data === 'object' && !(data instanceof File)) {
-            Object.keys(data).forEach((key) => {
-                const newKey = parentKey ? `${parentKey}[${key}]` : key;
-                appendFormData(data[key], newKey); // Llamada recursiva
+    const appendFormData = (value, key) => {
+        if (value === null || value === undefined) return;
+
+        if (key === "usuarios" && Array.isArray(value)) {
+            value.forEach((item) => formData.append(key, item));
+        } else if (value instanceof File) {
+            formData.append(key, value); // ✅ Agregar archivos sin índice
+        } else if (typeof value === "object") {
+            Object.keys(value).forEach((subKey) => {
+                appendFormData(value[subKey], key); // ❌ Aquí se estaba agregando con [subKey], lo eliminamos
             });
         } else {
-            formData.append(parentKey, data); // Agregar campo al FormData
+            formData.append(key, value);
         }
     };
 
-    appendFormData(data); // Iniciar el proceso
+    Object.keys(data).forEach((key) => appendFormData(data[key], key));
+
     return formData;
 };

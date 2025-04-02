@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { api } from "../../assets/variables";
+import { api, media_url } from "../../assets/variables";
 import { Link } from "react-router-dom";
 
 import "./style.css";
+import SampleAvatar from '../../assets/SampleAvatar.png';
 
 const Seguidos = ({ id_user }) => {
     const verSeguidos = async () => {
@@ -27,7 +28,7 @@ const Seguidos = ({ id_user }) => {
         }
     );
 
-    // console.log(seguidos);
+    console.log(seguidos);
     return (
         <div className="mt-4">
             <div className="">
@@ -36,10 +37,17 @@ const Seguidos = ({ id_user }) => {
                         seguidos &&
                         seguidos.length > 0 &&
                         seguidos.map((item, index) => (
-                            <div
-                                className="col-lg-3"
-                                key={index}>
-                                <div className="card-seguido rounded p-4 border-box-shadow">
+                            <div className="col-lg-3 d-flex">
+                                <div className="card-seguido rounded px-3 py-1 border-box-shadow d-flex flex-row gap-2 justify-content-between align-items-center w-100">
+                                    <img className="rounded" src={
+                                        item.userprofile?.imagen_perfil ?
+                                            `${media_url}${user.userprofile.imagen_perfil}`
+                                            :
+                                            item.imagen_perfil ?
+                                                `${media_url}${item.imagen_perfil}`
+                                                :
+                                                SampleAvatar
+                                    } alt="" />
                                     {
                                         item.type == 'user' ?
                                             <Link to={`/p/${item.username}`}>

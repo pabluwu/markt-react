@@ -7,7 +7,7 @@ const PublicacionesEmpresa = ({ empresa }) => {
     console.log(postsEmpresa);
     return (
         <>
-            <Publicar author_id={empresa.id} type={'empresa'} refetchPosts={refetchPosts} />
+            <Publicar author_id={empresa.id} type={'empresa'} refetchPosts={refetchPosts} author={empresa}/>
             <Post posts={postsEmpresa} />
         </>
     )

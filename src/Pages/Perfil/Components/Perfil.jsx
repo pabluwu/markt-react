@@ -1,13 +1,13 @@
 import useStore from '../../../store/userStore';
 
 import SeguirButton from '../../../Components/SeguirButton/SeguirButton';
-import { api } from '../../../assets/variables';
 
+import { api, media_url } from '../../../assets/variables';
 import SampleAvatar from '../../../assets/SampleAvatar.png';
 import './style.css';
 const Perfil = ({ user, opciones, selectedOption, setSelectedOption }) => {
     const { user: usuarioStore } = useStore();
-    console.log(usuarioStore);
+    // console.log(usuarioStore);
     return (
         <div className="contenedorPerfil">
             {
@@ -60,8 +60,8 @@ const Perfil = ({ user, opciones, selectedOption, setSelectedOption }) => {
                             <div className="text-center">
                                 <img className='rounded'
                                     src={
-                                        user.userprofile.imagen_perfil ? 
-                                        `${'http://localhost:8000'}/${user.userprofile.imagen_perfil}`
+                                        user.userprofile?.imagen_perfil ? 
+                                        `${media_url}/${user.userprofile?.imagen_perfil}`
                                         :
                                         SampleAvatar
                                     }

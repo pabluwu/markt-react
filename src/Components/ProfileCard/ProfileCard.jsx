@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import SampleAvatar from '../../assets/SampleAvatar.png';
+import { media_url } from '../../assets/variables';
 const ProfileCard = ({ user }) => {
     return (
         <div className="rounded profile-card py-3">
@@ -7,8 +8,8 @@ const ProfileCard = ({ user }) => {
                 <div className="info-profile px-3">
                     <img className='rounded'
                         src={
-                            user.userprofile.imagen_perfil ?
-                                `${'http://localhost:8000'}/${user.userprofile.imagen_perfil}`
+                            user.userprofile?.imagen_perfil ?
+                                `${media_url}/${user.userprofile?.imagen_perfil}`
                                 :
                                 SampleAvatar
                         } alt="" />

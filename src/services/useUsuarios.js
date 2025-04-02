@@ -27,7 +27,7 @@ export const useIdEmailUsuarios = () => {
 }
 
 export const getUsuarioByUsername = (username) => {
-    console.log('vamos a buscar el usuario', username);
+    // console.log('vamos a buscar el usuario', username);
     const acc = localStorage.getItem("access_token");
     const get = async () => {
         const res = await fetch(`${api}api/usuario/by-username/${username}`, {
@@ -44,10 +44,18 @@ export const getUsuarioByUsername = (username) => {
 
     const {
         data: usuario,
-    } = useQuery({ queryKey: ['usuarioUsername', username], queryFn: get });
+        isLoading,
+        isError
+    } = useQuery({
+        queryKey: ['usuarioUsername', username],
+        queryFn: get,
+        retry: false
+    });
 
     return {
         usuario,
+        isLoading,
+        isError
     }
 }
 

@@ -1,3 +1,16 @@
 .card-seguido{
     background-color: var(--white);
+    min-height: 100px; /* Ajusta según necesites */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Distribuye contenido */
+    align-items: center;
+    text-align: center;
+    p{
+        margin: 0;
+    }
+    img{
+        width: 32px;
+        height: 32px;
+    }
 }

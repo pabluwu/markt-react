@@ -2,12 +2,13 @@ import { useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
 import { createPost } from '../../services/usePost';
+import { media_url } from '../../assets/variables';
 import Popup from '../Popup/Popup';
 import Tiptap from '../TipTap/TipTap';
 import SampleAvatar from '../../assets/SampleAvatar.png';
-const Publicar = ({ author_id, type, refetchPosts }) => {
+const Publicar = ({ author_id, type, refetchPosts, author }) => {
     const [popUpCompartir, setPopupCompartir] = useState(false);
-
+    // console.log(refetchPosts);
     const { reset, handleSubmit, formState: { errors }, setValue, control, getValues, trigger } = useForm();
 
     const mutation = useMutation({
@@ -16,7 +17,7 @@ const Publicar = ({ author_id, type, refetchPosts }) => {
             reset();
             setPopupCompartir(false);
             refetchPosts();
-            alert('Post creado correctamente');
+            // alert('Post creado correctamente');
 
         },
         onError: (error) => {
@@ -58,12 +59,29 @@ const Publicar = ({ author_id, type, refetchPosts }) => {
         </>
     )
 
+    console.log(author);
+
     return (
         <>
             <Popup children={contentCompartir} show={popUpCompartir} setShow={setPopupCompartir} />
             <div className="rounded profile-card py-3">
                 <div className="info-profile px-3">
-                    <img src={SampleAvatar} alt="" />
+                    {
+                        type == 'user' ?
+                            <img className='rounded' src={
+                                author.userprofile?.imagen_perfil ?
+                                    `${media_url}/${author.userprofile?.imagen_perfil}`
+                                    :
+                                    SampleAvatar
+                            } alt="" />
+                            :
+                            <img className='rounded' src={
+                                author.imagen_perfil ?
+                                    `${media_url}/${author?.imagen_perfil}`
+                                    :
+                                    SampleAvatar
+                            } alt="" />
+                    }
                     <div className='compartir rounded-pill'
                         onClick={() => setPopupCompartir(true)}>
                         <p>Publica algo</p>

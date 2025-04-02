@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
 import Input from "../../Components/Input/Input";
 import MultiSelect from "../../Components/MultiSelect/MultiSelect";
+import File from "../../Components/File/File";
 
 const ConfigurarEmpresa = ({ empresa }) => {
     // console.log(empresa);
@@ -68,6 +69,16 @@ const ConfigurarEmpresa = ({ empresa }) => {
                             name={'rut'}
                             errors={errors}
                             type={'text'}
+                        />
+                    </div>
+                    <div className="col-md-6">
+                        <File
+                            text={'Foto de perfil'}
+                            register={register}
+                            required={{ required: 'Campo requerido' }}
+                            name={'imagen_perfil'}
+                            errors={errors}
+                            accept={"image/png, image/jpeg"}
                         />
                     </div>
                     <div className="col-md-6">

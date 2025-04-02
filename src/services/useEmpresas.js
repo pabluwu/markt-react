@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { api } from "../assets/variables";
-
+import { convertToFormData } from "./convertFormData";
 
 export const useMisEmpresas = () => {
     const acc = localStorage.getItem("access_token");
@@ -55,13 +55,14 @@ export const getEmpresa = (id) => {
 
 export const updateEmpresa = async (data, id) => {
     const acc = localStorage.getItem("access_token");
+    const formData = convertToFormData(data)
     const response = await fetch(`${api}api/empresa/${id}/`, {
         method: 'PUT',
         headers: {
-            'Content-Type': 'application/json',
+            // 'Content-Type': 'application/json',
             'Authorization': `Bearer ${acc}`
         },
-        body: JSON.stringify(data),
+        body: formData,
     });
     if (!response.ok) {
         throw new Error('Error al crear el usuario');

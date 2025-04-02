@@ -20,7 +20,7 @@ const Home = () => {
                                 <ProfileCard user={user} />
                             </div>
                             <div className="col-lg-6 mb-2">
-                                <Publicar author_id={user.id} type={'user'} refetchPosts={refetchAllPosts}/>
+                                <Publicar author_id={user.id} type={'user'} refetchPosts={refetchAllPosts} author={user}/>
                                 <Post posts={posts} />
                             </div>
                             <div className="col-lg-3 mb-2">
