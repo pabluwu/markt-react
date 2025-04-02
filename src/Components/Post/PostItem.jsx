@@ -86,7 +86,7 @@ const PostItem = ({ item }) => {
                     className='rounded'
                     src={
                         item.author?.userprofile?.imagen_perfil ?
-                            `${media_url}/${user.userprofile.imagen_perfil}`
+                            `${media_url}/${item.author?.userprofile.imagen_perfil}`
                             :
                             item.author?.imagen_perfil ?
                                 `${media_url}/${item.author?.imagen_perfil}`
