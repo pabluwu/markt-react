@@ -7,6 +7,7 @@ import Sidebar from "../../Components/Sidebar/Sidebar";
 import ConfigurarEmpresa from "./Configurar";
 import PublicacionesEmpresa from "./Publicaciones";
 import Servicios from "./Servicios";
+import ContactosEmpresa from "./Contactos";
 
 const AdministradorEmpresa = () => {
     const [option, setOption] = useState({ key: 'publicaciones', nombre: 'Publicaciones' });
@@ -63,7 +64,7 @@ const AdministradorEmpresa = () => {
                             <h3>{option.nombre}</h3>
                             {
                                 option.key == 'publicaciones' &&
-                                <PublicacionesEmpresa empresa={empresa}/>
+                                <PublicacionesEmpresa empresa={empresa} />
                             }
                             {
                                 option.key == 'configurar' &&
@@ -71,11 +72,17 @@ const AdministradorEmpresa = () => {
                             }
                             {
                                 option.key == 'perfil' &&
-                                <Navigate to={`/c/${empresa.id}`}/>
+                                <Navigate to={`/c/${empresa.id}`} />
                             }
                             {
                                 option.key == 'servicios' &&
-                                <Servicios empresa={empresa}/>
+                                <Servicios empresa={empresa} />
+                            }
+                            {
+                                option.key == 'contactos' &&
+                                <ContactosEmpresa
+                                    id={id}
+                                    type='empresa' />
                             }
                         </div>
                     </div>

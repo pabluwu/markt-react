@@ -1,0 +1,15 @@
+.box-solicitud {
+    background-color: var(--white);
+
+    .datos-solicitud{
+        p{
+            margin: 0;
+        }
+    }
+
+    .buttons-solicitudes{
+        display: flex;
+        gap: 16px;
+        
+    }
+}

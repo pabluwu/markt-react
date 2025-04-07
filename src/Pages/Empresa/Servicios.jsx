@@ -10,7 +10,11 @@ import Tab from "../../Components/Tab/Tab";
 import Select from "../../Components/Select/Select";
 import Table from "../../Components/Table/Table";
 import MultiSelect from "../../Components/MultiSelect/MultiSelect";
+
 import { api } from "../../assets/variables";
+import CopiarIcon from "../../assets/copiar-alt.svg";
+import DetalleIcon from "../../assets/detalle-de-atencion.svg";
+import EditIcon from "../../assets/editar.svg";
 
 const Servicios = ({ empresa }) => {
     const { register, handleSubmit, formState: { errors }, control, watch, setValue, reset } = useForm({
@@ -127,8 +131,34 @@ const Servicios = ({ empresa }) => {
             {
                 accessorKey: 'tiempo_entrega',
                 header: 'Tiempo de entrega',
+            },
+            {
+                id: 'action',
+                header: 'Acciones',
+                cell: ({ row }) => {
+                    // console.log(row); 
+                    return (
+                        <div className="d-flex gap-4">
+                            <span data-tooltip="Copiar servicio">
+                                <img
+                                    style={{ width: '24px', height: '24px' }}
+                                    src={CopiarIcon} alt="" />
+                            </span>
+                            <span data-tooltip="Ver detalle">
+                                <img
+                                    style={{ width: '24px', height: '24px' }}
+                                    src={DetalleIcon} alt="" />
+                            </span>
+                            <span data-tooltip="Editar servicio">
+                                <img
+                                    style={{ width: '24px', height: '24px' }}
+                                    src={EditIcon} alt="" />
+                            </span>
+                        </div>
+                    )// This will help confirm the structure of each row's data
+                },
             }
-        
+
         ],
         []
     );
@@ -144,7 +174,11 @@ const Servicios = ({ empresa }) => {
                     selectedOption.key == 'crear-servicio' &&
                     <form onSubmit={handleSubmit(onSubmit)}>
                         <div className="row">
-                            <div className="col-12">Crea un servicio</div>
+                            <div className="col-12">
+                                <h5>
+                                    Crea un servicio
+                                </h5>
+                            </div>
                             <div className="col-m-12">
                                 <Textarea
                                     label={'Descripción del servicio'}
@@ -188,6 +222,61 @@ const Servicios = ({ empresa }) => {
                                     register={register}
                                     name={'certificaciones'}
                                     errors={errors}
+                                />
+                            </div>
+                            <div className="col-12 mt-4">
+                                <h5>
+                                    Contacto
+                                </h5>
+                            </div>
+                            <div className="col-md-4">
+                                <Input
+                                    label={'Nombre'}
+                                    register={register}
+                                    required={{ required: 'Campo requerido' }}
+                                    name={'contacto_nombre'}
+                                    errors={errors}
+                                    type={'text'}
+                                />
+                            </div>
+                            <div className="col-md-4">
+                                <Input
+                                    label={'Cargo'}
+                                    register={register}
+                                    required={{ required: 'Campo requerido' }}
+                                    name={'contacto_cargo'}
+                                    errors={errors}
+                                    type={'text'}
+                                />
+                            </div>
+                            <div className="col-md-4">
+                                <Input
+                                    label={'Email'}
+                                    register={register}
+                                    required={{ required: 'Campo requerido' }}
+                                    name={'contacto_email'}
+                                    errors={errors}
+                                    type={'text'}
+                                />
+                            </div>
+                            <div className="col-md-4">
+                                <Input
+                                    label={'Telefono'}
+                                    register={register}
+                                    required={{ required: 'Campo requerido' }}
+                                    name={'contacto_telefono'}
+                                    errors={errors}
+                                    type={'text'}
+                                />
+                            </div>
+                            <div className="col-md-4">
+                                <Input
+                                    label={'Web'}
+                                    register={register}
+                                    required={{ required: 'Campo requerido' }}
+                                    name={'contacto_web'}
+                                    errors={errors}
+                                    type={'text'}
                                 />
                             </div>
 
@@ -262,26 +351,26 @@ const Servicios = ({ empresa }) => {
                                             </div>
                                         </div>
                                         <button type="button" disabled={fields.length == 1 ? true : false} className="btn btn-danger mt-2" onClick={() => remove(index)}>Eliminar</button>
+                                        <button
+                                            type="button"
+                                            className="btn btn-primary mt-2 mx-2"
+                                            onClick={() => append({
+                                                nombre: "",
+                                                descripcion_breve: "",
+                                                unidad_venta: "",
+                                                precio_estimado: "",
+                                                disponibilidad_geografica: ""
+                                            })}
+                                            disabled={!fields.length || !isProductValid(fields.length - 1)} // Deshabilitar si el producto actual no es válido
+                                        >
+                                            Agregar Producto
+                                        </button>
                                     </div>
                                 ))}
-                                <button
-                                    type="button"
-                                    className="btn btn-success mt-3"
-                                    onClick={() => append({
-                                        nombre: "",
-                                        descripcion_breve: "",
-                                        unidad_venta: "",
-                                        precio_estimado: "",
-                                        disponibilidad_geografica: ""
-                                    })}
-                                    disabled={!fields.length || !isProductValid(fields.length - 1)} // Deshabilitar si el producto actual no es válido
-                                >
-                                    Agregar Producto
-                                </button>
                             </div>
 
-                            <div className="col-12 text-end">
-                                <button type="submit" className="btn btn-azul mt-3">Guardar datos</button>
+                            <div className="col-12 text-start">
+                                <button type="submit" className="btn btn-success mt-3">Guardar datos</button>
                             </div>
                         </div>
                     </form>

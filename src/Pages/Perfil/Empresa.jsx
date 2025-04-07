@@ -13,6 +13,7 @@ import Tab from "../../Components/Tab/Tab";
 import Post from "../../Components/Post/Post";
 import Table from "../../Components/Table/Table";
 import useStore from "../../store/userStore";
+import ContactarButton from "../../Components/ContactarButton/ContactarButton";
 
 import SampleAvatar from '../../assets/SampleAvatar.png';
 import './style.css';
@@ -101,6 +102,13 @@ const PerfilEmpresa = () => {
                                             type_seguido={'empresa'}
                                             id_seguidor={user.id}
                                             type_seguidor={'user'} />
+                                    }
+                                    {
+                                        user &&
+                                        id &&
+                                        <ContactarButton
+                                            type={'empresa'}
+                                            id={id} />
                                     }
                                 </div>
                             </div>

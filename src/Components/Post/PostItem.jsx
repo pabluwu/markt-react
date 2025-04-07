@@ -78,7 +78,7 @@ const PostItem = ({ item }) => {
     }, [selected]); // Esto asegura que se ejecute siempre que 'liked' o 'selected' cambien
 
 
-    console.log(item);
+    // console.log(item);
     return (
         <div className="rounded profile-card mt-3">
             <div className="info-profile px-3 py-2">

@@ -8,7 +8,7 @@ import MultiSelect from "../../Components/MultiSelect/MultiSelect";
 import File from "../../Components/File/File";
 
 const ConfigurarEmpresa = ({ empresa }) => {
-    // console.log(empresa);
+    console.log(empresa);
     const { register, handleSubmit, formState: { errors }, setValue, control, watch } = useForm();
     const { usuarios } = useIdEmailUsuarios();
     const usuariosOptions = usuarios?.map(item => ({ value: item.id, label: item.email }))
@@ -30,6 +30,7 @@ const ConfigurarEmpresa = ({ empresa }) => {
         setValue('rut', empresa.rut)
         setValue('nombre_empresa', empresa.nombre_empresa)
         setValue('nombre_fantasia', empresa.nombre_fantasia)
+        setValue('imagen_perfil', empresa.imagen_perfil)
         setValue('usuarios', [1])
     }, [empresa])
 
@@ -75,7 +76,7 @@ const ConfigurarEmpresa = ({ empresa }) => {
                         <File
                             text={'Foto de perfil'}
                             register={register}
-                            required={{ required: 'Campo requerido' }}
+                            required={{ required: false }}
                             name={'imagen_perfil'}
                             errors={errors}
                             accept={"image/png, image/jpeg"}

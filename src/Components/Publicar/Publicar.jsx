@@ -59,7 +59,7 @@ const Publicar = ({ author_id, type, refetchPosts, author }) => {
         </>
     )
 
-    console.log(author);
+    // console.log(author);
 
     return (
         <>

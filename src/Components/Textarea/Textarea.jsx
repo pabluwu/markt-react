@@ -1,6 +1,6 @@
-const Textarea = ({ label, register, required, name, errors, disabled }) => {
+const Textarea = ({ label, register, required, name, errors, disabled, classes }) => {
     return (
-        <div className="text-start mt-4">
+        <div className={ classes ? classes : 'text-start mt-4'}>
             <label>
                 {label}
             </label>
