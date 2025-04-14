@@ -10,13 +10,20 @@ import Tab from "../../Components/Tab/Tab";
 import Select from "../../Components/Select/Select";
 import Table from "../../Components/Table/Table";
 import MultiSelect from "../../Components/MultiSelect/MultiSelect";
+import CopiarServicio from "./Components/CopiarServicio";
+import VerServicio from "./Components/VerServicio";
+import EditarServicio from "./Components/EditarServicio";
 
-import { api } from "../../assets/variables";
+import { api, formas_pago_choices, modalidades_choices } from "../../assets/variables";
 import CopiarIcon from "../../assets/copiar-alt.svg";
 import DetalleIcon from "../../assets/detalle-de-atencion.svg";
 import EditIcon from "../../assets/editar.svg";
 
 const Servicios = ({ empresa }) => {
+    const [copiar, setCopiar] = useState(false);
+    const [detalle, setDetalle] = useState(false);
+    const [editar, setEditar] = useState(false);
+    const [selectedServicio, setSelectedServicio] = useState(null);
     const { register, handleSubmit, formState: { errors }, control, watch, setValue, reset } = useForm({
         defaultValues: {
             productos: [{
@@ -43,21 +50,6 @@ const Servicios = ({ empresa }) => {
         { key: 'mis-servicios', nombre: 'Mis Servicios' }
     ]
     const [selectedOption, setSelectedOption] = useState(opciones[0]);
-
-    console.log(selectedOption);
-
-    const formas_pago_choices = [
-        { value: 'TRANSFERENCIA', label: "Transferencia" },
-        { value: 'CREDITO', label: "Crédito 30-60-90 días" },
-        { value: 'WEBPAY', label: "Webpay" },
-        { value: 'CRIPTO', label: "Criptomonedas u otras" },
-    ];
-
-    const modalidades_choices = [
-        { value: 'PRESENCIAL', label: "Presencial" },
-        { value: 'REMOTO', label: "Remoto / Online" },
-        { value: 'TERRENO', label: "En terreno / Despacho incluido" },
-    ];
 
     const obtenerServicios = async () => {
         const acc = localStorage.getItem('access_token');
@@ -139,17 +131,33 @@ const Servicios = ({ empresa }) => {
                     // console.log(row); 
                     return (
                         <div className="d-flex gap-4">
-                            <span data-tooltip="Copiar servicio">
+                            <span
+                                data-tooltip="Copiar servicio"
+                                onClick={() => {
+                                    setCopiar(true);
+                                    setSelectedServicio(row.original);
+                                }}>
                                 <img
                                     style={{ width: '24px', height: '24px' }}
                                     src={CopiarIcon} alt="" />
                             </span>
-                            <span data-tooltip="Ver detalle">
+                            <span
+                                data-tooltip="Ver detalle"
+                                onClick={() => {
+                                    setDetalle(true);
+                                    setSelectedServicio(row.original);
+                                }}
+                            >
                                 <img
                                     style={{ width: '24px', height: '24px' }}
                                     src={DetalleIcon} alt="" />
                             </span>
-                            <span data-tooltip="Editar servicio">
+                            <span
+                                data-tooltip="Editar servicio"
+                                onClick={() => {
+                                    setEditar(true);
+                                    setSelectedServicio(row.original);
+                                }}>
                                 <img
                                     style={{ width: '24px', height: '24px' }}
                                     src={EditIcon} alt="" />
@@ -165,6 +173,31 @@ const Servicios = ({ empresa }) => {
 
     return (
         <>
+            {
+                copiar &&
+                <CopiarServicio
+                    show={copiar}
+                    setShow={setCopiar}
+                    servicio={selectedServicio}
+                    refetch={refetchServicios}
+                    idEmpresa={empresa.id} />
+            }
+            {
+                detalle &&
+                <VerServicio
+                    show={detalle}
+                    setShow={setDetalle}
+                    servicio={selectedServicio} />
+            }
+            {
+                editar &&
+                <EditarServicio
+                    show={editar}
+                    setShow={setEditar}
+                    servicio={selectedServicio}
+                    refetch={refetchServicios}
+                    idEmpresa={empresa.id} />
+            }
             <Tab
                 opciones={opciones}
                 selectedOption={selectedOption}

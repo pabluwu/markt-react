@@ -2,8 +2,8 @@ import { useMutation } from '@tanstack/react-query';
 import { api } from '../../assets/variables';
 import './style.css';
 import Loader from '../Loader/Loader';
-const SolicitudItem = ({ solicitud }) => {
-
+const SolicitudItem = ({ solicitud, refetch }) => {
+    console.log(solicitud);
     const mutation = useMutation({
         mutationFn: async (data) => {
             const acc = localStorage.getItem("access_token");
@@ -22,6 +22,7 @@ const SolicitudItem = ({ solicitud }) => {
         },
         onSuccess: () => {
             // setOpenModal(false);
+            refetch();
         },
         onError: (error) => {
             console.log('Hubo un error al enviar solicitud', error);

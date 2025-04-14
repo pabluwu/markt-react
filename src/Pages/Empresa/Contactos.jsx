@@ -62,7 +62,7 @@ const ContactosEmpresa = ({ id, type }) => {
                 selectedOption.key == 'solicitudes' &&
                 solicitudes &&
                 solicitudes.filter(item => item.estado === 0).map(item => (
-                    <SolicitudItem solicitud={item} />
+                    <SolicitudItem solicitud={item} refetch={solicitudesRefetch} />
                 ))
             }
         </>

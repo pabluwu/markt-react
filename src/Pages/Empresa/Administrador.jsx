@@ -42,7 +42,12 @@ const AdministradorEmpresa = () => {
                                 <span
                                     className="text-decoration-none cursor-pointer"
                                     onClick={() => toggleOption(opcion)}>
-                                    {opcion.nombre}
+                                    {
+                                        option.key == opcion.key ?
+                                            <strong>{opcion.nombre}</strong>
+                                            :
+                                        opcion.nombre
+                                    }
                                 </span>
                             </li>
                         ))

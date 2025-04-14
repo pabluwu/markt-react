@@ -15,6 +15,8 @@ import Table from "../../Components/Table/Table";
 import useStore from "../../store/userStore";
 import ContactarButton from "../../Components/ContactarButton/ContactarButton";
 
+
+import DetalleIcon from "../../assets/detalle-de-atencion.svg";
 import SampleAvatar from '../../assets/SampleAvatar.png';
 import './style.css';
 const PerfilEmpresa = () => {
@@ -61,8 +63,20 @@ const PerfilEmpresa = () => {
                 header: 'Tiempo de entrega',
             },
             {
-                accessorKey: '',
+                id: 'action',
                 header: 'Acciones',
+                cell: ({ row }) => {
+                    // console.log(row); 
+                    return (
+                        <div className="d-flex gap-4">
+                            <span data-tooltip="Ver detalle">
+                                <img
+                                    style={{ width: '24px', height: '24px' }}
+                                    src={DetalleIcon} alt="" />
+                            </span>
+                        </div>
+                    )// This will help confirm the structure of each row's data
+                },
             }
         ],
         []

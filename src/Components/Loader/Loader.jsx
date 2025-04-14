@@ -3,9 +3,9 @@ const Loader = () => {
     return (
         <div className="loader">
             <div className="d-flex justify-content-center h-100 align-items-center">
-                <div class="text-center">
-                    <div class="spinner-border" role="status">
-                        <span class="visually-hidden">Loading...</span>
+                <div className="text-center">
+                    <div className="spinner-border" role="status">
+                        <span className="visually-hidden">Loading...</span>
                     </div>
                 </div>
             </div>
