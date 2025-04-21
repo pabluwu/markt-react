@@ -13,16 +13,19 @@ import MultiSelect from "../../Components/MultiSelect/MultiSelect";
 import CopiarServicio from "./Components/CopiarServicio";
 import VerServicio from "./Components/VerServicio";
 import EditarServicio from "./Components/EditarServicio";
+import VerMensajes from "./Components/VerMensajes";
 
 import { api, formas_pago_choices, modalidades_choices } from "../../assets/variables";
 import CopiarIcon from "../../assets/copiar-alt.svg";
 import DetalleIcon from "../../assets/detalle-de-atencion.svg";
 import EditIcon from "../../assets/editar.svg";
+import MsgIcon from "../../assets/message.svg";
 
 const Servicios = ({ empresa }) => {
     const [copiar, setCopiar] = useState(false);
     const [detalle, setDetalle] = useState(false);
     const [editar, setEditar] = useState(false);
+    const [verMensajes, setVerMensajes] = useState(false);
     const [selectedServicio, setSelectedServicio] = useState(null);
     const { register, handleSubmit, formState: { errors }, control, watch, setValue, reset } = useForm({
         defaultValues: {
@@ -114,8 +117,14 @@ const Servicios = ({ empresa }) => {
         return product?.nombre && product?.descripcion_breve && product?.unidad_venta && product?.precio_estimado && product?.disponibilidad_geografica;
     };
 
+    // console.log(servicios);
+
     const columns = useMemo(
         () => [
+            {
+                accessorKey: 'id',
+                header: 'Id',
+            },
             {
                 accessorKey: 'descripcion',
                 header: 'Descripción',
@@ -162,6 +171,16 @@ const Servicios = ({ empresa }) => {
                                     style={{ width: '24px', height: '24px' }}
                                     src={EditIcon} alt="" />
                             </span>
+                            <span
+                                data-tooltip="Revisar mensajes"
+                                onClick={() => {
+                                    setVerMensajes(true);
+                                    setSelectedServicio(row.original);
+                                }}>
+                                <img
+                                    style={{ width: '24px', height: '24px' }}
+                                    src={MsgIcon} alt="" />
+                            </span>
                         </div>
                     )// This will help confirm the structure of each row's data
                 },
@@ -197,6 +216,13 @@ const Servicios = ({ empresa }) => {
                     servicio={selectedServicio}
                     refetch={refetchServicios}
                     idEmpresa={empresa.id} />
+            }
+            {
+                verMensajes &&
+                <VerMensajes
+                    show={verMensajes}
+                    setShow={setVerMensajes}
+                    servicio={selectedServicio} />
             }
             <Tab
                 opciones={opciones}

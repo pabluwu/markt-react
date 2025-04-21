@@ -46,14 +46,18 @@ const PerfilEmpresa = () => {
 
     const { data: servicios, refetch: refetchServicios } = useQuery(
         {
-            queryKey: ['comentarios', id], // La clave ahora es un objeto
+            queryKey: ['comentarios', id],
             queryFn: obtenerServicios,
-            enabled: !!id,  // Solo se ejecuta si selected tiene un id
+            enabled: !!id,
         }
     );
 
     const columns = useMemo(
         () => [
+            {
+                accessorKey: 'id',
+                header: 'Id',
+            },
             {
                 accessorKey: 'descripcion',
                 header: 'Descripción',
@@ -69,10 +73,12 @@ const PerfilEmpresa = () => {
                     // console.log(row); 
                     return (
                         <div className="d-flex gap-4">
-                            <span data-tooltip="Ver detalle">
-                                <img
-                                    style={{ width: '24px', height: '24px' }}
-                                    src={DetalleIcon} alt="" />
+                            <span data-tooltip="Revisar servicio">
+                                <a href={`/servicio/${row.original.id}`}>
+                                    <img
+                                        style={{ width: '24px', height: '24px' }}
+                                        src={DetalleIcon} alt="" />
+                                </a>
                             </span>
                         </div>
                     )// This will help confirm the structure of each row's data
@@ -127,7 +133,10 @@ const PerfilEmpresa = () => {
                                 </div>
                             </div>
                             <div className="col-lg-9">
-                                <CardReputacion />
+                                {
+                                    servicios &&
+                                    <CardReputacion servicios={servicios.length} />
+                                }
                                 <Tab
                                     opciones={opciones}
                                     selectedOption={selectedOption}

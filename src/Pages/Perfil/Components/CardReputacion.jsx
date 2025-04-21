@@ -1,4 +1,4 @@
-const CardReputacion = () => {
+const CardReputacion = ({ servicios }) => {
 
     const reputacion = [
         { id: 1, nombre: 'Clasificación' },
@@ -19,7 +19,14 @@ const CardReputacion = () => {
                                     </strong>
                                 </h5>
                                 <h4>
-                                    0
+                                    {
+
+                                        item.nombre == 'Servicios' &&
+                                            servicios > 0 ?
+                                            servicios
+                                            :
+                                            0
+                                    }
                                 </h4>
                             </div>
                         </div>

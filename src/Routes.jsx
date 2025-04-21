@@ -9,6 +9,8 @@ import AdministradorEmpresa from "./Pages/Empresa/Administrador";
 //Perfiles publicos
 import PerfilUsuario from "./Pages/Perfil/Usuario";
 import PerfilEmpresa from "./Pages/Perfil/Empresa";
+
+import DetalleServicio from "./Pages/Servicio/DetalleServicio";
 const UserRouter = () => {
     return (
         <Routes>
@@ -26,6 +28,9 @@ const UserRouter = () => {
             } />
             <Route path="/c/:id" element={
                 <PrivateRoute element={<PerfilEmpresa key={Math.random()}/>}/>
+            } />
+            <Route path="/servicio/:id" element={
+                <PrivateRoute element={<DetalleServicio key={Math.random()}/>}/>
             } />
             <Route path="/login" element={<Login />} />
         </Routes >
