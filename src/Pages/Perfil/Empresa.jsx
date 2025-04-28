@@ -5,6 +5,7 @@ import { getEmpresa } from "../../services/useEmpresas";
 import { getAllPostByEmpresa } from "../../services/usePost";
 import { api } from "../../assets/variables";
 import { media_url } from "../../assets/variables";
+import useFormattedDate from "../../services/useFormattedDate";
 
 import SeguirButton from "../../Components/SeguirButton/SeguirButton";
 import Navbar from "../../Components/Navbar/Navbar";
@@ -22,7 +23,8 @@ import './style.css';
 const PerfilEmpresa = () => {
     const opciones = [
         { key: 'publicaciones', nombre: 'Publicaciones' },
-        { key: 'servicios', nombre: 'Servicios' }
+        { key: 'servicios', nombre: 'Servicios' },
+        { key: 'licitacion', nombre: 'Licitaciones' }
     ]
     const { user } = useStore();
     const [selectedOption, setSelectedOption] = useState(opciones[0]);
@@ -52,6 +54,28 @@ const PerfilEmpresa = () => {
         }
     );
 
+    const obtenerLicitaciones = async () => {
+        const acc = localStorage.getItem('access_token');
+        const response = await fetch(`${api}api/licitacion/?empresa_id=${id}`, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${acc}`
+            },
+        })
+        if (!response.ok) {
+            throw new Error('Error al obtener información del like');
+        }
+        return response.json();
+    };
+
+    const { data: licitaciones, refetch: refetchLicitaciones } = useQuery(
+        {
+            queryKey: ['licitaciones', id], // La clave ahora es un objeto
+            queryFn: obtenerLicitaciones,
+            enabled: !!id,  // Solo se ejecuta si selected tiene un id
+        }
+    );
+
     const columns = useMemo(
         () => [
             {
@@ -70,7 +94,6 @@ const PerfilEmpresa = () => {
                 id: 'action',
                 header: 'Acciones',
                 cell: ({ row }) => {
-                    // console.log(row); 
                     return (
                         <div className="d-flex gap-4">
                             <span data-tooltip="Revisar servicio">
@@ -81,7 +104,54 @@ const PerfilEmpresa = () => {
                                 </a>
                             </span>
                         </div>
-                    )// This will help confirm the structure of each row's data
+                    )
+                },
+            }
+        ],
+        []
+    );
+
+    const columns2 = useMemo(
+        () => [
+            {
+                accessorKey: 'id',
+                header: 'Id',
+            },
+            {
+                accessorKey: 'titulo',
+                header: 'Titulo',
+            },
+            {
+                accessorKey: 'fecha_inicio',
+                header: 'Fecha de inicio',
+                cell: ({ getValue }) => {
+                    return useFormattedDate(getValue());
+                }
+            },
+            {
+                accessorKey: 'fecha_fin',
+                header: 'Fecha de termino',
+                cell: ({ getValue }) => {
+                    return useFormattedDate(getValue());
+                }
+            },
+            {
+                id: 'action',
+                header: 'Acciones',
+                cell: ({ row }) => {
+                    return (
+                        <div className="d-flex gap-4">
+                            <span
+                                data-tooltip="Ver licitación"
+                            >
+                                <a href={`/licitacion/${row.original.id}`}>
+                                    <img
+                                        style={{ width: '24px', height: '24px' }}
+                                        src={DetalleIcon} alt="" />
+                                </a>
+                            </span>
+                        </div>
+                    )
                 },
             }
         ],
@@ -154,6 +224,15 @@ const PerfilEmpresa = () => {
                                         <Table
                                             data={servicios}
                                             columns={columns} />
+                                    </div>
+                                }
+                                {
+                                    selectedOption.key == 'licitacion' &&
+                                    licitaciones &&
+                                    <div className="mis-empresas-card px-4 mt-3">
+                                        <Table
+                                            data={licitaciones}
+                                            columns={columns2} />
                                     </div>
                                 }
                             </div>

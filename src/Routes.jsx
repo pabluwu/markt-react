@@ -10,7 +10,11 @@ import AdministradorEmpresa from "./Pages/Empresa/Administrador";
 import PerfilUsuario from "./Pages/Perfil/Usuario";
 import PerfilEmpresa from "./Pages/Perfil/Empresa";
 
+import CrearEmpresa from "./Pages/CrearEmpresa/CrearEmpresa";
+
 import DetalleServicio from "./Pages/Servicio/DetalleServicio";
+
+import Licitacion from "./Pages/Licitacion/Licitacion";
 const UserRouter = () => {
     return (
         <Routes>
@@ -31,6 +35,12 @@ const UserRouter = () => {
             } />
             <Route path="/servicio/:id" element={
                 <PrivateRoute element={<DetalleServicio key={Math.random()}/>}/>
+            } />
+            <Route path="/crear-empresa" element={
+                <PrivateRoute element={<CrearEmpresa key={Math.random()}/>}/>
+            } />
+            <Route path="/licitacion/:id" element={
+                <PrivateRoute element={<Licitacion key={Math.random()}/>}/>
             } />
             <Route path="/login" element={<Login />} />
         </Routes >

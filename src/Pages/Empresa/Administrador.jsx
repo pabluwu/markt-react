@@ -8,6 +8,7 @@ import ConfigurarEmpresa from "./Configurar";
 import PublicacionesEmpresa from "./Publicaciones";
 import Servicios from "./Servicios";
 import ContactosEmpresa from "./Contactos";
+import Licitaciones from "./Licitaciones";
 
 const AdministradorEmpresa = () => {
     const [option, setOption] = useState({ key: 'publicaciones', nombre: 'Publicaciones' });
@@ -20,6 +21,7 @@ const AdministradorEmpresa = () => {
         { key: 'servicios', nombre: 'Servicios' },
         { key: 'contactos', nombre: 'Contactos' },
         { key: 'configurar', nombre: 'Configurar' },
+        { key: 'licitaciones', nombre: 'Licitaciones' },
     ]
 
     const toggleOption = (option) => {
@@ -46,7 +48,7 @@ const AdministradorEmpresa = () => {
                                         option.key == opcion.key ?
                                             <strong>{opcion.nombre}</strong>
                                             :
-                                        opcion.nombre
+                                            opcion.nombre
                                     }
                                 </span>
                             </li>
@@ -88,6 +90,10 @@ const AdministradorEmpresa = () => {
                                 <ContactosEmpresa
                                     id={id}
                                     type='empresa' />
+                            }
+                            {
+                                option.key == 'licitaciones' &&
+                                <Licitaciones empresa={empresa} />
                             }
                         </div>
                     </div>

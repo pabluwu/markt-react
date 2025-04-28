@@ -58,7 +58,7 @@ const ContactarServicio = ({ id }) => {
             <div className="modal-header">
                 <h5 className="modal-title" id="exampleModalLabel">Contactar servicio</h5>
                 <span className="btn-close cursor-pointer"
-                    onClick={() => setOpenModal(!popUpCompartir)}></span>
+                    onClick={() => setOpenModal(!openModal)}></span>
             </div>
             <div className="modal-body">
                 <div>

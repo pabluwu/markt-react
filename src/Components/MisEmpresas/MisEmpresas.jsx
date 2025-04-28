@@ -18,6 +18,9 @@ const MisEmpresas = ({ user }) => {
                         ))
                     }
                 </ul>
+                <a className="btn btn-primary mt-3 text-white" href="/crear-empresa">
+                    Crear empresa
+                </a>
             </div>
         </div>
     )
