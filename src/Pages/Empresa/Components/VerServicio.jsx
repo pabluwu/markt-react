@@ -43,6 +43,18 @@ const VerServicio = ({ show, setShow, servicio }) => {
                         </div>
                     </div>
                     <div className="col-12">
+                        <p><strong>Archivos:</strong></p>
+                        <ul>
+                            {
+                                servicio?.archivos?.map((item, index) => (
+                                    <li key={item.archivo}>
+                                        <a href={item.archivo} target="_blank">{`Archivo ${index+1}`}</a>
+                                    </li>
+                                ))
+                            }
+                        </ul>	
+                    </div>
+                    <div className="col-12">
                         <p><strong>Certificaciones:</strong> {servicio?.certificaciones}</p>
                     </div>
                     <h5 style={{ borderTop: 'solid 1px #dee2e6', borderBottom: 'solid 1px #dee2e6' }} className={'py-2'}>Datos contacto</h5>

@@ -35,6 +35,18 @@ const ServicioInfo = ({ servicio }) => {
                                 {servicio.certificaciones}
                             </div>
                         </div>
+                        {
+                            servicio.archivos &&
+                            servicio.archivos.length > 0 &&
+                            servicio.archivos.map((item, index) => (
+                                <div className="col-md-4 mt-2" key={item.archivo}>
+                                    <label htmlFor="">{`Archivo ${index + 1}`}</label>
+                                    <a href={item.archivo} target="_blank" className="form-control">
+                                        {item.archivo.split('/').pop()}
+                                    </a>
+                                </div>
+                            ))
+                        }
                         <div className="col-12 mt-4">
                             <h5>
                                 Contacto
@@ -103,7 +115,7 @@ const ServicioInfo = ({ servicio }) => {
                                             {producto.descripcion_breve ? producto.descripcion_breve : 'No especifica'}
                                         </div>
                                     </div>
-                                    <hr className="mt-4"/>
+                                    <hr className="mt-4" />
                                 </div>
                             ))
                         }

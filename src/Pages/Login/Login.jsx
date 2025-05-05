@@ -9,6 +9,7 @@ const Login = () => {
     const navigate = useNavigate();
     const { register, handleSubmit, formState: { errors } } = useForm();
     const [error, setError] = useState(null);
+    const [responseBack, setResponseBack] = useState(null);
     const { login, isAuthenticated } = useAuth();
     
     if (isAuthenticated) {
@@ -35,7 +36,11 @@ const Login = () => {
         } else {
             setError('Invalid credentials');
         }
+
+        setResponseBack(response.status);
     };
+
+    console.log(responseBack);
     return (
         <div className="bg-dark" style={{
             height: '100vh',
@@ -75,6 +80,11 @@ const Login = () => {
                                         type={'password'}
                                     />
                                 </div>
+                                {
+                                    responseBack && 
+                                    responseBack === 401 &&
+                                    <p className="error_input">Credenciales inválidas</p>
+                                }
                                 <button type="submit" className="btn btn-azul mt-3">Iniciar sesión</button>
                             </form>
                         </div>

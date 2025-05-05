@@ -30,6 +30,19 @@ const DetalleLicitacion = ({ show, setShow, licitacion, setSelectedOption }) => 
                     <div className="col-12">
                         <p><strong>Fecha de termino:</strong> {useFormattedDate(licitacion?.fecha_fin)}</p>
                     </div>
+                    {
+                        licitacion.archivos &&
+                        licitacion.archivos.length > 0 &&
+                        licitacion.archivos.map((item, index) => (
+                            <div className="col-md-4 mt-2" key={item.archivo}>
+                                <p> <strong>{`Archivo ${index + 1}`}: </strong>
+                                    <a href={item.archivo} target="_blank">
+                                        {item.archivo.split('/').pop()}
+                                    </a>
+                                </p>
+                            </div>
+                        ))
+                    }
 
                 </div>
             </div>

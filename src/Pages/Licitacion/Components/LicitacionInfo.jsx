@@ -30,6 +30,18 @@ const LicitacionInfo = ({ licitacion }) => {
                                 {useFormattedDate(licitacion?.fecha_fin)}
                             </div>
                         </div>
+                        {
+                            licitacion.archivos &&
+                            licitacion.archivos.length > 0 &&
+                            licitacion.archivos.map((item, index) => (
+                                <div className="col-md-4 mt-3" key={item.archivo}>
+                                    <label htmlFor="">{`Archivo ${index + 1}`}</label>
+                                    <a href={item.archivo} target="_blank" className="form-control">
+                                        {item.archivo.split('/').pop()}
+                                    </a>
+                                </div>
+                            ))
+                        }
                     </div>
                 </div>
             </div>

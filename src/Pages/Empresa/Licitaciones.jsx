@@ -10,6 +10,7 @@ import DetalleLicitacion from "./Components/DetalleLicitacion";
 import EditarServicio from "./Components/EditarServicio";
 import VerMensajes from "./Components/VerMensajes";
 import DatePickerCustom from "../../Components/DatePicker/DatePicker";
+import File from "../../Components/File/File";
 
 import { api, formas_pago_choices, modalidades_choices } from "../../assets/variables";
 import CopiarIcon from "../../assets/copiar-alt.svg";
@@ -22,7 +23,7 @@ const Licitaciones = ({ empresa }) => {
     const [editar, setEditar] = useState(false);
     const [verMensajes, setVerMensajes] = useState(false);
     const [selectedLicitacion, setSelectedLicitacion] = useState(null);
-    const { register, handleSubmit, formState: { errors }, control, watch, setValue, reset } = useForm({});
+    const { register, handleSubmit, formState: { errors }, control, watch, setValue, reset, getValues } = useForm({});
 
     useEffect(() => {
         setValue('empresa', empresa.id);
@@ -58,6 +59,33 @@ const Licitaciones = ({ empresa }) => {
     );
 
     // console.log(servicios);
+    const loadFiles = useMutation({
+        mutationFn: async (data) => {
+            const acc = localStorage.getItem("access_token");
+            const formData = new FormData();
+            formData.append('archivo', data.archivo[0]);
+            formData.append('licitacion', data.licitacion);
+            const response = await fetch(`${api}api/licitacion/${data.licitacion}/agregar_archivo/`, {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${acc}`
+                },
+                body: formData,
+            });
+            if (!response.ok) {
+                throw new Error('Error al cargar archivos');
+            }
+            return response.json();
+        },
+        onSuccess: (data) => {
+            alert('Creado con éxito');
+            refetchLicitaciones();
+        },
+        onError: (error) => {
+            console.error('Error:', error);
+            alert('Error al cargar archivos2');
+        },
+    });
 
     const mutation = useMutation({
         mutationFn: async (data) => {
@@ -75,11 +103,10 @@ const Licitaciones = ({ empresa }) => {
             }
             return response.json();
         },
-        onSuccess: (data) => {
-            // console.log('servicio creado:', data);
-            alert('Creado con éxito');
-            reset();
-            refetchLicitaciones();
+        onSuccess: async (data) => {
+            const { id } = data;
+            const values = getValues();
+            await loadFiles.mutateAsync({ ...values, licitacion: id });
         },
         onError: (error) => {
             console.error('Error:', error);
@@ -224,6 +251,16 @@ const Licitaciones = ({ empresa }) => {
                                     required={{ required: 'Campo requerido' }}
                                     name={'descripcion'}
                                     errors={errors}
+                                />
+                            </div>
+                            <div className="col-md-12">
+                                <File
+                                    text={'Archivo adjunto'}
+                                    register={register}
+                                    required={{ required: false }}
+                                    name={'archivo'}
+                                    errors={errors}
+                                    accept={"application/pdf"}
                                 />
                             </div>
                             <div className="col-md-6">

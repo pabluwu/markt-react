@@ -14,6 +14,7 @@ import CopiarServicio from "./Components/CopiarServicio";
 import VerServicio from "./Components/VerServicio";
 import EditarServicio from "./Components/EditarServicio";
 import VerMensajes from "./Components/VerMensajes";
+import File from "../../Components/File/File";
 
 import { api, formas_pago_choices, modalidades_choices } from "../../assets/variables";
 import CopiarIcon from "../../assets/copiar-alt.svg";
@@ -27,7 +28,7 @@ const Servicios = ({ empresa }) => {
     const [editar, setEditar] = useState(false);
     const [verMensajes, setVerMensajes] = useState(false);
     const [selectedServicio, setSelectedServicio] = useState(null);
-    const { register, handleSubmit, formState: { errors }, control, watch, setValue, reset } = useForm({
+    const { register, handleSubmit, formState: { errors }, control, watch, setValue, reset, getValues } = useForm({
         defaultValues: {
             productos: [{
                 nombre: "",
@@ -78,6 +79,37 @@ const Servicios = ({ empresa }) => {
 
     // console.log(servicios);
 
+    const loadFiles = useMutation({
+        mutationFn: async (data) => {
+            console.log(data.servicio_id);
+            const acc = localStorage.getItem("access_token");
+            const formData = new FormData();
+            formData.append('archivo', data.archivo_servicio[0]);
+            formData.append('servicio', data.servicio);
+            const response = await fetch(`${api}api/servicios/${data.servicio}/agregar_archivo/`, {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${acc}`
+                },
+                body: formData,
+            });
+            if (!response.ok) {
+                throw new Error('Error al cargar archivos');
+            }
+            return response.json();
+        },
+        onSuccess: (data) => {
+            // console.log('servicio creado:', data);
+            alert('Creado con éxito');
+            // reset();
+            refetchServicios();
+        },
+        onError: (error) => {
+            console.error('Error:', error);
+            alert('Error al cargar archivos2');
+        },
+    });
+
     const mutation = useMutation({
         mutationFn: async (data) => {
             const acc = localStorage.getItem("access_token");
@@ -90,19 +122,18 @@ const Servicios = ({ empresa }) => {
                 body: JSON.stringify(data),
             });
             if (!response.ok) {
-                throw new Error('Error al crear el usuario');
+                throw new Error('Error al crear el servicio');
             }
             return response.json();
         },
-        onSuccess: (data) => {
-            // console.log('servicio creado:', data);
-            alert('Creado con éxito');
-            reset();
-            refetchServicios();
+        onSuccess: async (data) => {
+            const { id } = data.servicio;
+            const values = getValues();
+            await loadFiles.mutateAsync({ ...values, servicio: id });
         },
         onError: (error) => {
             console.error('Error:', error);
-            alert('Hubo un error al crear el servicio');
+            alert('Hubo un error al crear el servicio2');
         },
     });
 
@@ -281,6 +312,16 @@ const Servicios = ({ empresa }) => {
                                     register={register}
                                     name={'certificaciones'}
                                     errors={errors}
+                                />
+                            </div>
+                            <div className="col-md-12">
+                                <File
+                                    text={'Archivo adjunto'}
+                                    register={register}
+                                    required={{ required: false }}
+                                    name={'archivo_servicio'}
+                                    errors={errors}
+                                    accept={"application/pdf"}
                                 />
                             </div>
                             <div className="col-12 mt-4">
