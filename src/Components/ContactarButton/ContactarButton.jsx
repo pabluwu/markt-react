@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
 import { api } from "../../assets/variables";
+import { toast } from "react-toastify";
 
 import Popup from "../Popup/Popup";
 import Input from "../Input/Input";
@@ -9,7 +10,7 @@ import Textarea from "../Textarea/Textarea";
 
 const ContactarButton = ({ type, id }) => {
     const [openModal, setOpenModal] = useState(false);
-    const { reset, handleSubmit, formState: { errors }, setValue, register, getValues, trigger } = useForm();
+    const { reset, handleSubmit, formState: { errors }, setValue, register, getValues, trigger, watch } = useForm();
 
     useEffect(() => {
         if (type && id) {
@@ -37,9 +38,11 @@ const ContactarButton = ({ type, id }) => {
         },
         onSuccess: () => {
             setOpenModal(false);
+            toast.success('Contacto enviado exitosamente');
         },
         onError: (error) => {
             console.log('Hubo un error al enviar solicitud', error);
+            toast.error(`Error: ${error}`);
         },
     });
 
@@ -70,6 +73,7 @@ const ContactarButton = ({ type, id }) => {
                         required={{ required: 'Campo requerido' }}
                         name={'detalle_conexion'}
                         errors={errors}
+                        watch={watch}
                     />
                 </div>
             </div>

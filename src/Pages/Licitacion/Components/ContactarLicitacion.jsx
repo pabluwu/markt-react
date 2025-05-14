@@ -110,6 +110,7 @@ const ContactarLicitacion = ({ id }) => {
                                     required={{ required: 'Campo requerido' }}
                                     name={'descripcion'}
                                     errors={errors}
+                                    watch={watch}
                                 />
                             </div>
                             <div className="col-md-6">
@@ -146,6 +147,7 @@ const ContactarLicitacion = ({ id }) => {
                                     register={register}
                                     name={'certificaciones'}
                                     errors={errors}
+                                    watch={watch}
                                 />
                             </div>
                             <div className="col-12 mt-4">

@@ -12,11 +12,11 @@ const SeguirButton = ({ id_seguidor, id_seguido, type_seguidor, type_seguido }) 
         const acc = localStorage.getItem('access_token');
         try{
 
-            console.log(`${api}api/seguir/check_follow/?id_seguidor=${id_seguidor}&id_seguido=${id_seguido}&type_seguidor=${type_seguidor}&type_seguido=${type_seguido}`, 'url a consultar')
+            // console.log(`${api}api/seguir/check_follow/?id_seguidor=${id_seguidor}&id_seguido=${id_seguido}&type_seguidor=${type_seguidor}&type_seguido=${type_seguido}`, 'url a consultar')
         }catch(err){
             console.log(err);
         }
-        console.log('cheques el follow');
+        // console.log('cheques el follow');
         const response = await fetch(`${api}api/seguir/check_follow/?id_seguidor=${id_seguidor}&id_seguido=${id_seguido}&type_seguidor=${type_seguidor}&type_seguido=${type_seguido}`, {
             headers: {
                 'Content-Type': 'application/json',
@@ -59,10 +59,10 @@ const SeguirButton = ({ id_seguidor, id_seguido, type_seguidor, type_seguido }) 
         mutation.mutate(data);
     }
 
-    console.log(seguido);
+    // console.log(seguido);
 
     useEffect(() => {
-        console.log('actualizar useState');
+        // console.log('actualizar useState');
         setIsSiguiendo(seguido?.following);
     }, [seguido])
 

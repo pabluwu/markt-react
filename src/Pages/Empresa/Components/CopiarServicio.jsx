@@ -109,6 +109,7 @@ const CopiarServicio = ({ show, setShow, servicio, refetch, idEmpresa }) => {
                                 required={{ required: 'Campo requerido' }}
                                 name={'descripcion'}
                                 errors={errors}
+                                watch={watch}
                             />
                         </div>
                         <div className="col-md-6">
@@ -145,6 +146,7 @@ const CopiarServicio = ({ show, setShow, servicio, refetch, idEmpresa }) => {
                                 register={register}
                                 name={'certificaciones'}
                                 errors={errors}
+                                watch={watch}
                             />
                         </div>
                         <div className="col-12 mt-4">

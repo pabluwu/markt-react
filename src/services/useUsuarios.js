@@ -72,11 +72,26 @@ export const updateUsuario = async (data) => {
     });
 
     if (!res.ok) {
-        throw new Error('Failed to update');
+        const errorData = await res.json();
+        throw new Error(errorData.error);
     }
     return res.json();
 
 }
 
+export const verContactos = async (id_user) => {
+    console.log(id_user);
+    const acc = localStorage.getItem('access_token');
+    const response = await fetch(`${api}api/conexion/conectados/?id_conectado=${id_user}`, {
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${acc}`
+        },
+    })
+    if (!response.ok) {
+        throw new Error('Error al obtener información del like');
+    }
+    return response.json();
+};
 
 

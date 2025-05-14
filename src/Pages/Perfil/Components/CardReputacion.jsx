@@ -1,10 +1,10 @@
-const CardReputacion = ({ servicios }) => {
+const CardReputacion = ({ servicios, licitaciones, colaboradores, seguidores }) => {
 
     const reputacion = [
-        { id: 1, nombre: 'Clasificación' },
-        { id: 2, nombre: 'Contactos' },
-        { id: 3, nombre: 'Seguidores' },
-        { id: 4, nombre: 'Servicios' },
+        { id: 1, nombre: 'Colaboradores' },
+        { id: 2, nombre: 'Seguidores' },
+        { id: 3, nombre: 'Servicios' },
+        { id: 4, nombre: 'Licitaciones' },
     ]
     return (
         <>
@@ -21,11 +21,32 @@ const CardReputacion = ({ servicios }) => {
                                 <h4>
                                     {
 
-                                        item.nombre == 'Servicios' &&
+                                        item.nombre == 'Servicios' ?
                                             servicios > 0 ?
-                                            servicios
+                                                servicios : 0
                                             :
-                                            0
+                                            ''
+                                    }
+                                    {
+                                        item.nombre == 'Licitaciones' ?
+                                            licitaciones > 0 ?
+                                                licitaciones : 0
+                                            :
+                                            ''
+                                    }
+                                    {
+                                        item.nombre == 'Colaboradores' ?
+                                            colaboradores > 0 ?
+                                                colaboradores : 0
+                                            :
+                                            ''
+                                    }
+                                    {
+                                        item.nombre == 'Seguidores' ?
+                                            seguidores > 0 ?
+                                                seguidores : 0
+                                            :
+                                            ''
                                     }
                                 </h4>
                             </div>

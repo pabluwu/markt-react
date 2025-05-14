@@ -276,6 +276,7 @@ const Servicios = ({ empresa }) => {
                                     required={{ required: 'Campo requerido' }}
                                     name={'descripcion'}
                                     errors={errors}
+                                    watch={watch}
                                 />
                             </div>
                             <div className="col-md-6">
@@ -312,6 +313,7 @@ const Servicios = ({ empresa }) => {
                                     register={register}
                                     name={'certificaciones'}
                                     errors={errors}
+                                    watch={watch}
                                 />
                             </div>
                             <div className="col-md-12">

@@ -13,7 +13,7 @@ const MisEmpresas = ({ user }) => {
                         misEmpresas &&
                         misEmpresas.map(item => (
                             <li key={item.id}>
-                                <Link to={`/empresa/${item.id}`} className="text-decoration-none">{item.nombre_empresa}</Link>
+                                <Link to={`/empresa/${item.id}`} className="text-decoration-none">{item.nombre_fantasia}</Link>
                             </li>
                         ))
                     }

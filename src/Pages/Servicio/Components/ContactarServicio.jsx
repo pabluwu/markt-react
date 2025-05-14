@@ -10,7 +10,7 @@ import Textarea from "../../../Components/Textarea/Textarea";
 import { api } from "../../../assets/variables";
 const ContactarServicio = ({ id }) => {
     const [openModal, setOpenModal] = useState(false);
-    const { reset, handleSubmit, formState: { errors }, setValue, register, getValues, trigger } = useForm();
+    const { reset, handleSubmit, formState: { errors }, setValue, register, getValues, trigger, watch } = useForm();
     const { user } = useStore();
 
     useEffect(() => {
@@ -104,6 +104,7 @@ const ContactarServicio = ({ id }) => {
                         required={{ required: 'Campo requerido' }}
                         name={'mensaje'}
                         errors={errors}
+                        watch={watch}
                     />
                 </div>
             </div>

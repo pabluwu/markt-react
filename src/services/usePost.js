@@ -75,7 +75,6 @@ export const getAllPostByEmpresa = (idEmpresa) => {
 
 export const getAllPostByUser = (idUser) => {
     const acc = localStorage.getItem('access_token');
-    console.log('recargar posts de usuario');
     const get = async () => {
         const response = await fetch(`${api}api/post/${idUser}/user`, {
             headers: {

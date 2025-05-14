@@ -18,7 +18,12 @@ const ContactCard = ({ solicitud }) => {
                         }
                         alt="" />
                     <div className='flex-row'>
-                        <p className='m-0'><strong>{solicitud.username}</strong></p>
+                        {
+                            solicitud.type == 'user' ?
+                            <p className='m-0'><strong>{solicitud.username}</strong></p>
+                            :
+                            <p className='m-0'><strong>{solicitud.name}</strong></p>
+                        }
                         <span>
                             <p>Conectados desde {renderFormattedDate(solicitud.fecha_seguimiento)}</p>
                         </span>

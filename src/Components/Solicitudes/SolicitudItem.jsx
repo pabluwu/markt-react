@@ -1,5 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
 import { api } from '../../assets/variables';
+import { toast } from 'react-toastify';
 import './style.css';
 import Loader from '../Loader/Loader';
 const SolicitudItem = ({ solicitud, refetch }) => {
@@ -23,9 +24,11 @@ const SolicitudItem = ({ solicitud, refetch }) => {
         onSuccess: () => {
             // setOpenModal(false);
             refetch();
+            toast.success('Contacto actualizado exitosamente');
         },
         onError: (error) => {
             console.log('Hubo un error al enviar solicitud', error);
+            toast.error(`Error: ${error}`);
         },
     });
 

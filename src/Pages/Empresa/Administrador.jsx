@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Navigate, useParams } from "react-router-dom";
-import { getEmpresa } from "../../services/useEmpresas";
+import { getEmpresa, getEmpresasCargos, verSolicitudesContacto } from "../../services/useEmpresas";
+import { useQuery } from "@tanstack/react-query";
 
 import Navbar from "../../Components/Navbar/Navbar";
 import Sidebar from "../../Components/Sidebar/Sidebar";
@@ -9,6 +10,7 @@ import PublicacionesEmpresa from "./Publicaciones";
 import Servicios from "./Servicios";
 import ContactosEmpresa from "./Contactos";
 import Licitaciones from "./Licitaciones";
+import Cargos from "./Components/Cargos";
 
 const AdministradorEmpresa = () => {
     const [option, setOption] = useState({ key: 'publicaciones', nombre: 'Publicaciones' });
@@ -20,6 +22,7 @@ const AdministradorEmpresa = () => {
         { key: 'perfil', nombre: 'Ver perfil' },
         { key: 'servicios', nombre: 'Servicios' },
         { key: 'contactos', nombre: 'Contactos' },
+        { key: 'cargos', nombre: 'Revisar Cargos' },
         { key: 'configurar', nombre: 'Configurar' },
         { key: 'licitaciones', nombre: 'Licitaciones' },
     ]
@@ -28,6 +31,22 @@ const AdministradorEmpresa = () => {
         setOption(option);
     }
 
+    const { data: cargos, refetch: refetchCargos } = useQuery(
+        {
+            queryKey: ['cargos_empresas', id], // La clave ahora es un objeto
+            queryFn: () => getEmpresasCargos(id, null),
+        }
+    );
+
+    const { data: solicitudes, refetch: solicitudesRefetch } = useQuery(
+        {
+            queryKey: ['solicitudes_length', id],
+            queryFn: () => verSolicitudesContacto(id, 'empresa', 0),
+            enabled: true
+        }
+    );
+
+    console.log(cargos);
     const contentSidebar = (
         <>
             <div className="offcanvas-header">
@@ -46,9 +65,32 @@ const AdministradorEmpresa = () => {
                                     onClick={() => toggleOption(opcion)}>
                                     {
                                         option.key == opcion.key ?
-                                            <strong>{opcion.nombre}</strong>
+                                            <>
+                                                <strong>
+                                                    {opcion.nombre}
+                                                </strong>
+                                                {
+                                                    opcion.key == 'contactos' &&
+                                                    <span class="badge bg-primary mx-2">{solicitudes?.filter(item => item.estado == 0).length}</span>
+                                                }
+                                                {
+                                                    opcion.key == 'cargos' &&
+                                                    <span class="badge bg-primary mx-2">{cargos?.filter(item => item.is_valido == false).length}</span>
+                                                }
+                                            </>
                                             :
-                                            opcion.nombre
+                                            <>
+                                                {opcion.nombre}
+                                                {
+                                                    opcion.key == 'cargos' &&
+                                                    <span class="badge bg-dark mx-2">{cargos?.filter(item => item.is_valido == false).length}</span>
+                                                }
+                                                {
+                                                    opcion.key == 'contactos' &&
+                                                    <span class="badge bg-dark mx-2">{solicitudes?.filter(item => item.estado == 0).length}</span>
+                                                }
+                                            </>
+
                                     }
                                 </span>
                             </li>
@@ -86,10 +128,15 @@ const AdministradorEmpresa = () => {
                                 <Servicios empresa={empresa} />
                             }
                             {
+                                option.key == 'cargos' &&
+                                <Cargos empresa={empresa} cargos={cargos} refetchCargos={refetchCargos} />
+                            }
+                            {
                                 option.key == 'contactos' &&
                                 <ContactosEmpresa
                                     id={id}
-                                    type='empresa' />
+                                    type='empresa'
+                                    refetchLength={solicitudesRefetch} />
                             }
                             {
                                 option.key == 'licitaciones' &&

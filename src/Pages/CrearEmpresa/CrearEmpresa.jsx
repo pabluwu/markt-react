@@ -108,6 +108,7 @@ const CrearEmpresa = () => {
                                     required={{ required: 'Campo requerido' }}
                                     name={'descripcion'}
                                     errors={errors}
+                                    watch={watch}
                                 />
                             </div>
 

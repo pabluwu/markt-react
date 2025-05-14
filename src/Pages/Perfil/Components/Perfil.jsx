@@ -7,7 +7,7 @@ import SampleAvatar from '../../../assets/SampleAvatar.png';
 import './style.css';
 const Perfil = ({ user, opciones, selectedOption, setSelectedOption }) => {
     const { user: usuarioStore } = useStore();
-    // console.log(usuarioStore);
+    console.log(usuarioStore);
     return (
         <div className="contenedorPerfil">
             {
@@ -60,14 +60,22 @@ const Perfil = ({ user, opciones, selectedOption, setSelectedOption }) => {
                             <div className="text-center">
                                 <img className='rounded'
                                     src={
-                                        user.userprofile?.imagen_perfil ? 
-                                        `${media_url}/${user.userprofile?.imagen_perfil}`
-                                        :
-                                        SampleAvatar
+                                        user.userprofile?.imagen_perfil ?
+                                            `${media_url}/${user.userprofile?.imagen_perfil}`
+                                            :
+                                            SampleAvatar
                                     }
                                     alt="" />
                                 <h2>{user.first_name} {user.last_name}</h2>
-                                <p>{user?.userprofile?.sobre_mi}</p>
+                                {
+                                    user?.cargo_empresa &&
+                                    <>
+                                        <hr />
+                                        <p>{user?.cargo_empresa?.cargo} en {user?.cargo_empresa?.empresa?.nombre_fantasia} { user?.cargo_empresa?.is_valido ? '✅' : '❗'}</p>
+                                        <hr />
+                                    </>
+                                }
+                                <p className='px-3'>{user?.userprofile?.sobre_mi}</p>
                             </div>
                         </div>
                     </div>

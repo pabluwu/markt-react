@@ -1,7 +1,8 @@
 import { useState, useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
-import { getEmpresa } from "../../services/useEmpresas";
+import { getEmpresa, getEmpresasCargos } from "../../services/useEmpresas";
+import { verSeguidores } from "../../services/useSeguir";
 import { getAllPostByEmpresa } from "../../services/usePost";
 import { api } from "../../assets/variables";
 import { media_url } from "../../assets/variables";
@@ -68,6 +69,20 @@ const PerfilEmpresa = () => {
         return response.json();
     };
 
+    const { data: cargos, refetch: refetchCargos } = useQuery(
+        {
+            queryKey: ['cargos_empresas', id], // La clave ahora es un objeto
+            queryFn: () => getEmpresasCargos(id, null),
+        }
+    );
+
+    const { data: seguidores, refetch: refetchSeguidores } = useQuery(
+        {
+            queryKey: ['seguidores_empresas', id], // La clave ahora es un objeto
+            queryFn: () => verSeguidores(id, 'empresa'),
+        }
+    );
+
     const { data: licitaciones, refetch: refetchLicitaciones } = useQuery(
         {
             queryKey: ['licitaciones', id], // La clave ahora es un objeto
@@ -75,6 +90,8 @@ const PerfilEmpresa = () => {
             enabled: !!id,  // Solo se ejecuta si selected tiene un id
         }
     );
+
+    console.log(seguidores)
 
     const columns = useMemo(
         () => [
@@ -204,8 +221,12 @@ const PerfilEmpresa = () => {
                             </div>
                             <div className="col-lg-9">
                                 {
-                                    servicios &&
-                                    <CardReputacion servicios={servicios.length} />
+                                    servicios && licitaciones && cargos && seguidores &&
+                                    <CardReputacion
+                                        servicios={servicios.length}
+                                        licitaciones={licitaciones.length}
+                                        colaboradores={cargos.length}
+                                        seguidores={seguidores.length} />
                                 }
                                 <Tab
                                     opciones={opciones}

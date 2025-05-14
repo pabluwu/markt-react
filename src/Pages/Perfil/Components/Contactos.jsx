@@ -1,12 +1,25 @@
 import { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { verContactos } from "../../../services/useUsuarios";
 import Tab from "../../../Components/Tab/Tab";
 import Seguidos from "../../../Components/Seguidos/Seguidos";
-const Contactos = ({id_user}) => {
+import ContactCard from "../../../Components/ContactCard/ContactCard";
+const Contactos = ({ id_user }) => {
     const opciones = [
         { key: 'seguidos', nombre: 'Seguidos' },
         { key: 'contactos', nombre: 'Contactos Profesionales' }
     ]
     const [selectedOption, setSelectedOption] = useState(opciones[0]);
+
+    const { data: contactos, refetch: contactosRefetch, isLoading } = useQuery(
+        {
+            queryKey: ['contactos_usuario', id_user],
+            queryFn: () => verContactos(id_user),
+        }
+    );
+
+    console.log(contactos);
+
     return (
         <>
             <Tab
@@ -16,7 +29,14 @@ const Contactos = ({id_user}) => {
 
             {
                 selectedOption.key == 'seguidos' &&
-                <Seguidos id_user={id_user}/>
+                <Seguidos id_user={id_user} />
+            }
+            {
+                selectedOption.key == 'contactos' &&
+                contactos &&
+                contactos.map(item => (
+                    <ContactCard solicitud={item} />
+                ))
             }
         </>
 

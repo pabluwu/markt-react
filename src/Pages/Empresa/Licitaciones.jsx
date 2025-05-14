@@ -251,6 +251,7 @@ const Licitaciones = ({ empresa }) => {
                                     required={{ required: 'Campo requerido' }}
                                     name={'descripcion'}
                                     errors={errors}
+                                    watch={watch}
                                 />
                             </div>
                             <div className="col-md-12">
