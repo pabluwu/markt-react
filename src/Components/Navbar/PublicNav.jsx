@@ -1,6 +1,4 @@
-import { useState } from "react";
-import Search from "../Search/Search";
-const Navbar = () => {
+const PublicNavbar = () => {
     return (
         <nav className="navbar navbar-dark navbar-expand-lg navbar-light bg-navbar fixed">
             <div className="container">
@@ -12,11 +10,10 @@ const Navbar = () => {
                     <ul className="navbar-nav me-auto mb-2 mb-lg-0">
 
                     </ul>
-                    <Search />
                 </div>
             </div>
         </nav>
     )
 }
 
-export default Navbar;
+export default PublicNavbar;

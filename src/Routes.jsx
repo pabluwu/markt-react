@@ -3,6 +3,8 @@ import Login from "./Pages/Login/Login";
 import Home from "./Pages/Home/Home";
 import PrivateRoute from "./Components/PrivateRoute/PrivateRoute";
 
+import PublicHome from "./Pages/PublicHome/PublicHome";
+
 //Administrador de empresas
 import AdministradorEmpresa from "./Pages/Empresa/Administrador";
 
@@ -18,29 +20,29 @@ import Licitacion from "./Pages/Licitacion/Licitacion";
 const UserRouter = () => {
     return (
         <Routes>
-            <Route path="/" element={
-                <PrivateRoute element={<Home />}/>
-            } />
+            {/* Páginas públicas */}
+
+            <Route path='/' element={<PublicHome/>}/>
             <Route path="/home" element={
-                <PrivateRoute element={<Home />}/>
+                <PrivateRoute element={<Home />} />
             } />
             <Route path="/empresa/:id" element={
-                <PrivateRoute element={<AdministradorEmpresa />}/>
+                <PrivateRoute element={<AdministradorEmpresa />} />
             } />
             <Route path="/p/:username" element={
-                <PrivateRoute element={<PerfilUsuario key={Math.random()}/>}/>
+                <PrivateRoute element={<PerfilUsuario key={Math.random()} />} />
             } />
             <Route path="/c/:id" element={
-                <PrivateRoute element={<PerfilEmpresa key={Math.random()}/>}/>
+                <PrivateRoute element={<PerfilEmpresa key={Math.random()} />} />
             } />
             <Route path="/servicio/:id" element={
-                <PrivateRoute element={<DetalleServicio key={Math.random()}/>}/>
+                <PrivateRoute element={<DetalleServicio key={Math.random()} />} />
             } />
             <Route path="/crear-empresa" element={
-                <PrivateRoute element={<CrearEmpresa key={Math.random()}/>}/>
+                <PrivateRoute element={<CrearEmpresa key={Math.random()} />} />
             } />
             <Route path="/licitacion/:id" element={
-                <PrivateRoute element={<Licitacion key={Math.random()}/>}/>
+                <PrivateRoute element={<Licitacion key={Math.random()} />} />
             } />
             <Route path="/login" element={<Login />} />
         </Routes >

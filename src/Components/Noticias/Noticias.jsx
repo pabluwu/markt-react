@@ -19,7 +19,6 @@ const Noticias = () => {
         return response.json();
     };
 
-    // Query para obtener el like, con 'enabled' activado solo cuando 'selected' tiene un id
     const { data: noticias, refetch: refetchNoticias } = useQuery(
         {
             queryKey: ['noticias_all'], // La clave ahora es un objeto
