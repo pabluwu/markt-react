@@ -21,7 +21,7 @@ const Search = () => {
         const response = await fetch(`${api}api/search/?q=${debouncedSearch}`, {
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${acc}`
+                // 'Authorization': `Bearer ${acc}`
             },
         });
         if (!response.ok) {

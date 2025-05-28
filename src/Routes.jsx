@@ -17,12 +17,16 @@ import CrearEmpresa from "./Pages/CrearEmpresa/CrearEmpresa";
 import DetalleServicio from "./Pages/Servicio/DetalleServicio";
 
 import Licitacion from "./Pages/Licitacion/Licitacion";
+
+//Repositorio
+import SubirDocumento from "./Pages/Repositorio/SubirDocumento";
+import VerRecurso from "./Pages/Recurso/VerRecurso";
 const UserRouter = () => {
     return (
         <Routes>
             {/* Páginas públicas */}
 
-            <Route path='/' element={<PublicHome/>}/>
+            <Route path='/' element={<PublicHome />} />
             <Route path="/home" element={
                 <PrivateRoute element={<Home />} />
             } />
@@ -44,6 +48,16 @@ const UserRouter = () => {
             <Route path="/licitacion/:id" element={
                 <PrivateRoute element={<Licitacion key={Math.random()} />} />
             } />
+
+            {/* Repositorio */}
+            <Route path="/repositorio/subir" element={
+                <PrivateRoute element={<SubirDocumento key={Math.random()} />} />
+            } />
+            <Route path="/repositorio/doc/:id" element={
+                <VerRecurso key={Math.random()} />
+            } />
+
+
             <Route path="/login" element={<Login />} />
         </Routes >
     )

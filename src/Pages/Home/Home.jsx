@@ -8,6 +8,7 @@ import MisEmpresas from '../../Components/MisEmpresas/MisEmpresas';
 import Post from '../../Components/Post/Post';
 import Noticias from '../../Components/Noticias/Noticias';
 import Tab from '../../Components/Tab/Tab';
+import CardRepositorio from '../../Components/Repositorio/CardRepositorio';
 const Home = () => {
     const [selectedOption, setSelectedOption] = useState({ key: 'posts', nombre: 'Publicaciones', estado: 1 });
     const { user } = useStore();
@@ -42,11 +43,12 @@ const Home = () => {
                                 {
                                     selectedOption.key == 'news' &&
                                     posts &&
-                                    <Noticias/>
+                                    <Noticias />
                                 }
                             </div>
                             <div className="col-lg-3 mb-2">
                                 <MisEmpresas />
+                                <CardRepositorio />
                             </div>
                         </div>
                     </div>

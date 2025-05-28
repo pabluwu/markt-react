@@ -16,6 +16,7 @@ import Post from "../../Components/Post/Post";
 import Table from "../../Components/Table/Table";
 import useStore from "../../store/userStore";
 import ContactarButton from "../../Components/ContactarButton/ContactarButton";
+import FadeOverlay from "../PublicHome/components/FadeOverlay";
 
 
 import DetalleIcon from "../../assets/detalle-de-atencion.svg";
@@ -260,6 +261,7 @@ const PerfilEmpresa = () => {
                         </div>
                     </div>
             }
+            
         </>
     )
 }

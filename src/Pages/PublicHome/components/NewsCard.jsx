@@ -24,7 +24,7 @@ const NewsCard = ({ item }) => {
                 </p>
                 <div className="mt-auto">
                     <a
-                        // href={item.url_original}
+                        href={item.url_original}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="btn btn-dark btn-sm text-white"
