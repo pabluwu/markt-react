@@ -45,6 +45,7 @@ const CrearEmpresa = () => {
     });
 
     const onSubmit = (data) => {
+        console.log(data);
         mutate(data);
     }
     return (
@@ -63,7 +64,7 @@ const CrearEmpresa = () => {
                         <div className="row">
                             <div className="col-md-6">
                                 <Input
-                                    label={'Rut Empresa'}
+                                    label={'Rut Empresa*'}
                                     register={register}
                                     required={{ required: 'Campo requerido' }}
                                     name={'rut'}
@@ -83,29 +84,151 @@ const CrearEmpresa = () => {
                             </div>
                             <div className="col-md-6">
                                 <Input
-                                    label={'Nombre Empresa'}
+                                    label={'Nombre Empresa*'}
                                     register={register}
                                     required={{ required: 'Campo requerido' }}
                                     name={'nombre_empresa'}
                                     errors={errors}
                                     type={'text'}
+                                    maxLength={50}
                                 />
                             </div>
                             <div className="col-md-6">
                                 <Input
-                                    label={'Nombre Fantasía'}
+                                    label={'Nombre Fantasía*'}
                                     register={register}
                                     required={{ required: 'Campo requerido' }}
                                     name={'nombre_fantasia'}
                                     errors={errors}
                                     type={'text'}
+                                    maxLength={50}
+                                />
+                            </div>
+                            <div className="col-md-6">
+                                <Input
+                                    label={'Razón Social*'}
+                                    register={register}
+                                    required={{ required: 'Campo requerido' }}
+                                    name={'razon_social'}
+                                    errors={errors}
+                                    type={'text'}
+                                    maxLength={50}
+                                />
+                            </div>
+                            <div className="col-md-6">
+                                <Input
+                                    label={'Sector*'}
+                                    register={register}
+                                    required={{ required: 'Campo requerido' }}
+                                    name={'sector'}
+                                    errors={errors}
+                                    type={'text'}
+                                    maxLength={50}
+                                />
+                            </div>
+                            <div className="col-md-6">
+                                <Input
+                                    label={'Rubro*'}
+                                    register={register}
+                                    required={{ required: 'Campo requerido' }}
+                                    name={'rubro'}
+                                    errors={errors}
+                                    type={'text'}
+                                    maxLength={50}
+                                />
+                            </div>
+                            <div className="col-md-6">
+                                <Input
+                                    label={'Giro*'}
+                                    register={register}
+                                    required={{ required: 'Campo requerido' }}
+                                    name={'giro'}
+                                    errors={errors}
+                                    type={'text'}
+                                    maxLength={50}
+                                />
+                            </div>
+                            <div className="col-md-6">
+                                <Input
+                                    label={'Telefono empresa*'}
+                                    register={register}
+                                    required={{ required: 'Campo requerido' }}
+                                    name={'telefono_empresa'}
+                                    errors={errors}
+                                    type={'tel'}
+                                    maxLength={9}
+                                />
+                            </div>
+                            <div className="col-md-6">
+                                <Input
+                                    label={'Email empresa*'}
+                                    register={register}
+                                    required={{ required: 'Campo requerido' }}
+                                    name={'email_empresa'}
+                                    errors={errors}
+                                    type={'email'}
+                                />
+                            </div>
+                            <div className="col-md-6">
+                                <Input
+                                    label={'Dirección empresa*'}
+                                    register={register}
+                                    required={{ required: 'Campo requerido' }}
+                                    name={'direccion_fisica'}
+                                    errors={errors}
+                                    type={'text'}
+                                    maxLength={50}
+                                />
+                            </div>
+                            <div className="col-md-6">
+                                <Input
+                                    label={'País*'}
+                                    register={register}
+                                    required={{ required: 'Campo requerido' }}
+                                    name={'pais'}
+                                    errors={errors}
+                                    type={'text'}
+                                    maxLength={50}
+                                />
+                            </div>
+                            <div className="col-md-6">
+                                <Input
+                                    label={'Región*'}
+                                    register={register}
+                                    required={{ required: 'Campo requerido' }}
+                                    name={'region'}
+                                    errors={errors}
+                                    type={'text'}
+                                    maxLength={50}
+                                />
+                            </div>
+                            <div className="col-md-6">
+                                <Input
+                                    label={'Comuna*'}
+                                    register={register}
+                                    required={{ required: 'Campo requerido' }}
+                                    name={'comuna'}
+                                    errors={errors}
+                                    type={'text'}
+                                    maxLength={50}
+                                />
+                            </div>
+                            <div className="col-md-6">
+                                <Input
+                                    label={'Página web'}
+                                    register={register}
+                                    required={{ required: false }}
+                                    name={'pagina_web'}
+                                    errors={errors}
+                                    type={'text'}
+                                    maxLength={255}
                                 />
                             </div>
                             <div className="col-m-12">
                                 <Textarea
                                     label={'Descripción'}
                                     register={register}
-                                    required={{ required: 'Campo requerido' }}
+                                    required={{ required: false }}
                                     name={'descripcion'}
                                     errors={errors}
                                     watch={watch}

@@ -1,3 +1,4 @@
+/* @import "tailwindcss"; */
 :root {
   --primary-color: #3C6EAF;
   --secondary-color: #2EB67D;
@@ -12,10 +13,13 @@
   --font-size: 16px;
   --gris: rgba(61, 37, 20, .08);
   --spacing: 8px;
+
 }
 
 body {
-  background-color: var(--bg-color) !important;
+  /* background-color: var(--bg-color) !important; */
+  --tw-bg-opacity: 1;
+  background-color: rgb(249 250 251 / var(--tw-bg-opacity, 1)) !important
 }
 
 a {
@@ -313,11 +317,11 @@ a {
   }
 }
 
-.selector-user{
+.selector-user {
   border-top: solid 1px rgba(0, 0, 0, .15);
 }
 
-.border-box-shadow{
+.border-box-shadow {
   box-shadow: 0 0 1px rgba(0, 0, 0, .15), 0 2px 3px rgba(0, 0, 0, .2);
 }
 
@@ -350,4 +354,22 @@ a {
   opacity: 1;
   transform: translateY(0);
   transition-duration: 300ms;
+}
+
+.title-text {
+  color: #0f0f0f;
+  font-weight: 700;
+  font-size: 2.25rem;
+  line-height: 2.5rem;
+  margin-bottom: .5rem;
+}
+
+.bg-gray {
+  background-color: rgb(249 250 251 / var(--tw-bg-opacity, 1)) !important
+}
+
+.hover-shadow:hover {
+  box-shadow: 3px 7px 10px 0px rgba(0, 0, 0, 0.3) !important;
+  -webkit-box-shadow: 3px 7px 10px 0px rgba(0, 0, 0, 0.3) !important;
+  -moz-box-shadow: 3px 7px 10px 0px rgba(0, 0, 0, 0.3) !important;
 }

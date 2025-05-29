@@ -21,6 +21,8 @@ import Licitacion from "./Pages/Licitacion/Licitacion";
 //Repositorio
 import SubirDocumento from "./Pages/Repositorio/SubirDocumento";
 import VerRecurso from "./Pages/Recurso/VerRecurso";
+import Noticias from "./Pages/Noticias/Noticias";
+import Repositorio from "./Pages/Repositorio/Repositorio";
 const UserRouter = () => {
     return (
         <Routes>
@@ -49,9 +51,17 @@ const UserRouter = () => {
                 <PrivateRoute element={<Licitacion key={Math.random()} />} />
             } />
 
+            {/* Página noticias */}
+            <Route path="/noticias" element={
+                <PrivateRoute element={<Noticias key={Math.random()} />} />
+            } />
+
             {/* Repositorio */}
             <Route path="/repositorio/subir" element={
                 <PrivateRoute element={<SubirDocumento key={Math.random()} />} />
+            } />
+            <Route path="/repositorio" element={
+                <PrivateRoute element={<Repositorio key={Math.random()} />} />
             } />
             <Route path="/repositorio/doc/:id" element={
                 <VerRecurso key={Math.random()} />

@@ -1,4 +1,4 @@
-const Input = ({ label, register, required, name, errors, disabled, type }) => {
+const Input = ({ label, register, required, name, errors, disabled, type, maxLength }) => {
     // console.log(errors)
     return (
         <div className="text-start mt-4">
@@ -7,6 +7,7 @@ const Input = ({ label, register, required, name, errors, disabled, type }) => {
             </label>
             <input
                 className="form-control"
+                maxLength={maxLength ? maxLength : 100}
                 type={type}
                 {...register(name, required)}
                 readOnly={disabled}

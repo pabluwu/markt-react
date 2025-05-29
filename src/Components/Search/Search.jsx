@@ -46,13 +46,13 @@ const Search = () => {
         <div className="position-relative w-100" style={{ maxWidth: '400px' }}>
             <div className="d-flex">
                 <input
-                    className="form-control me-2"
+                    className="form-control me-2 bg-gray"
                     type="text"
                     placeholder="Buscar"
                     autoComplete="off"
                     {...register('search_nav', { required: true })}
                 />
-                <span className="btn btn-verde" type="submit">
+                <span className="btn btn-dark" type="submit">
                     Buscar
                 </span>
             </div>

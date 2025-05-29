@@ -67,10 +67,11 @@ const UploadForm = () => {
                 <h3>Subir Documento</h3>
                 <form onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data" className="row g-3">
                     <div className="col-md-6 mt-4">
-                        <label className="">Título *</label>
+                        <label className="">Título (max 50 carácteres) *</label>
                         <input
                             className={`form-control ${errors.titulo ? 'is-invalid' : ''}`}
                             {...register('titulo', { required: true })}
+                            maxLength={50}
                         />
                         {errors.titulo && <div className="invalid-feedback">Este campo es obligatorio.</div>}
                     </div>
@@ -86,16 +87,17 @@ const UploadForm = () => {
 
 
                     <div className="col-md-12">
-                        <label className="">Descripción *</label>
+                        <label className="">Descripción (max 1000 carácteres)*</label>
                         <textarea
                             className={`form-control ${errors.descripcion ? 'is-invalid' : ''}`}
                             {...register('descripcion', { required: true })}
+                            maxLength={1000}
                         />
                         {errors.descripcion && <div className="invalid-feedback">Este campo es obligatorio.</div>}
                     </div>
 
                     <div className="col-md-6 mt-4">
-                        <label className="">Fuente</label>
+                        <label className="">Fuente (max 50 carácteres)</label>
                         <input className="form-control" {...register('fuente')} />
                     </div>
 
@@ -109,7 +111,7 @@ const UploadForm = () => {
                     </div>
 
                     <div className="col-md-6 mt-4">
-                        <label className="">Link</label>
+                        <label className="">Link (max 200 carácteres)</label>
                         <input type="url" className="form-control" {...register('link')} />
                     </div>
 
