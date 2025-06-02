@@ -5,6 +5,7 @@ import useStore from '../../store/userStore';
 import { api, media_url } from '../../assets/variables';
 import { toggleLikePost } from '../../services/usePost';
 import { Link } from 'react-router-dom';
+import { ThumbsUp, MessageCircle, Share2 } from 'lucide-react';
 
 import SampleAvatar from '../../assets/SampleAvatar.png';
 import useFormattedDate from '../../services/useFormattedDate';
@@ -80,65 +81,88 @@ const PostItem = ({ item }) => {
 
     // console.log(item);
     return (
-        <div className="rounded profile-card mt-3">
-            <div className="info-profile px-3 py-2">
-                <img
-                    className='rounded'
-                    src={
-                        item.author?.userprofile?.imagen_perfil ?
-                            `${media_url}/${item.author?.userprofile.imagen_perfil}`
-                            :
-                            item.author?.imagen_perfil ?
-                                `${media_url}/${item.author?.imagen_perfil}`
-                                :
-                                SampleAvatar
-                    }
-                    alt="" />
-                <div className='postInfo'>
-                    {
-                        item.author.username &&
-                        <a href={`/p/${item.author.username}`}>
-                            <p><strong>{item.author.username}</strong></p>
-                        </a>
-                    }
-                    {
-                        item.author.nombre_fantasia &&
-                        <Link to={`/c/${item.author.id}`}>
-                            <p><strong>{item.author.nombre_fantasia}</strong></p>
-                        </Link>
-                    }
-                    <span className='fecha'>{created}</span>
+        <div className="card border-0 shadow-sm mb-3">
+            <div className="card-body">
+                {/* Header */}
+                <div className="d-flex align-items-center mb-3">
+                    <div className="rounded-circle bg-light d-flex justify-content-center align-items-center me-3" style={{ width: 40, height: 40 }}>
+                        {item.author?.userprofile?.imagen_perfil || item.author?.imagen_perfil ? (
+                            <img
+                                src={`${media_url}/${item.author.userprofile?.imagen_perfil || item.author.imagen_perfil}`}
+                                alt="avatar"
+                                className="rounded-circle"
+                                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                            />
+                        ) : (
+                            <span className="text-muted fw-bold">
+                                {item.author?.username?.[0]?.toUpperCase() || 'U'}
+                            </span>
+                        )}
+                    </div>
+                    <div>
+                        <div className="fw-semibold text-dark small mb-1">
+                            {item.author?.username ? (
+                                <a href={`/p/${item.author.username}`} className="text-decoration-none text-dark">
+                                    {item.author.username}
+                                </a>
+                            ) : (
+                                <Link to={`/c/${item.author.id}`} className="text-decoration-none text-dark">
+                                    {item.author.nombre_fantasia}
+                                </Link>
+                            )}
+                        </div>
+                        <div className="text-muted small">{created}</div>
+                    </div>
                 </div>
-            </div>
-            <div className="postContent px-4 py-2">
-                <div dangerouslySetInnerHTML={{ __html: item.content }} />
-            </div>
-            {
-                misEmpresas && misEmpresas.length > 0 &&
-                <div className='selector-user px-4 py-2'>
-                    <SelectorPerfil
-                        misEmpresas={misEmpresas}
-                        user={user}
-                        setSelected={setSelected}
-                        refetch={likedRefetch} />
-                </div>
-            }
-            <div className='social-buttons px-4 py-2'>
-                <div className="d-flex justify-content-around button">
 
-                    <span className='d-flex' onClick={handleLike}>
-                        <img src={isLiked ? Liked : Like} alt="" />
-                        <p>Me gusta</p>
-                    </span>
-
-                    <span onClick={() => setComentar(!comentar)}>Comentar</span>
-                    <span>Compartir</span>
+                {/* Content */}
+                <div className="mb-3">
+                    <div dangerouslySetInnerHTML={{ __html: item.content }} className="text-body" />
                 </div>
+
+                {/* Tags (si hay) */}
+                {item.tags && item.tags.length > 0 && (
+                    <div className="mb-3">
+                        {item.tags.map((tag, i) => (
+                            <span key={i} className="badge bg-light text-muted me-2">{tag}</span>
+                        ))}
+                    </div>
+                )}
+
+                {/* Selector de perfil */}
+                {misEmpresas && misEmpresas.length > 0 && (
+                    <div className="mb-3">
+                        <SelectorPerfil
+                            misEmpresas={misEmpresas}
+                            user={user}
+                            setSelected={setSelected}
+                            refetch={likedRefetch}
+                        />
+                    </div>
+                )}
+
+                {/* Social buttons */}
+                <div className="border-top pt-2 d-flex justify-content-start gap-5 text-muted small">
+                    <button className="btn btn-link d-flex align-items-center gap-1 text-decoration-none text-muted p-0" onClick={handleLike}>
+                        {isLiked ? <ThumbsUp fill="currentColor" strokeWidth={1.5} size={16} /> : <ThumbsUp strokeWidth={1.5} size={16} />}
+                        <span>Me gusta</span>
+                    </button>
+                    <button className="btn btn-link d-flex align-items-center gap-1 text-decoration-none text-muted p-0" onClick={() => setComentar(!comentar)}>
+                        <MessageCircle strokeWidth={1.5} size={16} />
+                        <span>Comentar</span>
+                    </button>
+                    {/* <button className="btn btn-link d-flex align-items-center gap-1 text-decoration-none text-muted p-0">
+                        <Share2 strokeWidth={1.5} />
+                        <span>Compartir</span>
+                    </button> */}
+                </div>
+
+                {comentar && (
+                    <div className="mt-2">
+                        <Comentario post_id={item.id} commenter_id={selected.id} commenter_type={selected.type} />
+                    </div>
+                )}
             </div>
-            {
-                comentar &&
-                <Comentario post_id={item.id} commenter_id={selected.id} commenter_type={selected.type} />
-            }
         </div>
     );
 };

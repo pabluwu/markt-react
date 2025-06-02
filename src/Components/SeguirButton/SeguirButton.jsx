@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { toggleSeguir } from "../../services/useSeguir";
 import { api } from "../../assets/variables";
+import { Users, UserMinus } from "lucide-react";
 
 
 
@@ -10,10 +11,10 @@ const SeguirButton = ({ id_seguidor, id_seguido, type_seguidor, type_seguido }) 
     const [isSiguiendo, setIsSiguiendo] = useState(false);
     const checkFollow = async () => {
         const acc = localStorage.getItem('access_token');
-        try{
+        try {
 
             // console.log(`${api}api/seguir/check_follow/?id_seguidor=${id_seguidor}&id_seguido=${id_seguido}&type_seguidor=${type_seguidor}&type_seguido=${type_seguido}`, 'url a consultar')
-        }catch(err){
+        } catch (err) {
             console.log(err);
         }
         // console.log('cheques el follow');
@@ -55,7 +56,7 @@ const SeguirButton = ({ id_seguidor, id_seguido, type_seguidor, type_seguido }) 
             type_seguidor: type_seguidor,
             type_seguido: type_seguido
         }
-        
+
         mutation.mutate(data);
     }
 
@@ -68,14 +69,20 @@ const SeguirButton = ({ id_seguidor, id_seguido, type_seguidor, type_seguido }) 
 
     return (
         <span
-            className="boton-seguir btn-azul text-center"
+            className="boton-seguir btn-azul text-center w-100"
             onClick={handleSeguir}>
-                {
-                    isSiguiendo ?
-                    'Dejar de seguir'
+            {
+                isSiguiendo ?
+                    <div className="d-flex align-items-center justify-content-center gap-2">
+                        <UserMinus size={16} />
+                        Dejar de seguir
+                    </div>
                     :
-                    'Seguir'
-                }
+                    <div className="d-flex align-items-center justify-content-center gap-2">
+                        <Users size={16} />
+                        Seguir
+                    </div>
+            }
         </span>
     )
 };

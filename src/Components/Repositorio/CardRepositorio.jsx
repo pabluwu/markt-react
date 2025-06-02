@@ -1,11 +1,13 @@
 import './style.css';
+import { Plus } from 'lucide-react';
 
 const CardRepositorio = () => {
     return (
         <div className="rounded repositorio-card mt-3 py-3">
             <div className=" px-3">
-                <h2>Repositorio</h2>
-                <a className="btn btn-primary mt-3 text-white" href="/repositorio/subir">
+                <p><strong>Repositorio</strong></p>
+                <a className="btn btn-dark w-100 d-flex text-white align-items-center justify-content-center gap-2 mt-2" href="/repositorio/subir">
+                    <Plus size={16} />
                     Agregar documento
                 </a>
             </div>

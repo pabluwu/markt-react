@@ -41,15 +41,27 @@ a {
 }
 
 .btn-azul {
-  background-color: var(--primary-color) !important;
+  background-color: #2563eb !important;
   color: var(--white) !important;
   border: solid 1px var(--primary-color) !important;
 }
 
 .btn-azul:hover {
   background-color: var(--white) !important;
-  color: var(--primary-color) !important;
+  color: #2563eb !important;
+  border: solid 1px #2563eb !important;
+}
+
+.btn-gray {
+  background-color: #475569 !important;
+  color: var(--white) !important;
   border: solid 1px var(--primary-color) !important;
+}
+
+.btn-gray:hover {
+  background-color: var(--white) !important;
+  color: #475569 !important;
+  border: solid 1px #475569 !important;
 }
 
 .btn-verde {

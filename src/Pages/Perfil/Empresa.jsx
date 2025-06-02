@@ -184,7 +184,7 @@ const PerfilEmpresa = () => {
                         <h1>Not found empresa</h1>
                     </div>
                     :
-                    <div className="container-fluid">
+                    <div className="container">
                         <div className="row mt-4">
                             <div className="col-lg-3">
                                 <div className="contenedorPerfilEmpresa">
@@ -201,23 +201,25 @@ const PerfilEmpresa = () => {
                                                 <h2>{empresa.nombre_fantasia}</h2>
                                             }
                                         </div>
+                                        <div className="d-flex flex-column align-items-center justify-content-center mt-3 gap-4">
+                                            {
+                                                user &&
+                                                id &&
+                                                <SeguirButton
+                                                    id_seguido={id}
+                                                    type_seguido={'empresa'}
+                                                    id_seguidor={user.id}
+                                                    type_seguidor={'user'} />
+                                            }
+                                            {
+                                                user &&
+                                                id &&
+                                                <ContactarButton
+                                                    type={'empresa'}
+                                                    id={id} />
+                                            }
+                                        </div>
                                     </div>
-                                    {
-                                        user &&
-                                        id &&
-                                        <SeguirButton
-                                            id_seguido={id}
-                                            type_seguido={'empresa'}
-                                            id_seguidor={user.id}
-                                            type_seguidor={'user'} />
-                                    }
-                                    {
-                                        user &&
-                                        id &&
-                                        <ContactarButton
-                                            type={'empresa'}
-                                            id={id} />
-                                    }
                                 </div>
                             </div>
                             <div className="col-lg-9">
@@ -261,7 +263,7 @@ const PerfilEmpresa = () => {
                         </div>
                     </div>
             }
-            
+
         </>
     )
 }

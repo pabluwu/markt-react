@@ -71,7 +71,7 @@ const PublicHome = () => {
                     {/* Sidebar */}
                     <div className="col-lg-3">
                         <Sidebar />
-                        <DocumentosRecientes />
+                        <DocumentosRecientes documents={recursos}/>
                         <IfNotAuthenticated>
                             <LoginPrompt />
                         </IfNotAuthenticated>

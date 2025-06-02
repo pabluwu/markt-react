@@ -4,6 +4,8 @@ import { useMutation } from "@tanstack/react-query";
 import { api } from "../../assets/variables";
 import { toast } from "react-toastify";
 
+import { MessageSquare } from "lucide-react";
+
 import Popup from "../Popup/Popup";
 import Input from "../Input/Input";
 import Textarea from "../Textarea/Textarea";
@@ -91,13 +93,13 @@ const ContactarButton = ({ type, id }) => {
                 <Popup children={contentModal} show={openModal} />
             }
             <span
-                className="boton-seguir btn-azul text-center"
+                className="boton-seguir btn-gray text-center w-100"
                 onClick={() => setOpenModal(true)}
             >
-
-
-
-                Contactar
+                <div className="d-flex align-items-center justify-content-center gap-2">
+                    <MessageSquare size={16} />
+                    Contactar
+                </div>
 
             </span>
         </>

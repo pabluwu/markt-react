@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Search from "../Search/Search";
+import SessionButton from "./SesionButton";
 const Navbar = () => {
     return (
         <nav className="navbar bg-white border-bottom navbar-dark navbar-expand-lg navbar-light bg-navbar fixed">
@@ -28,6 +29,7 @@ const Navbar = () => {
                         </li>
                     </ul>
                     <Search />
+                    <SessionButton />
                 </div>
             </div>
         </nav>
