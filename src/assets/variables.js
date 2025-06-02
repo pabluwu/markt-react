@@ -1,7 +1,7 @@
 // export const api = 'http://localhost:8000/api/' //dev
 // export const media_url = 'http://localhost:8000/' // dev
 export const media_url = 'https://markt.cl/' // produccion
-export const api = 'https://markt.cl/' //produccionn
+export const api = 'https://markt.cl/api/' //produccionn
 
 export const formas_pago_choices = [
     { id: 1, value: 'TRANSFERENCIA', label: "Transferencia" },
