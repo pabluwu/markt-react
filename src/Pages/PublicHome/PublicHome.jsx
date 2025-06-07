@@ -53,17 +53,19 @@ const PublicHome = () => {
                         <div style={{ width: '4rem', backgroundColor: '#0f0f0f', height: '.25rem' }}></div>
                         {/* Noticia destacada (grande) */}
                         {noticias.length > 0 && (
-                            <NewsBox item={noticias[0]} />
+                            <NewsBox item={noticias.results[0]} />
                         )}
 
                         {/* Noticias pequeñas */}
                         <div className="mt-5">
                             <div className="row ">
-                                {noticias.slice(1, 4).map((item, i) => (
-                                    <div key={item.id || i} className="col-md-4 mb-3">
-                                        <NewsCard item={item} />
-                                    </div>
-                                ))}
+                                {
+                                    noticias.results &&
+                                    noticias.results.slice(1, 4).map((item, i) => (
+                                        <div key={item.id || i} className="col-md-4 mb-3">
+                                            <NewsCard item={item} />
+                                        </div>
+                                    ))}
                             </div>
                         </div>
                     </div>
@@ -71,7 +73,7 @@ const PublicHome = () => {
                     {/* Sidebar */}
                     <div className="col-lg-3">
                         <Sidebar />
-                        <DocumentosRecientes documents={recursos}/>
+                        <DocumentosRecientes documents={recursos} />
                         <IfNotAuthenticated>
                             <LoginPrompt />
                         </IfNotAuthenticated>
@@ -86,11 +88,13 @@ const PublicHome = () => {
                     <div className="col-lg-9">
                         {/* Documentos */}
                         <div className="row">
-                            {recursos.slice(0, 7).map((item, i) => (
-                                <div key={item.id || i} className="col-md-6 mb-3">
-                                    <CardDocumento documento={item} />
-                                </div>
-                            ))}
+                            {
+                                recursos.results &&
+                                recursos.results.slice(0, 7).map((item, i) => (
+                                    <div key={item.id || i} className="col-md-6 mb-3">
+                                        <CardDocumento documento={item} />
+                                    </div>
+                                ))}
                         </div>
                     </div>
                 </div>

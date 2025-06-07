@@ -1,5 +1,6 @@
 import useFormattedDate from "../../services/useFormattedDate";
 const NoticiaItem = ({ noticia }) => {
+    console.log(noticia)
     return (
         <div className="rounded profile-card mt-3">
             <div className="info-profile px-3 py-2">

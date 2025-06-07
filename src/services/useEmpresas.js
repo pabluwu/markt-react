@@ -107,7 +107,7 @@ export const getEmpresasCargos = async (id, isValid) => {
 
 export const verSolicitudesContacto = async (id, type, estado) => {
     if (id, type) {
-        console.log(id, type, estado);
+        // console.log(id, type, estado);
         const acc = localStorage.getItem('access_token');
         const response = await fetch(`${api}api/conexion/solicitudes_conexion/?type=${type}&id=${id}&estado=${estado}`, {
             headers: {

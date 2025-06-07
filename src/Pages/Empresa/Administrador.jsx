@@ -2,6 +2,8 @@ import { useState } from "react";
 import { Navigate, useParams } from "react-router-dom";
 import { getEmpresa, getEmpresasCargos, verSolicitudesContacto } from "../../services/useEmpresas";
 import { useQuery } from "@tanstack/react-query";
+import { FileText, Eye, ChevronDown, ChevronRight, Briefcase, Users, Award, Settings, Building2, User } from "lucide-react";
+import { media_url } from "../../assets/variables";
 
 import Navbar from "../../Components/Navbar/Navbar";
 import Sidebar from "../../Components/Sidebar/Sidebar";
@@ -18,13 +20,13 @@ const AdministradorEmpresa = () => {
     const { empresa, empresaIsLoading } = getEmpresa(id);
 
     const opciones = [
-        { key: 'publicaciones', nombre: 'Publicaciones' },
-        { key: 'perfil', nombre: 'Ver perfil' },
-        { key: 'servicios', nombre: 'Servicios' },
-        { key: 'contactos', nombre: 'Contactos' },
-        { key: 'cargos', nombre: 'Revisar Cargos' },
-        { key: 'configurar', nombre: 'Configurar' },
-        { key: 'licitaciones', nombre: 'Licitaciones' },
+        { key: 'publicaciones', nombre: 'Publicaciones', icon: <FileText size={18} /> },
+        { key: 'perfil', nombre: 'Ver perfil', icon: <Eye size={18} /> },
+        { key: 'servicios', nombre: 'Servicios', icon: <Briefcase size={18} /> },
+        { key: 'contactos', nombre: 'Contactos', icon: <Users size={18} /> },
+        { key: 'cargos', nombre: 'Revisar Cargos', icon: <Award size={18} /> },
+        { key: 'configurar', nombre: 'Configurar', icon: <Settings size={18} /> },
+        { key: 'licitaciones', nombre: 'Licitaciones', icon: <Building2 size={18} /> },
     ]
 
     const toggleOption = (option) => {
@@ -46,58 +48,87 @@ const AdministradorEmpresa = () => {
         }
     );
 
-    console.log(cargos);
+    // console.log(cargos);
     const contentSidebar = (
         <>
             <div className="offcanvas-header">
-                <h5 className="offcanvas-title" id="sidebarLabel">
-                    {empresa?.nombre_empresa}
+                <h5 className="offcanvas-title w-100 bg-white rounded shadow" id="sidebarLabel">
+                    <div className="d-flex align-items-center justify-content-between py-3 px-4 gap-4">
+                        {
+                            empresa &&
+                            empresa.imagen_perfil ?
+                                <img className="rounded" style={{maxWidth: '48px'}} src={
+                                    `${media_url}/${empresa.imagen_perfil}`
+                                } alt="" />
+                                :
+                                <User size={24}/>  
+                        }
+                        {empresa?.nombre_empresa}
+                    </div>
                 </h5>
             </div>
             <div className="offcanvas-body">
+                <div className="rounded bg-white shadow">
+                    <ul className="list-group list-group-flush py-3">
+                        {
+                            opciones.map(opcion => (
+                                <li className="list-group-item bg-transparent border-0" key={opcion.key}>
+                                    <span
+                                        className="text-decoration-none cursor-pointer"
+                                        onClick={() => toggleOption(opcion)}>
+                                        {
+                                            option.key == opcion.key ?
+                                                <>
+                                                    <span
+                                                        href="#"
+                                                        className="d-flex align-items-center text-white bg-dark rounded-3 px-3 py-2 mb-2 text-decoration-none"
+                                                    >
+                                                        <div className="bg-secondary p-2 rounded me-2 d-flex align-items-center justify-content-center">
+                                                            {opcion.icon}
+                                                        </div>
+                                                        <span className="flex-grow-1">{opcion.nombre}</span>
+                                                        {
+                                                            opcion.key == 'contactos' &&
+                                                            <span class="badge bg-primary mx-2">{solicitudes?.filter(item => item.estado == 0).length}</span>
+                                                        }
+                                                        {
+                                                            opcion.key == 'cargos' &&
+                                                            <span class="badge bg-primary mx-2">{cargos?.filter(item => item.is_valido == false).length}</span>
+                                                        }
+                                                        <ChevronDown className="ms-auto" size={18} />
+                                                    </span>
+                                                </>
+                                                :
+                                                <>
+                                                    <span
+                                                        href="#"
+                                                        className="d-flex align-items-center text-dark px-3 py-2 rounded text-decoration-none"
+                                                    >
+                                                        <div className="bg-light p-2 rounded me-2 d-flex align-items-center justify-content-center">
+                                                            {opcion.icon}
+                                                        </div>
+                                                        <span className="flex-grow-1">{opcion.nombre}</span>
+                                                        {
+                                                            opcion.key == 'cargos' &&
+                                                            <span class="badge bg-dark mx-2">{cargos?.filter(item => item.is_valido == false).length}</span>
+                                                        }
+                                                        {
+                                                            opcion.key == 'contactos' &&
+                                                            <span class="badge bg-dark mx-2">{solicitudes?.filter(item => item.estado == 0).length}</span>
+                                                        }
+                                                        <ChevronRight className="ms-auto text-muted" size={18} />
+                                                    </span>
+                                                </>
+
+                                        }
+                                    </span>
+                                </li>
+                            ))
+                        }
+
+                    </ul>
+                </div>
                 {/* Lista de enlaces */}
-                <ul className="list-group list-group-flush">
-                    {
-                        opciones.map(opcion => (
-                            <li className="list-group-item" key={opcion.key}>
-                                <span
-                                    className="text-decoration-none cursor-pointer"
-                                    onClick={() => toggleOption(opcion)}>
-                                    {
-                                        option.key == opcion.key ?
-                                            <>
-                                                <strong>
-                                                    {opcion.nombre}
-                                                </strong>
-                                                {
-                                                    opcion.key == 'contactos' &&
-                                                    <span class="badge bg-primary mx-2">{solicitudes?.filter(item => item.estado == 0).length}</span>
-                                                }
-                                                {
-                                                    opcion.key == 'cargos' &&
-                                                    <span class="badge bg-primary mx-2">{cargos?.filter(item => item.is_valido == false).length}</span>
-                                                }
-                                            </>
-                                            :
-                                            <>
-                                                {opcion.nombre}
-                                                {
-                                                    opcion.key == 'cargos' &&
-                                                    <span class="badge bg-dark mx-2">{cargos?.filter(item => item.is_valido == false).length}</span>
-                                                }
-                                                {
-                                                    opcion.key == 'contactos' &&
-                                                    <span class="badge bg-dark mx-2">{solicitudes?.filter(item => item.estado == 0).length}</span>
-                                                }
-                                            </>
-
-                                    }
-                                </span>
-                            </li>
-                        ))
-                    }
-
-                </ul>
             </div>
         </>
     )
@@ -110,7 +141,7 @@ const AdministradorEmpresa = () => {
                     <Sidebar content={contentSidebar} />
                     <div className="container-responsive">
                         <div className="container mt-4 ">
-                            <h3>{option.nombre}</h3>
+                            <h3> <strong>{option.nombre}</strong></h3>
                             {
                                 option.key == 'publicaciones' &&
                                 <PublicacionesEmpresa empresa={empresa} />

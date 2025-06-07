@@ -1,17 +1,66 @@
-import { useQuery } from "@tanstack/react-query";
-import { getAllRecursos } from "../../services/useRecursos";
+import { useEffect } from 'react';
+import { useRecursosInfinite } from "../../services/useRecursos";
 
 import Navbar from "../../Components/Navbar/Navbar";
 import CardDocumento from "../PublicHome/components/CardDocumento";
 
 const Repositorio = () => {
 
-    const { data: recursos = [], refetch: refetchRecursos } = useQuery(
-        {
-            queryKey: ['recursos'], // La clave ahora es un objeto
-            queryFn: () => getAllRecursos(),
-        }
-    );
+    const {
+        recursos,
+        fetchNextRecursos,
+        hasMoreRecursos,
+        isFetchingNextRecursos,
+        isLoadingRecursos,
+        isErrorRecursos,
+        errorRecursos,
+        refetchAllRecursos
+    } = useRecursosInfinite();
+
+    useEffect(() => {
+        const handleScroll = () => {
+            const scrollThreshold = 100;
+            if (window.innerHeight + document.documentElement.scrollTop >= document.documentElement.offsetHeight - scrollThreshold &&
+                hasMoreRecursos &&
+                !isFetchingNextRecursos
+            ) {
+                fetchNextRecursos();
+            }
+        };
+
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, [hasMoreRecursos, isFetchingNextRecursos, fetchNextRecursos]);
+
+    if (isLoadingRecursos) {
+        return (
+            <>
+                <Navbar />
+                <div className="container py-4">
+                    <h4 className="mt-4 title-text">Documentos</h4>
+                    <div style={{ width: '4rem', backgroundColor: '#0f0f0f', height: '.25rem' }}></div>
+                    <div className="text-center my-3">
+                        <div className="spinner-border text-primary" role="status">
+                            <span className="visually-hidden">Cargando...</span>
+                        </div>
+                    </div>
+                </div>
+            </>
+        );
+    }
+
+    if (isErrorRecursos) {
+        return (
+            <>
+                <Navbar />
+                <div className="container py-4">
+                    <h4 className="mt-4 title-text">Documentos</h4>
+                    <div style={{ width: '4rem', backgroundColor: '#0f0f0f', height: '.25rem' }}></div>
+                    <p className="text-center mt-3">Error al cargar los documentos: {errorRecursos.message}</p>
+                </div>
+            </>
+        );
+    }
 
     return (
         <>
@@ -21,18 +70,32 @@ const Repositorio = () => {
                 <div style={{ width: '4rem', backgroundColor: '#0f0f0f', height: '.25rem' }}></div>
 
                 <div className="row">
-                    {/* Col principal */}
                     <div className="col-lg-12">
-                        {/* Documentos */}
                         <div className="row">
-                            {recursos.map((item, i) => (
-                                <div key={item.id || i} className="col-md-4 mb-3">
-                                    <CardDocumento documento={item} />
-                                </div>
-                            ))}
+                            {recursos && recursos.length > 0 ? (
+                                recursos.map((item, i) => (
+                                    <div key={item.id || `recurso-${i}`} className="col-md-4 mb-3">
+                                        <CardDocumento documento={item} />
+                                    </div>
+                                ))
+                            ) : (
+                                <p className="text-center mt-3">No hay documentos disponibles.</p>
+                            )}
                         </div>
                     </div>
                 </div>
+
+                {isFetchingNextRecursos && (
+                    <div className="text-center my-3">
+                        <p>Cargando más documentos...</p>
+                    </div>
+                )}
+
+                {!hasMoreRecursos && recursos.length > 0 && (
+                    <div className="text-center my-3">
+                        <p>¡Has llegado al final de los documentos!</p>
+                    </div>
+                )}
             </div>
         </>
     )

@@ -4,11 +4,13 @@ import Post from "../../Components/Post/Post";
 
 const PublicacionesEmpresa = ({ empresa }) => {
     const { postsEmpresa, refetchPosts } = getAllPostByEmpresa(empresa.id);
-    // console.log(postsEmpresa);
     return (
         <>
-            <Publicar author_id={empresa.id} type={'empresa'} refetchPosts={refetchPosts} author={empresa}/>
-            <Post posts={postsEmpresa} />
+            <Publicar author_id={empresa.id} type={'empresa'} refetchPosts={refetchPosts} author={empresa} />
+            {
+                postsEmpresa &&
+                <Post posts={postsEmpresa.results} />
+            }
         </>
     )
 }

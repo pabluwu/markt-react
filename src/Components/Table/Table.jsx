@@ -18,7 +18,7 @@ const Table = ({ data, columns }) => {
     }, [data])
 
     const table = useReactTable({
-        data, 
+        data,
         columns,
         pageCount: Math.ceil(data.length / pageSize),
         state: {
@@ -72,12 +72,14 @@ const Table = ({ data, columns }) => {
                 </tbody>
             </table>
             <div className="ContainerPaginator">
-                Mostrando registros del {pageIndex + 1} al {pageSize * (pageIndex + 1)} de un total de {data.length} registros.
+                <p className="text-muted">
+                    Mostrando registros del {pageIndex + 1} al {pageSize * (pageIndex + 1)} de un total de {data.length} registros.
+                </p>
                 <div>
                     <span onClick={() => setPageIndex(prev => Math.max(prev - 1, 0))} disabled={pageIndex === 0}>
                         Anterior
                     </span>
-                    {pages.map((page,index) => (
+                    {pages.map((page, index) => (
                         <span
                             key={index}
                             onClick={() => setPageIndex(page)}

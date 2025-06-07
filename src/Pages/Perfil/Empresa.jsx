@@ -198,7 +198,7 @@ const PerfilEmpresa = () => {
                                             } alt="" />
                                             {
                                                 empresa &&
-                                                <h2>{empresa.nombre_fantasia}</h2>
+                                                <h3>{empresa.nombre_fantasia}</h3>
                                             }
                                         </div>
                                         <div className="d-flex flex-column align-items-center justify-content-center mt-3 gap-4">
@@ -239,7 +239,7 @@ const PerfilEmpresa = () => {
                                 {
                                     selectedOption.key == 'publicaciones' &&
                                     postsEmpresa &&
-                                    <Post posts={postsEmpresa} />
+                                    <Post posts={postsEmpresa.results} />
                                 }
                                 {
                                     selectedOption.key == 'servicios' &&

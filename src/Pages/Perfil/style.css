@@ -5,7 +5,7 @@
     flex-direction: column;
     .cardEmpresa {
         /* width: 300px; */
-        height: 400px;
+        height: auto;
         padding: 16px 32px;
         background-color: var(--white);
         border-radius: 8px;

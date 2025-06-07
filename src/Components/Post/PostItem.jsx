@@ -81,7 +81,7 @@ const PostItem = ({ item }) => {
 
     // console.log(item);
     return (
-        <div className="card border-0 shadow-sm mb-3">
+        <div className="card border-0 shadow-sm mt-3">
             <div className="card-body">
                 {/* Header */}
                 <div className="d-flex align-items-center mb-3">
