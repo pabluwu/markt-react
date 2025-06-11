@@ -68,22 +68,22 @@ const SeguirButton = ({ id_seguidor, id_seguido, type_seguidor, type_seguido }) 
     }, [seguido])
 
     return (
-        <span
-            className="boton-seguir btn-azul text-center w-100"
+        <div
+            className="boton-seguir bg-dark btn-dark text-center w-100 mt-4 p-2"
             onClick={handleSeguir}>
             {
                 isSiguiendo ?
                     <div className="d-flex align-items-center justify-content-center gap-2">
-                        <UserMinus size={16} />
+                        <UserMinus size={16} className="" />
                         Dejar de seguir
                     </div>
                     :
                     <div className="d-flex align-items-center justify-content-center gap-2">
-                        <Users size={16} />
+                        <Users size={16} className="" />
                         Seguir
                     </div>
             }
-        </span>
+        </div>
     )
 };
 

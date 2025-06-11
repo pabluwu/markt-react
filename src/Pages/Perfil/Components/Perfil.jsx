@@ -1,6 +1,7 @@
 import useStore from '../../../store/userStore';
 
 import SeguirButton from '../../../Components/SeguirButton/SeguirButton';
+import { Briefcase, BadgeCheck, BadgeAlert } from 'lucide-react';
 
 import { api, media_url } from '../../../assets/variables';
 import SampleAvatar from '../../../assets/SampleAvatar.png';
@@ -14,10 +15,7 @@ const Perfil = ({ user, opciones, selectedOption, setSelectedOption }) => {
                 usuarioStore &&
                 user &&
                 <>
-                    <div className="imagenFondo">
-
-                    </div>
-                    <div className="opciones">
+                    {/* <div className="opciones">
                         {
                             opciones &&
                             opciones.map((item, index) => (
@@ -54,11 +52,12 @@ const Perfil = ({ user, opciones, selectedOption, setSelectedOption }) => {
                                 type_seguidor={'user'} />
                         }
 
-                    </div>
-                    <div className="container">
-                        <div className="cardUsuario pt-3">
+                    </div> */}
+                    <div className="container mt-4">
+                        <div className="cardUsuario bg-white rounded shadow-sm pt-3">
                             <div className="text-center">
-                                <img className='rounded'
+
+                                <img className='border shadow border-4 border-light rounded-circle'
                                     src={
                                         user.userprofile?.imagen_perfil ?
                                             `${media_url}/${user.userprofile?.imagen_perfil}`
@@ -66,18 +65,51 @@ const Perfil = ({ user, opciones, selectedOption, setSelectedOption }) => {
                                             SampleAvatar
                                     }
                                     alt="" />
-                                <h2>{user.first_name} {user.last_name}</h2>
+
+                                <h4><strong>{user.first_name} {user.last_name}</strong></h4>
                                 {
                                     user?.cargo_empresa &&
-                                    <>
-                                        <hr />
-                                        <p>{user?.cargo_empresa?.cargo} en {user?.cargo_empresa?.empresa?.nombre_fantasia} { user?.cargo_empresa?.is_valido ? '✅' : '❗'}</p>
-                                        <hr />
-                                    </>
+                                    <div className='d-flex justify-content-center align-items-top gap-3 px-4 mt-4'>
+                                        <Briefcase size={24} />
+                                        <div>
+                                            <p className='text-start mb-1'>
+                                                <strong>
+                                                    {user?.cargo_empresa?.cargo} en {user?.cargo_empresa?.empresa?.nombre_fantasia}
+                                                </strong>
+                                            </p>
+                                            {user?.cargo_empresa?.is_valido ?
+                                                <span className='m-0 p-0 d-flex justity-content-center align-items-center gap-1'>
+                                                    <BadgeCheck size={12} className='text-success' />
+                                                    <p className='text-success m-0' style={{ fontSize: '12px' }}>
+                                                        Verificado
+                                                    </p>
+                                                </span>
+                                                :
+                                                <span className='m-0 p-0 d-flex justity-content-center align-items-center gap-1'>
+                                                    <BadgeAlert size={12} className='text-danger' />
+                                                    <p className='text-danger m-0' style={{ fontSize: '12px' }}>
+                                                        No verificado
+                                                    </p>
+                                                </span>
+                                            }
+                                        </div>
+
+                                    </div>
                                 }
-                                <p className='px-3'>{user?.userprofile?.sobre_mi}</p>
+                                <div className='mt-4 pb-4'>
+                                    <p className='text-center m-0'> <strong>Sobre mí</strong></p>
+                                    <p className='px-3 text-center' >{user?.userprofile?.sobre_mi}</p>
+                                </div>
                             </div>
                         </div>
+                        {
+                            usuarioStore.id != user?.id &&
+                            <SeguirButton
+                                id_seguido={user.id}
+                                type_seguido={'user'}
+                                id_seguidor={usuarioStore.id}
+                                type_seguidor={'user'} />
+                        }
                     </div>
                 </>
             }

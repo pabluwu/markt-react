@@ -78,29 +78,50 @@ export const getAllPostByEmpresa = (idEmpresa) => {
 
 export const getAllPostByUser = (idUser) => {
     const acc = localStorage.getItem('access_token');
-    const get = async () => {
-        const response = await fetch(`${api}api/post/${idUser}/user`, {
+
+    const fetchPosts = async ({ pageParam = 1 }) => {
+        const response = await fetch(`${api}api/post/${idUser}/user?page=${pageParam}`, {
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${acc}`
             },
-        })
+        });
+
         if (!response.ok) {
-            throw new Error('Error al obtener todos los posts');
+            throw new Error('Error al obtener posts paginados');
         }
-        return response.json();
-    }
+
+        return response.json(); // Debe contener { results, next, previous }
+    };
 
     const {
-        data: postsUser,
-        refetch: refetchAllPostByUser,
-    } = useQuery({ queryKey: ['posts', idUser], queryFn: get });
+        data,
+        fetchNextPage,
+        hasNextPage,
+        isFetchingNextPage,
+        refetch
+    } = useInfiniteQuery({
+        queryKey: ['posts', idUser],
+        queryFn: fetchPosts,
+        getNextPageParam: (lastPage) => {
+            if (lastPage.next) {
+                const nextUrl = new URL(lastPage.next);
+                return nextUrl.searchParams.get('page');
+            }
+            return undefined;
+        },
+        enabled: !!idUser
+    });
 
     return {
-        postsUser,
-        refetchAllPostByUser
-    }
-}
+        postsUser: data?.pages?.flatMap(page => page.results) || [],
+        fetchNextPosts: fetchNextPage,
+        hasMorePosts: hasNextPage,
+        isFetchingNextPosts: isFetchingNextPage,
+        refetchAllPostByUser: refetch
+    };
+
+};
 
 export const toggleLikePost = async (data) => {
     const acc = localStorage.getItem("access_token");
@@ -137,9 +158,7 @@ export const usePostsInfinite = () => {
     const acc = localStorage.getItem("access_token");
 
     const getPaginatedPosts = async ({ pageParam }) => {
-        // Si pageParam es la URL de la siguiente página (del campo 'next' de la respuesta anterior)
-        // o si es la primera carga (undefined, en cuyo caso usamos la URL base sin 'limit' ya que el backend lo maneja)
-        const url = pageParam ? pageParam : `${api}api/post/`; // Eliminamos el `?limit=${POSTS_PER_PAGE}`
+        const url = pageParam ? pageParam : `${api}api/post/`;
 
         const response = await fetch(url, {
             headers: {

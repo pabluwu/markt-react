@@ -65,6 +65,15 @@ a {
   border: solid 1px #475569 !important;
 }
 
+.btn-dark{
+  color: var(--white) !important;
+}
+.btn-dark:hover {
+  background-color: var(--white) !important;
+  color: #0f0f0f !important;
+  border: solid 1px #0f0f0f !important;
+}
+
 .btn-verde {
   background-color: var(--verde-oscuro) !important;
   color: var(--white) !important;

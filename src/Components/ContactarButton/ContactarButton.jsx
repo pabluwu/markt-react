@@ -93,7 +93,7 @@ const ContactarButton = ({ type, id }) => {
                 <Popup children={contentModal} show={openModal} />
             }
             <span
-                className="boton-seguir btn-gray text-center w-100"
+                className="boton-seguir btn-gray text-center w-100 p-2"
                 onClick={() => setOpenModal(true)}
             >
                 <div className="d-flex align-items-center justify-content-center gap-2">

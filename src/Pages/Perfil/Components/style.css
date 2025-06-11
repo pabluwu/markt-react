@@ -1,11 +1,6 @@
 .contenedorPerfil {
     position: relative;
 
-    .imagenFondo {
-        background-color: black;
-        height: 300px;
-    }
-
     .opciones {
         height: 40px;
         display: flex;
@@ -28,13 +23,7 @@
 
 
     .cardUsuario {
-        width: 300px;
         min-height: 400px;
-        background-color: var(--white);
-        border-radius: 8px;
-        position: absolute;
-        box-shadow: 0 0 1px rgba(0, 0, 0, .15), 0 2px 3px rgba(0, 0, 0, .2);
-        top: 40%;
 
         img {
             width: 150px;
@@ -47,7 +36,7 @@
 }
 
 .boton-seguir {
-    padding: 2px 16px;
+    /* padding: 2px 16px; */
     border-radius: 8px;
     cursor: pointer;
 }
