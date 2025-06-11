@@ -39,7 +39,7 @@ const PublicHome = () => {
         }
     );
 
-    console.log(recursos);
+    // console.log(noticias.results[0]);
     return (
         <>
             <Navbar />
@@ -52,9 +52,11 @@ const PublicHome = () => {
                         <h4 className="title-text">Noticias</h4>
                         <div style={{ width: '4rem', backgroundColor: '#0f0f0f', height: '.25rem' }}></div>
                         {/* Noticia destacada (grande) */}
-                        {noticias.length > 0 && (
-                            <NewsBox item={noticias.results[0]} />
-                        )}
+                        {
+                            noticias.results &&
+                            noticias.results.length > 0 && (
+                                <NewsBox item={noticias.results[0]} />
+                            )}
 
                         {/* Noticias pequeñas */}
                         <div className="mt-5">
