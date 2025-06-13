@@ -18,13 +18,23 @@ const PdfPreview = ({ fileUrl, obj }) => {
     setNumPages(numPages);
   };
 
+  const tagsArray = obj.palabrasClaves
+    .split(",")           // divide por coma
+    .map(tag => tag.trim()) // elimina espacios alrededor
+    .filter(tag => tag);
+
   return (
     <div className="container mt-4">
       <div className="row">
         {/* Lado izquierdo */}
         <div className="col-lg-4">
           <div className="bg-white border rounded shadow-sm p-3 mb-3">
-            <span className="badge bg-light text-dark mb-2 fw-semibold">Documento técnico</span>
+            {
+              tagsArray.length > 0 &&
+              tagsArray.map((tag, index) => (
+                <span className="badge bg-light text-dark mb-2 fw-semibold">{tag}</span>
+              ))
+            }
             <h5 className="fw-bold">{obj.titulo}</h5>
             <p className="text-muted">{obj.descripcion}</p>
           </div>

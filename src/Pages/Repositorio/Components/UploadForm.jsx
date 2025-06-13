@@ -1,7 +1,9 @@
 import { useForm } from 'react-hook-form';
 import { useMutation } from '@tanstack/react-query';
 import { api } from '../../../assets/variables';
+
 import DatePickerCustom from '../../../Components/DatePicker/DatePicker';
+import TagInput from '../../../Components/TagInput/TagInput';
 import { toast } from 'react-toastify';
 
 const UploadForm = () => {
@@ -11,6 +13,7 @@ const UploadForm = () => {
         control,
         formState: { errors },
         reset,
+        getValues,
     } = useForm();
 
     const uploadDocument = async (formData) => {
@@ -53,12 +56,19 @@ const UploadForm = () => {
         formData.append('rubro', data.rubro);
         formData.append('link', data.link || '');
         formData.append('archivo', data.archivo[0]);
+        if (data.imagen && data.imagen.length > 0){
+            formData.append('imagen', data.imagen[0]);
+        }
+        formData.append('palabrasClaves', data.palabrasClaves || '');
         for (let pair of formData.entries()) {
             console.log(pair[0] + ':', pair[1]);
         }
 
         mutation.mutate(formData);
     };
+
+    console.log(getValues());
+    console.log(errors);
 
     return (
         <div className="container mt-4">
@@ -111,6 +121,12 @@ const UploadForm = () => {
                     </div>
 
                     <div className="col-md-6 mt-4">
+                        <label className="">Palabras claves</label>
+                        <TagInput errors={errors} name={'palabrasClaves'} control={control}/>
+                        {errors.palabrasClaves && <div className="invalid-feedback">Este campo es obligatorio.</div>}
+                    </div>
+
+                    <div className="col-md-6 mt-4">
                         <label className="">Link (max 200 carácteres)</label>
                         <input type="url" className="form-control" {...register('link')} />
                     </div>
@@ -124,6 +140,16 @@ const UploadForm = () => {
                             {...register('archivo', { required: true })}
                         />
                         {errors.archivo && <div className="invalid-feedback">Debes subir un archivo.</div>}
+                    </div>
+
+                    <div className="col-md-6 mt-4">
+                        <label className="">Subir imagen</label>
+                        <input
+                            type="file"
+                            className={`form-control ${errors.imagen ? 'is-invalid' : ''}`}
+                            accept=".png, .jpeg, .jpg"
+                            {...register('imagen')}
+                        />
                     </div>
 
                     <div className="col-12 mt-4">
