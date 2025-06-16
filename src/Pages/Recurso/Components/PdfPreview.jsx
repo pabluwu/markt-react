@@ -6,6 +6,7 @@ import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
 import 'react-pdf/dist/Page/TextLayer.css';
 import useFormattedDate from '../../../services/useFormattedDate';
 import FadeOverlay from '../../PublicHome/components/FadeOverlay';
+import LoginPrompt from '../../../Components/LoginPrompt/LoginPrompt';
 
 pdfjs.GlobalWorkerOptions.workerSrc = `/pdf.worker.min.js`;
 
@@ -50,6 +51,7 @@ const PdfPreview = ({ fileUrl, obj }) => {
               <span><strong>Fecha de publicación:</strong>&nbsp;{useFormattedDate(obj.fecha_subida) || 'Sin Fecha'}</span>
             </div>
           </div>
+          {!isAuthenticated && <LoginPrompt />}
         </div>
 
         {/* Contenedor PDF */}
@@ -71,7 +73,7 @@ const PdfPreview = ({ fileUrl, obj }) => {
         </div>
       </div>
 
-      {!isAuthenticated && <FadeOverlay />}
+      
     </div>
   );
 };

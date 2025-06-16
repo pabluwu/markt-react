@@ -8,7 +8,7 @@ const FadeOverlay = () => {
             <div
                 className="position-relative start-0 w-100 h-100 d-flex align-items-end justify-content-center"
                 style={{
-                    background: 'linear-gradient(to top, #c1daff, rgba(245, 220, 230, 0))',
+                    background: 'linear-gradient(to top, #d6d6d6, rgba(245, 220, 230, 0))',
                     pointerEvents: 'none',
                 }}
             >
