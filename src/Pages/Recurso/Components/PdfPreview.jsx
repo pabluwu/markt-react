@@ -7,6 +7,7 @@ import 'react-pdf/dist/Page/TextLayer.css';
 import useFormattedDate from '../../../services/useFormattedDate';
 import FadeOverlay from '../../PublicHome/components/FadeOverlay';
 import LoginPrompt from '../../../Components/LoginPrompt/LoginPrompt';
+import ChatRecurso from './ChatRecurso';
 
 pdfjs.GlobalWorkerOptions.workerSrc = `/pdf.worker.min.js`;
 
@@ -27,31 +28,41 @@ const PdfPreview = ({ fileUrl, obj }) => {
   return (
     <div className="container mt-4">
       <div className="row">
-        {/* Lado izquierdo */}
+        {/* Lado izquierdo - Sticky */}
         <div className="col-lg-4">
-          <div className="bg-white border rounded shadow-sm p-3 mb-3">
-            {
-              tagsArray.length > 0 &&
-              tagsArray.map((tag, index) => (
-                <span className="badge bg-light text-dark mb-2 fw-semibold">{tag}</span>
-              ))
-            }
-            <h5 className="fw-bold">{obj.titulo}</h5>
-            <p className="text-muted">{obj.descripcion}</p>
-          </div>
+          <div>
+            <div className="bg-white border rounded shadow-sm p-3 mb-3">
+              {
+                tagsArray.length > 0 &&
+                tagsArray.map((tag, index) => (
+                  <span key={index} className="badge bg-light text-dark mb-2 fw-semibold">{tag}</span>
+                ))
+              }
+              <h5 className="fw-bold">{obj.titulo}</h5>
+              <p className="text-muted">{obj.descripcion}</p>
+            </div>
 
-          <div className="bg-white border rounded shadow-sm p-3">
-            <h6 className="fw-semibold mb-3">Información del documento</h6>
-            <div className="d-flex align-items-center mb-2 text-muted">
-              <Hash size={18} className="me-2" />
-              <span><strong>Número de páginas:</strong>&nbsp;{numPages || 'Cargando...'}</span>
+            <div className="bg-white border rounded shadow-sm p-3 mb-3">
+              <h6 className="fw-semibold mb-3">Información del documento</h6>
+              <div className="d-flex align-items-center mb-2 text-muted">
+                <Hash size={18} className="me-2" />
+                <span><strong>Número de páginas:</strong>&nbsp;{numPages || 'Cargando...'}</span>
+              </div>
+              <div className="d-flex align-items-center mb-2 text-muted">
+                <CalendarDays size={18} className="me-2" />
+                <span><strong>Fecha de publicación:</strong>&nbsp;{useFormattedDate(obj.fecha_subida) || 'Sin Fecha'}</span>
+              </div>
             </div>
-            <div className="d-flex align-items-center mb-2 text-muted">
-              <CalendarDays size={18} className="me-2" />
-              <span><strong>Fecha de publicación:</strong>&nbsp;{useFormattedDate(obj.fecha_subida) || 'Sin Fecha'}</span>
-            </div>
+            
+            {/* Chat del recurso */}
+            {isAuthenticated && (
+              <div className="mb-3">
+                <ChatRecurso recursoId={obj.id} titulo={obj.titulo} />
+              </div>
+            )}
+            
+            {!isAuthenticated && <LoginPrompt />}
           </div>
-          {!isAuthenticated && <LoginPrompt />}
         </div>
 
         {/* Contenedor PDF */}

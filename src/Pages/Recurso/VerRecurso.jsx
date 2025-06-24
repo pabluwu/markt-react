@@ -20,10 +20,7 @@ const VerRecurso = () => {
     return (
         <>
             <Navbar />
-            {
-                recurso &&
-                <PdfPreview fileUrl={recurso.archivo} obj={recurso}/>
-            }
+            {recurso && <PdfPreview fileUrl={recurso.archivo} obj={recurso}/>}
         </>
     )
 }

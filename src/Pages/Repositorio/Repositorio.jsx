@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef, useCallback } from 'react';
 import { useRecursosInfinite } from "../../services/useRecursos";
 
 import Navbar from "../../Components/Navbar/Navbar";
@@ -17,20 +17,23 @@ const Repositorio = () => {
         refetchAllRecursos
     } = useRecursosInfinite();
 
-    useEffect(() => {
-        const handleScroll = () => {
-            const scrollThreshold = 100;
-            if (window.innerHeight + document.documentElement.scrollTop >= document.documentElement.offsetHeight - scrollThreshold &&
-                hasMoreRecursos &&
-                !isFetchingNextRecursos
-            ) {
+    // Referencia para el elemento que activará la carga de más datos
+    const observerRef = useRef();
+    const lastElementRef = useCallback(node => {
+        if (isFetchingNextRecursos) return;
+        
+        if (observerRef.current) observerRef.current.disconnect();
+        
+        observerRef.current = new IntersectionObserver(entries => {
+            if (entries[0].isIntersecting && hasMoreRecursos) {
                 fetchNextRecursos();
             }
-        };
+        });
+        
+        if (node) observerRef.current.observe(node);
+    }, [isFetchingNextRecursos, hasMoreRecursos, fetchNextRecursos]);
 
-        window.addEventListener('scroll', handleScroll);
-        return () => window.removeEventListener('scroll', handleScroll);
-    }, [hasMoreRecursos, isFetchingNextRecursos, fetchNextRecursos]);
+    console.log(recursos);
 
     if (isLoadingRecursos) {
         return (
@@ -74,7 +77,11 @@ const Repositorio = () => {
                         <div className="row">
                             {recursos && recursos.length > 0 ? (
                                 recursos.map((item, i) => (
-                                    <div key={item.id || `recurso-${i}`} className="col-md-4 mb-3">
+                                    <div 
+                                        key={item.id || `recurso-${i}`} 
+                                        className="col-md-4 mb-3"
+                                        ref={i === recursos.length - 1 ? lastElementRef : null}
+                                    >
                                         <CardDocumento documento={item} />
                                     </div>
                                 ))
@@ -87,7 +94,10 @@ const Repositorio = () => {
 
                 {isFetchingNextRecursos && (
                     <div className="text-center my-3">
-                        <p>Cargando más documentos...</p>
+                        <div className="spinner-border text-primary" role="status">
+                            <span className="visually-hidden">Cargando más documentos...</span>
+                        </div>
+                        <p className="mt-2">Cargando más documentos...</p>
                     </div>
                 )}
 

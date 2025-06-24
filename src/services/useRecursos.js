@@ -35,6 +35,25 @@ export const getRecurso = async (id) => {
 
 }
 
+export const consultarRecurso = async (id, pregunta) => {
+    const acc = localStorage.getItem("access_token");
+
+    const response = await fetch(`${api}api/recursos/${id}/consultar/`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${acc}`
+        },
+        body: JSON.stringify({ pregunta })
+    });
+
+    if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Error al consultar el recurso');
+    }
+    return response.json();
+}
+
 export const useRecursosInfinite = () => {
 
     const getPaginatedRecursos = async ({ pageParam }) => {
