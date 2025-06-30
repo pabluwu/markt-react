@@ -24,6 +24,8 @@ import VerRecurso from "./Pages/Recurso/VerRecurso";
 import Noticias from "./Pages/Noticias/Noticias";
 import Repositorio from "./Pages/Repositorio/Repositorio";
 import AdminRepositorio from "./Pages/Repositorio/Admin";
+
+import ListEmpresas from "./Pages/Empresa/ListEmpresas";
 const UserRouter = () => {
 
     return (
@@ -72,6 +74,10 @@ const UserRouter = () => {
 
             <Route path="/repositorio/doc/:id" element={
                 <VerRecurso key={Math.random()} />
+            } />
+
+            <Route path="/empresas" element={
+                <PrivateRoute element={<ListEmpresas key={Math.random()} />} />
             } />
 
 
