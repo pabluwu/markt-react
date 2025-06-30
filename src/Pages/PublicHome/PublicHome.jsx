@@ -101,7 +101,7 @@ const PublicHome = () => {
                     </div>
                 </div>
             </div>
-            <Footer />
+            {/* <Footer /> */}
         </>
     );
 };
