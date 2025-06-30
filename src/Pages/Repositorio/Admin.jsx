@@ -1,0 +1,197 @@
+import { useState, useMemo, useEffect } from "react";
+import {
+    useRecursosInfinite,
+    useDeleteRecurso
+} from "../../services/useRecursos";
+import useFormattedDate from "../../services/useFormattedDate";
+
+import Sidebar from "../../Components/Sidebar/Sidebar";
+import Navbar from "../../Components/Navbar/Navbar";
+import Table from "../../Components/Table/Table";
+
+import {
+    Grid2x2Plus,
+    ChevronDown,
+    ChevronRight,
+    ExternalLink,
+    Trash2
+} from "lucide-react"
+
+const AdminRepositorio = () => {
+    const [option, setOption] = useState({ key: 'recursos', nombre: 'Lista de Recursos' });
+    const opciones = [
+        { key: 'recursos', nombre: 'Lista de Recursos', icon: <Grid2x2Plus size={18} /> },
+    ]
+
+    const toggleOption = (option) => {
+        setOption(option);
+    }
+
+    const {
+        recursos,
+        fetchNextRecursos,
+        hasMoreRecursos,
+        isFetchingNextRecursos,
+        isLoadingRecursos,
+        isErrorRecursos,
+        errorRecursos,
+        refetchAllRecursos
+    } = useRecursosInfinite();
+
+    const fetchAllRecursos = async () => {
+        while (hasMoreRecursos) {
+            await fetchNextRecursos();
+        }
+    };
+
+    useEffect(() => {
+        if (!isLoadingRecursos && recursos.length === 0) {
+            fetchAllRecursos();
+        }
+    }, [isLoadingRecursos]);
+
+    const { mutate, isLoading, isSuccess, error } = useDeleteRecurso();
+
+    const handleDelete = (id) => {
+        if (confirm("¿Eliminar este recurso?")) {
+            mutate(id);
+            fetchAllRecursos();
+        }
+    };
+
+    const columns = useMemo(
+        () => [
+            {
+                accessorKey: 'id',
+                header: 'Id',
+            },
+            {
+                accessorKey: 'titulo',
+                header: 'Titulo',
+            },
+            {
+                accessorKey: 'fecha_subida',
+                header: 'Fecha creación',
+                cell: ({ getValue }) => {
+                    return useFormattedDate(getValue());
+                }
+            },
+            {
+                id: 'action',
+                header: 'Acciones',
+                cell: ({ row }) => {
+                    // console.log(row); 
+                    return (
+                        <div className="d-flex gap-4">
+                            <span
+                                data-tooltip="Abrir">
+                                <a
+                                    className=""
+                                    href={`/repositorio/doc/${row.original.id}`}
+                                    target="_blank">
+                                    <ExternalLink size={18} color="#000" />
+                                </a>
+                            </span>
+                            <span
+                                data-tooltip="Eliminar"
+                                onClick={() => {
+                                    handleDelete(row.original.id)
+                                }}>
+                                {/* <img
+                                    style={{ width: '24px', height: '24px' }}
+                                    src={EditIcon} alt="" /> */}
+                                <Trash2 size={18} color="#000" />
+                            </span>
+                        </div>
+                    )// This will help confirm the structure of each row's data
+                },
+            }
+        ],
+        []
+    );
+
+    const contentSidebar = (
+        <>
+            <div className="offcanvas-header">
+                <h5 className="offcanvas-title w-100 bg-white rounded shadow" id="sidebarLabel">
+                    <div className="d-flex align-items-center justify-content-between py-3 px-4 gap-4">
+                        Administración Repositorio
+                    </div>
+                </h5>
+            </div>
+            <div className="offcanvas-body">
+                <div className="rounded bg-white shadow">
+                    <ul className="list-group list-group-flush py-3">
+                        {
+                            opciones.map(opcion => (
+                                <li className="list-group-item bg-transparent border-0" key={opcion.key}>
+                                    <span
+                                        className="text-decoration-none cursor-pointer"
+                                        onClick={() => toggleOption(opcion)}>
+                                        {
+                                            option.key == opcion.key ?
+                                                <>
+                                                    <span
+                                                        href="#"
+                                                        className="d-flex align-items-center text-white bg-dark rounded-3 px-3 py-2 mb-2 text-decoration-none"
+                                                    >
+                                                        <div className="bg-secondary p-2 rounded me-2 d-flex align-items-center justify-content-center">
+                                                            {opcion.icon}
+                                                        </div>
+                                                        <span className="flex-grow-1">{opcion.nombre}</span>
+                                                        <ChevronDown className="ms-auto" size={18} />
+                                                    </span>
+                                                </>
+                                                :
+                                                <>
+                                                    <span
+                                                        href="#"
+                                                        className="d-flex align-items-center text-dark px-3 py-2 rounded text-decoration-none"
+                                                    >
+                                                        <div className="bg-light p-2 rounded me-2 d-flex align-items-center justify-content-center">
+                                                            {opcion.icon}
+                                                        </div>
+                                                        <span className="flex-grow-1">{opcion.nombre}</span>
+                                                        <ChevronRight className="ms-auto text-muted" size={18} />
+                                                    </span>
+                                                </>
+
+                                        }
+                                    </span>
+                                </li>
+                            ))
+                        }
+
+                    </ul>
+                </div>
+                {/* Lista de enlaces */}
+            </div>
+        </>
+    )
+
+    return (
+        <>
+            <Navbar />
+            {
+                recursos &&
+                <>
+                    <Sidebar content={contentSidebar} />
+                    <div className="container-responsive">
+                        <div className="container mt-4 ">
+                            <h3> <strong>{option.nombre}</strong></h3>
+                            <div className="bg-white py-2 rounded shadow">
+                                <div className="px-3">
+                                    <Table
+                                        data={recursos}
+                                        columns={columns} />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </>
+            }
+        </>
+    )
+}
+
+export default AdminRepositorio;

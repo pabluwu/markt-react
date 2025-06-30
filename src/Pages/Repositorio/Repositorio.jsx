@@ -1,5 +1,7 @@
 import { useEffect, useRef, useCallback } from 'react';
-import { useRecursosInfinite } from "../../services/useRecursos";
+import {
+    useRecursosInfinite,
+} from "../../services/useRecursos";
 
 import Navbar from "../../Components/Navbar/Navbar";
 import CardDocumento from "../PublicHome/components/CardDocumento";
@@ -21,15 +23,15 @@ const Repositorio = () => {
     const observerRef = useRef();
     const lastElementRef = useCallback(node => {
         if (isFetchingNextRecursos) return;
-        
+
         if (observerRef.current) observerRef.current.disconnect();
-        
+
         observerRef.current = new IntersectionObserver(entries => {
             if (entries[0].isIntersecting && hasMoreRecursos) {
                 fetchNextRecursos();
             }
         });
-        
+
         if (node) observerRef.current.observe(node);
     }, [isFetchingNextRecursos, hasMoreRecursos, fetchNextRecursos]);
 
@@ -77,8 +79,8 @@ const Repositorio = () => {
                         <div className="row">
                             {recursos && recursos.length > 0 ? (
                                 recursos.map((item, i) => (
-                                    <div 
-                                        key={item.id || `recurso-${i}`} 
+                                    <div
+                                        key={item.id || `recurso-${i}`}
                                         className="col-md-4 mb-3"
                                         ref={i === recursos.length - 1 ? lastElementRef : null}
                                     >

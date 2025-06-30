@@ -23,7 +23,9 @@ import SubirDocumento from "./Pages/Repositorio/SubirDocumento";
 import VerRecurso from "./Pages/Recurso/VerRecurso";
 import Noticias from "./Pages/Noticias/Noticias";
 import Repositorio from "./Pages/Repositorio/Repositorio";
+import AdminRepositorio from "./Pages/Repositorio/Admin";
 const UserRouter = () => {
+
     return (
         <Routes>
             {/* Páginas públicas */}
@@ -63,6 +65,11 @@ const UserRouter = () => {
             <Route path="/repositorio" element={
                 <PrivateRoute element={<Repositorio key={Math.random()} />} />
             } />
+
+            <Route path="/repositorio/admin" element={
+                <PrivateRoute element={<AdminRepositorio key={Math.random()} />} />
+            } />
+
             <Route path="/repositorio/doc/:id" element={
                 <VerRecurso key={Math.random()} />
             } />
