@@ -15,43 +15,15 @@ const CardDocumento = ({ documento }) => {
             : text;
     }
     return (
-        // <div className="card h-100 d-flex flex-column">
-        //     {/* <img
-        //         src={item.imageSrc || "https://via.placeholder.com/600x400"}
-        //         className="card-img-top"
-        //         alt={item.medio}
-        //     /> */}
-        //     <div className="card-body d-flex flex-column">
-        //         <small className="text-muted">{renderFormattedDate(documento.fecha_subida) || "Sin fecha"}</small>
-        //         <h6 className="card-title mt-1">Título: {documento.titulo}</h6>
-        //         <p className="card-text">
-        //             Descripción: {truncateText(documento.descripcion, 50)}
-        //         </p>
-        //         <div className="mt-auto d-flex gap-2">
-        //             <a
-        //                 href={documento.link}
-        //                 target="_blank"
-        //                 rel="noopener noreferrer"
-        //                 className="btn btn-dark btn-sm text-white"
-        //             >
-        //                 Fuente
-        //             </a>
-        //             <a
-        //                 href={`repositorio/doc/${documento.id}`}
-        //                 target="_blank"
-        //                 rel="noopener noreferrer"
-        //                 className="btn btn-dark btn-sm text-white"
-        //             >
-        //                 Abrir documento
-        //             </a>
-        //         </div>
-
-        //     </div>
-        // </div>
         <div className="card p-3 border-0 shadow-sm rounded-4 mt-4" style={{ maxWidth: '600px' }}>
             <div className="d-flex align-items-start gap-3">
-                <div className="bg-light rounded-3 p-3 d-flex align-items-center justify-content-center">
-                    <FileText size={24} className="text-secondary" />
+                <div style={{width: '56px', height: '56px'}} className="bg-light rounded-3 p-3 d-flex align-items-center justify-content-center">
+                    {
+                        documento.imagen ?
+                            <img src={documento.imagen} className="rounded" style={{height: '56px'}} alt="" />
+                            :
+                            <FileText size={24} className="text-secondary" />
+                    }
                 </div>
                 <div className="flex-grow-1">
                     <small className="text-muted">DOC</small>
@@ -71,7 +43,7 @@ const CardDocumento = ({ documento }) => {
                             Descargar
                         </button> */}
                         <a
-                            className="btn btn-dark btn-sm d-flex align-items-center gap-1 text-white" 
+                            className="btn btn-dark btn-sm d-flex align-items-center gap-1 text-white"
                             href={`repositorio/doc/${documento.id}`}
                             target="_blank">
                             <ExternalLink size={16} />

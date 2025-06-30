@@ -1,12 +1,15 @@
 import { useForm } from 'react-hook-form';
 import { useMutation } from '@tanstack/react-query';
 import { api } from '../../../assets/variables';
+import { useState } from 'react';
 
 import DatePickerCustom from '../../../Components/DatePicker/DatePicker';
 import TagInput from '../../../Components/TagInput/TagInput';
 import { toast } from 'react-toastify';
 
 const UploadForm = () => {
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    
     const {
         register,
         handleSubmit,
@@ -40,14 +43,18 @@ const UploadForm = () => {
         onSuccess: () => {
             toast.success('Archivo subido exitosamente');
             reset();
+            setIsSubmitting(false);
         },
         onError: (error) => {
-
             toast.error(`Error: ${error}`);
+            setIsSubmitting(false);
         },
     });
 
     const onSubmit = (data) => {
+        if (isSubmitting) return; // Prevent multiple submissions
+        
+        setIsSubmitting(true);
         const formData = new FormData();
         formData.append('titulo', data.titulo);
         formData.append('descripcion', data.descripcion);
@@ -60,15 +67,13 @@ const UploadForm = () => {
             formData.append('imagen', data.imagen[0]);
         }
         formData.append('palabrasClaves', data.palabrasClaves || '');
-        for (let pair of formData.entries()) {
-            console.log(pair[0] + ':', pair[1]);
-        }
-
+        // for (let pair of formData.entries()) {
+        //     console.log(pair[0] + ':', pair[1]);
+        // }
+        // console.log('se va a subir doc');
         mutation.mutate(formData);
     };
 
-    console.log(getValues());
-    console.log(errors);
 
     return (
         <div className="container mt-4">
@@ -128,7 +133,7 @@ const UploadForm = () => {
 
                     <div className="col-md-6 mt-4">
                         <label className="">Link (max 200 carácteres)</label>
-                        <input type="url" className="form-control" {...register('link')} />
+                        <input type="url" maxLength={200} className="form-control" {...register('link')} />
                     </div>
 
                     <div className="col-md-6 mt-4">
@@ -153,8 +158,12 @@ const UploadForm = () => {
                     </div>
 
                     <div className="col-12 mt-4">
-                        <button type="submit" className="btn btn-success" disabled={mutation.isLoading}>
-                            {mutation.isLoading ? 'Subiendo...' : 'Subir Documento'}
+                        <button 
+                            type="submit" 
+                            className="btn btn-success" 
+                            disabled={isSubmitting || mutation.isLoading}
+                        >
+                            {isSubmitting || mutation.isLoading ? 'Subiendo...' : 'Subir Documento'}
                         </button>
                     </div>
                 </form>

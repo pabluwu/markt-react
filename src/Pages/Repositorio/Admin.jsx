@@ -8,19 +8,27 @@ import useFormattedDate from "../../services/useFormattedDate";
 import Sidebar from "../../Components/Sidebar/Sidebar";
 import Navbar from "../../Components/Navbar/Navbar";
 import Table from "../../Components/Table/Table";
+import UploadForm from "./Components/UploadForm";
+import EditarForm from "./Components/EditarForm";
+import Popup from "../../Components/Popup/Popup";
 
 import {
     Grid2x2Plus,
     ChevronDown,
     ChevronRight,
     ExternalLink,
-    Trash2
+    Trash2,
+    Upload,
+    Edit
 } from "lucide-react"
 
 const AdminRepositorio = () => {
     const [option, setOption] = useState({ key: 'recursos', nombre: 'Lista de Recursos' });
+    const [editar, setEditar] = useState(false);
+    const [selectedRecurso, setSelectedRecurso] = useState(null);
     const opciones = [
         { key: 'recursos', nombre: 'Lista de Recursos', icon: <Grid2x2Plus size={18} /> },
+        { key: 'recursos_subir', nombre: 'Subir un recurso', icon: <Upload size={18} /> },
     ]
 
     const toggleOption = (option) => {
@@ -36,26 +44,22 @@ const AdminRepositorio = () => {
         isErrorRecursos,
         errorRecursos,
         refetchAllRecursos
-    } = useRecursosInfinite();
+    } = useRecursosInfinite({ autoLoadAll: true });
 
-    const fetchAllRecursos = async () => {
-        while (hasMoreRecursos) {
-            await fetchNextRecursos();
-        }
-    };
-
-    useEffect(() => {
-        if (!isLoadingRecursos && recursos.length === 0) {
-            fetchAllRecursos();
-        }
-    }, [isLoadingRecursos]);
 
     const { mutate, isLoading, isSuccess, error } = useDeleteRecurso();
 
     const handleDelete = (id) => {
         if (confirm("¿Eliminar este recurso?")) {
-            mutate(id);
-            fetchAllRecursos();
+            mutate(id, {
+                onSuccess: () => {
+                    // Refetch los recursos después de eliminar exitosamente
+                    refetchAllRecursos();
+                },
+                onError: (error) => {
+                    console.error("Error al eliminar el recurso:", error);
+                }
+            });
         }
     };
 
@@ -101,6 +105,17 @@ const AdminRepositorio = () => {
                                     style={{ width: '24px', height: '24px' }}
                                     src={EditIcon} alt="" /> */}
                                 <Trash2 size={18} color="#000" />
+                            </span>
+                            <span
+                                data-tooltip="Editar"
+                                onClick={() => {
+                                    setEditar(true);
+                                    setSelectedRecurso(row.original);
+                                }}>
+                                {/* <img
+                                    style={{ width: '24px', height: '24px' }}
+                                    src={EditIcon} alt="" /> */}
+                                <Edit size={18} color="#000" />
                             </span>
                         </div>
                     )// This will help confirm the structure of each row's data
@@ -171,21 +186,41 @@ const AdminRepositorio = () => {
 
     return (
         <>
+            {
+                editar &&
+                <Popup children={
+                    <EditarForm
+                        recurso={selectedRecurso}
+                        setShow={setEditar}
+                        show={editar}
+                        refetch={refetchAllRecursos} />
+                } show={editar} />
+            }
             <Navbar />
             {
                 recursos &&
                 <>
                     <Sidebar content={contentSidebar} />
+
                     <div className="container-responsive">
                         <div className="container mt-4 ">
                             <h3> <strong>{option.nombre}</strong></h3>
-                            <div className="bg-white py-2 rounded shadow">
-                                <div className="px-3">
-                                    <Table
-                                        data={recursos}
-                                        columns={columns} />
-                                </div>
-                            </div>
+                            {
+                                option.key == 'recursos' &&
+                                <>
+                                    <div className="bg-white py-2 rounded shadow">
+                                        <div className="px-3">
+                                            <Table
+                                                data={recursos}
+                                                columns={columns} />
+                                        </div>
+                                    </div>
+                                </>
+                            }
+                            {
+                                option.key == 'recursos_subir' &&
+                                <UploadForm />
+                            }
                         </div>
                     </div>
                 </>
