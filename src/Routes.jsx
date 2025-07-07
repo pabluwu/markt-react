@@ -25,6 +25,10 @@ import Noticias from "./Pages/Noticias/Noticias";
 import Repositorio from "./Pages/Repositorio/Repositorio";
 import AdminRepositorio from "./Pages/Repositorio/Admin";
 
+//Repositorio usuario
+import ManageRepositorio from "./Pages/RepositorioUsuario/Management";
+import VerRecursoUsuarios from "./Pages/Recurso/VerRecursoUsuarios";
+
 import ListEmpresas from "./Pages/Empresa/ListEmpresas";
 const UserRouter = () => {
 
@@ -78,6 +82,14 @@ const UserRouter = () => {
 
             <Route path="/empresas" element={
                 <PrivateRoute element={<ListEmpresas key={Math.random()} />} />
+            } />
+
+            <Route path="/repositorio/management" element={
+                <PrivateRoute element={<ManageRepositorio key={Math.random()} />} />
+            } />
+
+            <Route path="/repositorio/archivo/:id" element={
+                <PrivateRoute element={<VerRecursoUsuarios key={Math.random()} />} />
             } />
 
 

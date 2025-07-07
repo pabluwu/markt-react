@@ -105,7 +105,14 @@ const Home = () => {
                             </div>
                             <div className="col-lg-3 mb-2">
                                 <MisEmpresas />
-                                <CardRepositorio />
+                                <CardRepositorio
+                                    titulo={'Administrar Repositorio Público'}
+                                    textoBoton={'Gestionar documentos'}
+                                    link={"/repositorio/admin"} />
+                                <CardRepositorio
+                                    titulo={'Administrar Mi Repositorio'}
+                                    textoBoton={'Gestionar mis documentos'}
+                                    link={"/repositorio/management"} />
                             </div>
                         </div>
                     </div>

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Navigate, useParams } from "react-router-dom";
 import { getEmpresa, getEmpresasCargos, verSolicitudesContacto } from "../../services/useEmpresas";
 import { useQuery } from "@tanstack/react-query";
-import { FileText, Eye, ChevronDown, ChevronRight, Briefcase, Users, Award, Settings, Building2, User } from "lucide-react";
+import { FileText, Eye, ChevronDown, ChevronRight, Briefcase, Users, Award, Settings, Building2, User, Grid2X2Plus, Upload } from "lucide-react";
 import { media_url } from "../../assets/variables";
 
 import Navbar from "../../Components/Navbar/Navbar";
@@ -13,6 +13,8 @@ import Servicios from "./Servicios";
 import ContactosEmpresa from "./Contactos";
 import Licitaciones from "./Licitaciones";
 import Cargos from "./Components/Cargos";
+import RecursosEmpresa from "./Components/Recursos";
+import UploadForm from "../RepositorioUsuario/Components/UploadForm";
 
 const AdministradorEmpresa = () => {
     const [option, setOption] = useState({ key: 'publicaciones', nombre: 'Publicaciones' });
@@ -27,6 +29,8 @@ const AdministradorEmpresa = () => {
         { key: 'cargos', nombre: 'Revisar Cargos', icon: <Award size={18} /> },
         { key: 'configurar', nombre: 'Configurar', icon: <Settings size={18} /> },
         { key: 'licitaciones', nombre: 'Licitaciones', icon: <Building2 size={18} /> },
+        { key: 'recursos', nombre: 'Lista de Recursos', icon: <Grid2X2Plus size={18} /> },
+        { key: 'recursos_subir', nombre: 'Subir un recurso', icon: <Upload size={18} /> },
     ]
 
     const toggleOption = (option) => {
@@ -56,12 +60,12 @@ const AdministradorEmpresa = () => {
                     <div className="d-flex align-items-center justify-content-between py-3 px-4 gap-4">
                         {
                             empresa &&
-                            empresa.imagen_perfil ?
-                                <img className="rounded" style={{maxWidth: '48px'}} src={
+                                empresa.imagen_perfil ?
+                                <img className="rounded" style={{ maxWidth: '48px' }} src={
                                     `${media_url}/${empresa.imagen_perfil}`
                                 } alt="" />
                                 :
-                                <User size={24}/>  
+                                <User size={24} />
                         }
                         {empresa?.nombre_empresa}
                     </div>
@@ -139,7 +143,7 @@ const AdministradorEmpresa = () => {
                 empresa &&
                 <>
                     <Sidebar content={contentSidebar} />
-                    <div className="container-responsive">
+                    <div className="container-responsive" style={{minHeight: '750px'}}>
                         <div className="container mt-4 ">
                             <h3> <strong>{option.nombre}</strong></h3>
                             {
@@ -172,6 +176,19 @@ const AdministradorEmpresa = () => {
                             {
                                 option.key == 'licitaciones' &&
                                 <Licitaciones empresa={empresa} />
+                            }
+                            {
+                                option.key == 'recursos' &&
+                                <RecursosEmpresa
+                                    author_type={'empresa'}
+                                    user_id={id} />
+                            }
+                            {
+                                option.key == 'recursos_subir' &&
+                                <UploadForm
+                                    author_type={'empresa'}
+                                    author_id={id}
+                                />
                             }
                         </div>
                     </div>
