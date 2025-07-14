@@ -1,4 +1,4 @@
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import { useMutation } from '@tanstack/react-query';
 import { api } from '../../../assets/variables';
 import { useState } from 'react';
@@ -17,7 +17,19 @@ const UploadForm = ({ author_type, author_id }) => {
         formState: { errors },
         reset,
         getValues,
-    } = useForm();
+    } = useForm({
+        defaultValues: {
+            titulo: '',
+            descripcion: '',
+            fecha: new Date(),
+            fuente: '',
+            rubro: '',
+            link: '',
+            palabrasClaves: '',
+            archivo: null,
+            imagen: null
+        }
+    });
 
     const uploadDocument = async (formData) => {
         const acc = localStorage.getItem('access_token');
@@ -46,7 +58,8 @@ const UploadForm = ({ author_type, author_id }) => {
             setIsSubmitting(false);
         },
         onError: (error) => {
-            toast.error(`Error: ${error}`);
+            console.error('Upload error:', error);
+            toast.error(`Error: ${error.message || error}`);
             setIsSubmitting(false);
         },
     });
@@ -80,12 +93,12 @@ const UploadForm = ({ author_type, author_id }) => {
     return (
         <div className="container mt-4">
             <div className='rounded p-4 shadow-sm bg-white'>
-
-                <h3>Subir Documento</h3>
+                {/* <input type="text" onClick={console.log('hola')}/> */}
                 <form onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data" className="row g-3">
                     <div className="col-md-6 mt-4">
                         <label className="">Título (max 50 carácteres) *</label>
                         <input
+                            type="text"
                             className={`form-control ${errors.titulo ? 'is-invalid' : ''}`}
                             {...register('titulo', { required: true })}
                             maxLength={50}
@@ -109,18 +122,25 @@ const UploadForm = ({ author_type, author_id }) => {
                             className={`form-control ${errors.descripcion ? 'is-invalid' : ''}`}
                             {...register('descripcion', { required: true })}
                             maxLength={1000}
+                            rows={4}
                         />
                         {errors.descripcion && <div className="invalid-feedback">Este campo es obligatorio.</div>}
                     </div>
 
                     <div className="col-md-6 mt-4">
                         <label className="">Fuente (max 50 carácteres)</label>
-                        <input className="form-control" {...register('fuente')} />
+                        <input 
+                            type="text"
+                            className="form-control" 
+                            {...register('fuente')} 
+                            maxLength={50}
+                        />
                     </div>
 
                     <div className="col-md-6 mt-4">
                         <label className="">Rubro o temática *</label>
                         <input
+                            type="text"
                             className={`form-control ${errors.rubro ? 'is-invalid' : ''}`}
                             {...register('rubro', { required: true })}
                         />
@@ -135,7 +155,12 @@ const UploadForm = ({ author_type, author_id }) => {
 
                     <div className="col-md-6 mt-4">
                         <label className="">Link (max 200 carácteres)</label>
-                        <input type="url" maxLength={200} className="form-control" {...register('link')} />
+                        <input 
+                            type="url" 
+                            maxLength={200} 
+                            className="form-control" 
+                            {...register('link')} 
+                        />
                     </div>
 
                     <div className="col-md-6 mt-4">

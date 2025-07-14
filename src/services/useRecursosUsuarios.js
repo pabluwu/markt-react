@@ -52,10 +52,28 @@ export const consultarRecurso = async (id, pregunta) => {
     return response.json();
 };
 
+export const compararRecursos = async (ids, pregunta) => {
+    const acc = localStorage.getItem("access_token");
+
+    const response = await fetch(`${api}api/recursos_usuarios/comparar/`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${acc}`
+        },
+        body: JSON.stringify({ "ids": ids, "pregunta": pregunta })
+    });
+
+    if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Error al consultar el recurso');
+    }
+    return response.json();
+};
+
 // Hook para obtener recursos paginados (infinite scroll)
 export const useRecursosInfinite = ({ autoLoadAll = false, authorType = null, authorId = null } = {}) => {
     const enabled = authorType != null && authorId != null;
-
     const getPaginatedRecursos = async ({ pageParam }) => {
         let url = pageParam ?? `${api}api/recursos_usuarios/`;
 

@@ -30,6 +30,8 @@ import ManageRepositorio from "./Pages/RepositorioUsuario/Management";
 import VerRecursoUsuarios from "./Pages/Recurso/VerRecursoUsuarios";
 
 import ListEmpresas from "./Pages/Empresa/ListEmpresas";
+
+import Comparador from "./Pages/Comparador/Comparador";
 const UserRouter = () => {
 
     return (
@@ -94,6 +96,10 @@ const UserRouter = () => {
 
 
             <Route path="/login" element={<Login />} />
+
+            <Route path="/comparador-documentos" element={
+                <PrivateRoute element={<Comparador key={Math.random()}/>} />
+            } />
         </Routes >
     )
 }

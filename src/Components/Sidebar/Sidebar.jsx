@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import Navbar from "../Navbar/Navbar";
-function Sidebar({ content }) {
+function Sidebar({ content, id }) {
     const [isOpen, setIsOpen] = useState(true);
     const [calculo, setCalculo] = useState(window.innerHeight);
     const [altura, setAltura] = useState(0);
@@ -22,6 +22,9 @@ function Sidebar({ content }) {
                 setIsOpen(false);
             }
         };
+
+        const backdrop = document.querySelector('.offcanvas-backdrop');
+        if (backdrop) backdrop.remove();
 
         window.addEventListener("resize", handleResize);
         return () => window.removeEventListener("resize", handleResize);
@@ -46,10 +49,12 @@ function Sidebar({ content }) {
             {/* Sidebar */}
             <div
                 className={`offcanvas offcanvas-start ${isOpen ? "show" : ""}`}
-                onMouseLeave={toggleSidebar}
                 tabIndex="-1"
-                id="sidebar"
-                aria-labelledby="sidebarLabel"
+                id={id}
+                aria-labelledby={"sidebarLabel"}
+                data-bs-backdrop="false"
+                data-bs-keyboard="false"
+                data-bs-scroll="true" 
                 style={{ visibility: isOpen ? "visible" : "hidden", height: calculo, paddingTop: `${altura}px`, zIndex: 99 }}
             >
                 {content}

@@ -142,7 +142,7 @@ const AdministradorEmpresa = () => {
             {
                 empresa &&
                 <>
-                    <Sidebar content={contentSidebar} />
+                    <Sidebar content={contentSidebar} id={'sidebarAdministrador'}/>
                     <div className="container-responsive" style={{minHeight: '750px'}}>
                         <div className="container mt-4 ">
                             <h3> <strong>{option.nombre}</strong></h3>

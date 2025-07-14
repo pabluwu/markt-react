@@ -148,7 +148,12 @@ const ManageRepositorio = () => {
                                 <li className="list-group-item bg-transparent border-0" key={opcion.key}>
                                     <span
                                         className="text-decoration-none cursor-pointer"
-                                        onClick={() => toggleOption(opcion)}>
+                                        onClick={(e) => {
+                                            e.preventDefault();
+                                            e.stopPropagation();
+                                            toggleOption(opcion)
+                                        }
+                                        }>
                                         {
                                             option.key == opcion.key ?
                                                 <>
@@ -192,7 +197,7 @@ const ManageRepositorio = () => {
 
     return (
         <>
-            {
+            {/* {
                 editar &&
                 <Popup children={
                     <EditarForm
@@ -203,14 +208,13 @@ const ManageRepositorio = () => {
                         author_type={'user'}
                         author_id={user.id} />
                 } show={editar} />
-            }
+            } */}
             <Navbar />
             {
                 recursos &&
                 <>
-                    <Sidebar content={contentSidebar} />
-
-                    <div className="container-responsive" style={{minHeight: '400px'}}>
+                    <Sidebar content={contentSidebar} id={'sidebarManagement'} />
+                    <div className="container-responsive" style={{ minHeight: '750px' }}>
                         <div className="container mt-4 ">
                             <h3> <strong>{option.nombre}</strong></h3>
                             {
@@ -227,6 +231,7 @@ const ManageRepositorio = () => {
                             }
                             {
                                 option.key == 'recursos_subir' &&
+                                user &&
                                 <UploadForm
                                     author_type={'user'}
                                     author_id={user.id}

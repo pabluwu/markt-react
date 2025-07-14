@@ -7,7 +7,7 @@ import {
     ArrowUpRight
 } from 'lucide-react';
 
-const CardDocumento = ({ documento }) => {
+const CardDocumento = ({ documento, selected }) => {
     function truncateText(text, maxLength = 70) {
         if (!text) return "";
         return text.length > maxLength
@@ -15,12 +15,17 @@ const CardDocumento = ({ documento }) => {
             : text;
     }
     return (
-        <div className="card p-3 border-0 shadow-sm rounded-4 mt-4" style={{ maxWidth: '600px' }}>
+        <div className={
+            !selected ? 
+            "card p-3 border-1 shadow-sm  rounded-4 mt-4"
+            :
+            "card p-3 border-1 shadow-sm rounded-4 mt-4 border-success bg-light"
+        } style={{ maxWidth: '600px', }}>
             <div className="d-flex align-items-start gap-3">
-                <div style={{width: '56px', height: '56px'}} className="bg-light rounded-3 p-3 d-flex align-items-center justify-content-center">
+                <div style={{ width: '56px', height: '56px' }} className="bg-light rounded-3 p-3 d-flex align-items-center justify-content-center">
                     {
                         documento.imagen ?
-                            <img src={documento.imagen} className="rounded" style={{height: '56px'}} alt="" />
+                            <img src={documento.imagen} className="rounded" style={{ height: '56px' }} alt="" />
                             :
                             <FileText size={24} className="text-secondary" />
                     }

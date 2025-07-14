@@ -200,7 +200,7 @@ const AdminRepositorio = () => {
             {
                 recursos &&
                 <>
-                    <Sidebar content={contentSidebar} />
+                    <Sidebar content={contentSidebar} id={'sidebarRepositorio'}/>
 
                     <div className="container-responsive">
                         <div className="container mt-4 ">
