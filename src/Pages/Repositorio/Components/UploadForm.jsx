@@ -112,15 +112,16 @@ const UploadForm = () => {
                     </div>
 
                     <div className="col-md-6 mt-4">
-                        <label className="">Fuente (max 50 carácteres)</label>
-                        <input className="form-control" {...register('fuente')} />
+                        <label className="">Fuente (max 200 carácteres)</label>
+                        <input className="form-control" {...register('fuente')} maxLength={200} />
                     </div>
 
                     <div className="col-md-6 mt-4">
-                        <label className="">Rubro o temática *</label>
+                        <label className="">Rubro o temática (max 200 carácteres) *</label>
                         <input
                             className={`form-control ${errors.rubro ? 'is-invalid' : ''}`}
                             {...register('rubro', { required: true })}
+                            maxLength={200}
                         />
                         {errors.rubro && <div className="invalid-feedback">Este campo es obligatorio.</div>}
                     </div>
