@@ -126,7 +126,7 @@ const UploadForm = () => {
                     </div>
 
                     <div className="col-md-6 mt-4">
-                        <label className="">Palabras claves</label>
+                        <label className="">Palabras claves (máximo 5)</label>
                         <TagInput errors={errors} name={'palabrasClaves'} control={control}/>
                         {errors.palabrasClaves && <div className="invalid-feedback">Este campo es obligatorio.</div>}
                     </div>

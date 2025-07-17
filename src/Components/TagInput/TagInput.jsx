@@ -21,7 +21,7 @@ const TagInput = ({ control, name, errors }) => {
         }, [value]);
 
         const handleKeyDown = e => {
-          if (e.key === "," || e.key === "Enter") {
+          if ((e.key === "," || e.key === "Enter") && tags.length < 5) {
             e.preventDefault();
             const nueva = inputValue.trim().replace(/,+$/, "");
             if (nueva && !tags.includes(nueva)) {
@@ -34,6 +34,8 @@ const TagInput = ({ control, name, errors }) => {
             const updated = tags.slice(0, -1);
             setTags(updated);
             onChange(updated.join(","));
+          } else if ((e.key === "," || e.key === "Enter") && tags.length >= 5) {
+            e.preventDefault(); // No permitir más de 5 tags
           }
         };
 
@@ -65,6 +67,7 @@ const TagInput = ({ control, name, errors }) => {
               className={`form-control border-0 flex-grow-1 ${errors[name] ? 'is-invalid' : ''}`}
               placeholder="Escribe una palabra y presiona coma"
               style={{ minWidth: "120px", boxShadow: "none" }}
+              disabled={tags.length >= 5}
             />
           </div>
         );
